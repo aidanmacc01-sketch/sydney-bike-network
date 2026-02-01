@@ -1,0 +1,924 @@
+openapi: 3.0.3
+info:
+  title: Sydney Bike Waze API
+  description: Community-powered cycling infrastructure API for City of Sydney LGA
+  version: 2.0.0
+  contact:
+    name: Micro2Move Sydney
+servers:
+  - url: https://api.micro2move.app/v1
+    description: Production
+  - url: https://staging-api.micro2move.app/v1
+    description: Staging
+
+paths:
+  /segments:
+    get:
+      summary: Get segments within bounding box
+      description: Retrieve cycling segments within a geographic bounding box (City of Sydney LGA)
+      operationId: getSegments
+      tags:
+        - Segments
+      parameters:
+        - name: bbox
+          in: query
+          required: true
+          description: Bounding box (west,south,east,north) - must be within City of Sydney LGA
+          schema:
+            type: string
+            example: "151.19,-33.90,151.23,-33.86"
+        - name: facility_type
+          in: query
+          required: false
+          description: Filter by facility type
+          schema:
+            $ref: '#/components/schemas/FacilityType'
+        - name: local_area
+          in: query
+          required: false
+          description: Filter by local area name
+          schema:
+            type: string
+            example: "Surry Hills"
+        - name: min_comfort
+          in: query
+          required: false
+          description: Minimum comfort score (0-1)
+          schema:
+            type: number
+            minimum: 0
+            maximum: 1
+        - name: max_risk
+          in: query
+          required: false
+          description: Maximum crash risk score (0-1)
+          schema:
+            type: number
+            minimum: 0
+            maximum: 1
+      responses:
+        '200':
+          description: List of segments
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentsResponse'
+
+  /segments/{segmentId}:
+    get:
+      summary: Get segment details
+      description: Retrieve full details for a single segment including reports and ratings
+      operationId: getSegmentById
+      tags:
+        - Segments
+      parameters:
+        - name: segmentId
+          in: path
+          required: true
+          schema:
+            type: string
+          example: seg_bourke_north_01
+        - name: include_reports
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: include_ratings
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: Segment details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentDetailResponse'
+        '404':
+          description: Segment not found
+
+  /events:
+    get:
+      summary: Get community events feed
+      description: Retrieve recent events/reports for the community feed
+      operationId: getEvents
+      tags:
+        - Events
+      parameters:
+        - name: local_area
+          in: query
+          required: false
+          description: Filter by local area
+          schema:
+            type: string
+        - name: event_type
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/EventType'
+        - name: status
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/ReportStatus'
+        - name: since
+          in: query
+          required: false
+          description: Only events after this timestamp
+          schema:
+            type: string
+            format: date-time
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 20
+            maximum: 100
+        - name: offset
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+      responses:
+        '200':
+          description: List of events
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/EventsResponse'
+
+    post:
+      summary: Submit a report/event
+      description: Submit a hazard or infrastructure report for a segment or POI
+      operationId: createEvent
+      tags:
+        - Events
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateEventRequest'
+      responses:
+        '201':
+          description: Event created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateEventResponse'
+        '400':
+          description: Invalid request
+        '429':
+          description: Rate limited
+
+  /events/{eventId}/vote:
+    post:
+      summary: Vote on an event
+      description: Upvote or downvote an event to confirm or dispute it
+      operationId: voteOnEvent
+      tags:
+        - Events
+      parameters:
+        - name: eventId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - vote
+              properties:
+                vote:
+                  type: string
+                  enum: [up, down]
+      responses:
+        '200':
+          description: Vote recorded
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  upvotes:
+                    type: integer
+                  downvotes:
+                    type: integer
+                  message:
+                    type: string
+
+  /routes:
+    get:
+      summary: Calculate cycling routes
+      description: Find cycling routes between two points with preference options
+      operationId: getRoutes
+      tags:
+        - Routing
+      parameters:
+        - name: from
+          in: query
+          required: true
+          description: Origin coordinates (lat,lng)
+          schema:
+            type: string
+            example: "-33.8808,151.2152"
+        - name: to
+          in: query
+          required: true
+          description: Destination coordinates (lat,lng)
+          schema:
+            type: string
+            example: "-33.8830,151.2069"
+        - name: mode
+          in: query
+          required: false
+          description: Routing preference
+          schema:
+            $ref: '#/components/schemas/RouteMode'
+        - name: avoid_steep
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: false
+        - name: alternatives
+          in: query
+          required: false
+          description: Number of alternative routes (1-3)
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 3
+            default: 3
+      responses:
+        '200':
+          description: Route options
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RoutesResponse'
+        '400':
+          description: Invalid coordinates or outside City of Sydney LGA
+
+  /ratings:
+    post:
+      summary: Submit a segment rating
+      description: Rate a cycling segment with stars and tags
+      operationId: createRating
+      tags:
+        - Ratings
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRatingRequest'
+      responses:
+        '201':
+          description: Rating submitted
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateRatingResponse'
+        '400':
+          description: Invalid request
+
+  /pois:
+    get:
+      summary: Get points of interest
+      description: Retrieve bike parking and other POIs within a bounding box
+      operationId: getPois
+      tags:
+        - POIs
+      parameters:
+        - name: bbox
+          in: query
+          required: true
+          description: Bounding box (west,south,east,north)
+          schema:
+            type: string
+        - name: type
+          in: query
+          required: false
+          schema:
+            $ref: '#/components/schemas/PoiType'
+        - name: local_area
+          in: query
+          required: false
+          schema:
+            type: string
+        - name: is_secure
+          in: query
+          required: false
+          schema:
+            type: boolean
+        - name: has_capacity
+          in: query
+          required: false
+          description: Only POIs with available capacity
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: List of POIs
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoisResponse'
+
+  /pois/{poiId}:
+    get:
+      summary: Get POI details
+      description: Retrieve full details for a POI including recent reports
+      operationId: getPoiById
+      tags:
+        - POIs
+      parameters:
+        - name: poiId
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: include_reports
+          in: query
+          required: false
+          schema:
+            type: boolean
+            default: true
+        - name: include_nearby_alternatives
+          in: query
+          required: false
+          description: Include nearby alternative parking if this POI has rack_full reports
+          schema:
+            type: boolean
+            default: true
+      responses:
+        '200':
+          description: POI details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PoiDetailResponse'
+
+components:
+  schemas:
+    # Enums
+    FacilityType:
+      type: string
+      enum:
+        - separated_cycleway
+        - painted_lane
+        - shared_path
+        - mixed_traffic
+
+    LightingQuality:
+      type: string
+      enum:
+        - good
+        - ok
+        - poor
+        - unknown
+
+    GradientClass:
+      type: string
+      enum:
+        - flat
+        - rolling
+        - steep
+
+    EventType:
+      type: string
+      enum:
+        - glass
+        - pothole
+        - closed
+        - construction
+        - door_zone_risk
+        - near_miss
+        - good_infra
+        - rack_full
+        - other
+
+    Severity:
+      type: string
+      enum:
+        - low
+        - medium
+        - high
+
+    ReportStatus:
+      type: string
+      enum:
+        - open
+        - verified
+        - resolved
+        - stale
+
+    PoiType:
+      type: string
+      enum:
+        - bike_rack
+        - bike_shed
+        - station_entrance
+        - micromobility_hub
+        - major_destination
+
+    UtilisationLevel:
+      type: string
+      enum:
+        - high
+        - medium
+        - low
+
+    RouteMode:
+      type: string
+      enum:
+        - fastest
+        - safest
+        - comfortable
+      default: safest
+
+    RatingTag:
+      type: string
+      enum:
+        - good_at_night
+        - family_friendly
+        - door_zone_risk
+        - nightlife_area
+        - high_traffic
+        - avoid_in_peak
+        - near_station
+        - quick_errands
+        - commuter_friendly
+        - good_for_ebikes
+        - family_rides
+        - green_space
+
+    EventSource:
+      type: string
+      enum:
+        - user
+        - council
+        - automated
+
+    # GeoJSON
+    Point:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: [Point]
+        coordinates:
+          type: array
+          items:
+            type: number
+          minItems: 2
+          maxItems: 2
+          description: "[longitude, latitude]"
+
+    LatLng:
+      type: object
+      properties:
+        lat:
+          type: number
+          example: -33.878
+        lng:
+          type: number
+          example: 151.216
+
+    LineString:
+      type: object
+      required:
+        - type
+        - coordinates
+      properties:
+        type:
+          type: string
+          enum: [LineString]
+        coordinates:
+          type: array
+          items:
+            type: array
+            items:
+              type: number
+            minItems: 2
+            maxItems: 2
+
+    # Core Models - Updated with new fields
+    Segment:
+      type: object
+      required:
+        - id
+        - road_name
+        - local_area
+        - facility_type
+      properties:
+        id:
+          type: string
+          example: seg_bourke_north_01
+        road_name:
+          type: string
+          example: Bourke St
+        local_area:
+          type: string
+          example: Surry Hills
+        facility_type:
+          $ref: '#/components/schemas/FacilityType'
+        is_pop_up_cycleway:
+          type: boolean
+        speed_env_kmh:
+          type: integer
+          example: 40
+        lane_width_m:
+          type: number
+          example: 3.0
+          description: Width of bike lane in metres (0 if no dedicated lane)
+        gradient_class:
+          $ref: '#/components/schemas/GradientClass'
+        lighting_quality:
+          $ref: '#/components/schemas/LightingQuality'
+        heavy_loading_zone:
+          type: boolean
+          description: True if segment passes through a heavy vehicle loading zone
+        has_bike_counts:
+          type: boolean
+        daily_bike_trips:
+          type: integer
+          nullable: true
+          example: 1800
+        popularity_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.9
+        crash_risk_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.2
+        comfort_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.92
+        perceived_safety_score:
+          type: number
+          minimum: 0
+          maximum: 1
+          example: 0.9
+          description: Community-reported feeling of safety
+        avg_user_rating:
+          type: number
+          minimum: 1
+          maximum: 5
+          example: 4.8
+        rating_count:
+          type: integer
+          example: 126
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingTag'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Event:
+      type: object
+      required:
+        - id
+        - event_type
+        - severity
+        - status
+        - created_at
+      properties:
+        id:
+          type: string
+          example: evt_000001
+        reporter_id:
+          type: string
+        segment_id:
+          type: string
+          nullable: true
+        poi_id:
+          type: string
+          nullable: true
+        location:
+          $ref: '#/components/schemas/LatLng'
+        event_type:
+          $ref: '#/components/schemas/EventType'
+        severity:
+          $ref: '#/components/schemas/Severity'
+        description:
+          type: string
+          maxLength: 500
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+        status:
+          $ref: '#/components/schemas/ReportStatus'
+        upvotes:
+          type: integer
+          example: 14
+        downvotes:
+          type: integer
+          example: 1
+        source:
+          $ref: '#/components/schemas/EventSource'
+        # Denormalised for feed display
+        road_name:
+          type: string
+        poi_name:
+          type: string
+        local_area:
+          type: string
+
+    Poi:
+      type: object
+      required:
+        - id
+        - type
+        - name
+        - location
+      properties:
+        id:
+          type: string
+          example: poi_townhall_racks_01
+        type:
+          $ref: '#/components/schemas/PoiType'
+        name:
+          type: string
+          example: Town Hall Station Bike Racks
+        description:
+          type: string
+        address:
+          type: string
+          example: George St, Sydney NSW
+        local_area:
+          type: string
+          example: Sydney CBD
+        location:
+          $ref: '#/components/schemas/LatLng'
+        capacity:
+          type: integer
+          nullable: true
+          example: 18
+        is_secure:
+          type: boolean
+        is_covered:
+          type: boolean
+        lighting_quality:
+          $ref: '#/components/schemas/LightingQuality'
+        utilisation_level:
+          $ref: '#/components/schemas/UtilisationLevel'
+        avg_user_rating:
+          type: number
+          minimum: 1
+          maximum: 5
+          example: 3.9
+        rating_count:
+          type: integer
+          example: 57
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingTag'
+        created_at:
+          type: string
+          format: date-time
+        updated_at:
+          type: string
+          format: date-time
+
+    Route:
+      type: object
+      properties:
+        id:
+          type: string
+        summary:
+          type: string
+          example: Via Bourke St Cycleway
+        distance_m:
+          type: integer
+        duration_s:
+          type: integer
+        comfort_score:
+          type: number
+        separated_percentage:
+          type: integer
+        geometry:
+          $ref: '#/components/schemas/LineString'
+        segments:
+          type: array
+          items:
+            type: object
+            properties:
+              segment_id:
+                type: string
+              distance_m:
+                type: integer
+        warnings:
+          type: array
+          items:
+            type: object
+            properties:
+              type:
+                type: string
+              segment_id:
+                type: string
+              message:
+                type: string
+        is_recommended:
+          type: boolean
+
+    # Response schemas
+    SegmentsResponse:
+      type: object
+      properties:
+        segments:
+          type: array
+          items:
+            $ref: '#/components/schemas/Segment'
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            bbox:
+              type: string
+
+    SegmentDetailResponse:
+      type: object
+      properties:
+        segment:
+          $ref: '#/components/schemas/Segment'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        open_issues_count:
+          type: integer
+          description: Count of open events for this segment
+
+    EventsResponse:
+      type: object
+      properties:
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+            has_more:
+              type: boolean
+
+    CreateEventRequest:
+      type: object
+      required:
+        - event_type
+        - severity
+      properties:
+        segment_id:
+          type: string
+          description: Required if poi_id not provided
+        poi_id:
+          type: string
+          description: Required if segment_id not provided
+        location:
+          $ref: '#/components/schemas/LatLng'
+        event_type:
+          $ref: '#/components/schemas/EventType'
+        severity:
+          $ref: '#/components/schemas/Severity'
+        description:
+          type: string
+          maxLength: 500
+
+    CreateEventResponse:
+      type: object
+      properties:
+        event:
+          $ref: '#/components/schemas/Event'
+        message:
+          type: string
+          example: "Thanks legend! Your report is now live."
+
+    RoutesResponse:
+      type: object
+      properties:
+        routes:
+          type: array
+          items:
+            $ref: '#/components/schemas/Route'
+        meta:
+          type: object
+          properties:
+            from:
+              $ref: '#/components/schemas/LatLng'
+            to:
+              $ref: '#/components/schemas/LatLng'
+            mode:
+              $ref: '#/components/schemas/RouteMode'
+
+    CreateRatingRequest:
+      type: object
+      required:
+        - score
+      properties:
+        segment_id:
+          type: string
+        poi_id:
+          type: string
+        score:
+          type: integer
+          minimum: 1
+          maximum: 5
+        tags:
+          type: array
+          items:
+            $ref: '#/components/schemas/RatingTag'
+        comment:
+          type: string
+          maxLength: 280
+
+    CreateRatingResponse:
+      type: object
+      properties:
+        rating:
+          type: object
+          properties:
+            id:
+              type: string
+            score:
+              type: integer
+            tags:
+              type: array
+              items:
+                type: string
+            created_at:
+              type: string
+              format: date-time
+        new_average:
+          type: number
+          description: Updated average rating after submission
+        message:
+          type: string
+          example: "Rating submitted! Cheers for the feedback."
+
+    PoisResponse:
+      type: object
+      properties:
+        pois:
+          type: array
+          items:
+            $ref: '#/components/schemas/Poi'
+        meta:
+          type: object
+          properties:
+            total:
+              type: integer
+
+    PoiDetailResponse:
+      type: object
+      properties:
+        poi:
+          $ref: '#/components/schemas/Poi'
+        events:
+          type: array
+          items:
+            $ref: '#/components/schemas/Event'
+        has_rack_full_reports:
+          type: boolean
+        nearby_alternatives:
+          type: array
+          description: Suggested alternative parking if this POI is often full
+          items:
+            type: object
+            properties:
+              poi:
+                $ref: '#/components/schemas/Poi'
+              distance_m:
+                type: integer
+              walking_time_s:
+                type: integer

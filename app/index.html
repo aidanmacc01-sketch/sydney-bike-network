@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Sydney Bike Network - Future Vision</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
+
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+
+  <!-- Tailwind Config -->
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#7C3AED",
+            "background-light": "#F8FAFC",
+            "background-dark": "#0F172A",
+            "acc-green": "#22C55E",
+            "acc-yellow": "#FACC15",
+            "acc-blue": "#3B82F6",
+            "acc-orange": "#F59E0B",
+          },
+          fontFamily: {
+            display: ["Inter", "sans-serif"],
+          },
+          borderRadius: {
+            DEFAULT: "1rem",
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .glass {
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+
+    @keyframes pulse-ring {
+      0% { transform: scale(.33); opacity: 1; }
+      80%, 100% { transform: scale(1.5); opacity: 0; }
+    }
+
+    .pulse-dot::before {
+      content: '';
+      position: absolute;
+      width: 300%;
+      height: 300%;
+      border-radius: 50%;
+      background-color: inherit;
+      animation: pulse-ring 1.5s cubic-bezier(0.455, 0.03, 0.515, 0.955) infinite;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .pin-shadow {
+      filter: drop-shadow(0 4px 6px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Hide scrollbar but allow scroll */
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+
+    /* Bottom sheet animation */
+    .bottom-sheet {
+      transition: transform 0.3s ease-out;
+    }
+
+    .bottom-sheet.collapsed {
+      transform: translateY(calc(100% - 100px));
+    }
+
+    /* Custom marker styles */
+    .custom-marker {
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+    .custom-marker:hover {
+      transform: scale(1.1);
+    }
+
+    /* Progress bar animation */
+    .progress-bar {
+      transition: width 0.5s ease-out;
+    }
+
+    /* Toast notification */
+    .toast {
+      transform: translateY(100px);
+      opacity: 0;
+      transition: all 0.3s ease-out;
+    }
+    .toast.visible {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    /* Modal */
+    .modal-overlay {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.3s;
+    }
+    .modal-overlay.visible {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .modal-content {
+      transform: translateY(50px) scale(0.95);
+      opacity: 0;
+      transition: all 0.3s ease-out;
+    }
+    .modal-overlay.visible .modal-content {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+    }
+  </style>
+</head>
+
+<body class="font-display antialiased bg-background-light dark:bg-background-dark overflow-hidden select-none">
+
+  <!-- Main Container - Full Screen -->
+  <div class="relative w-full h-screen overflow-hidden">
+
+    <!-- Google Map Container (Full Screen Background) -->
+    <div id="map" class="absolute inset-0 w-full h-full"></div>
+
+    <!-- Top Search Bar -->
+    <div class="absolute top-4 left-4 right-4 z-40 md:left-20 md:right-20 lg:left-1/4 lg:right-1/4">
+      <div class="glass bg-white/70 dark:bg-slate-900/70 p-1.5 rounded-full border border-white/30 dark:border-slate-800/30 flex items-center shadow-xl">
+        <span class="material-icons-round text-gray-400 px-3">search</span>
+        <input
+          id="searchInput"
+          class="bg-transparent border-none focus:ring-0 focus:outline-none text-sm w-full dark:text-white placeholder-gray-500"
+          placeholder="Search Sydney Bike Network..."
+          type="text"
+        />
+        <button id="filterBtn" class="w-8 h-8 rounded-full bg-primary flex items-center justify-center text-white flex-shrink-0">
+          <span class="material-icons-round text-lg">tune</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Network View Toggle -->
+    <div class="absolute top-20 left-1/2 -translate-x-1/2 z-40">
+      <div class="glass bg-white/80 dark:bg-slate-900/80 p-1 rounded-full border border-white/30 dark:border-slate-800/30 shadow-xl flex gap-1">
+        <button class="toggle-btn px-4 py-2 rounded-full text-sm font-semibold transition-all bg-acc-green text-white" data-view="current">
+          Today
+        </button>
+        <button class="toggle-btn px-4 py-2 rounded-full text-sm font-semibold transition-all text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800" data-view="future">
+          2026+
+        </button>
+        <button class="toggle-btn px-4 py-2 rounded-full text-sm font-semibold transition-all text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-slate-800" data-view="all">
+          Full Vision
+        </button>
+      </div>
+    </div>
+
+    <!-- Left Sidebar - Action Buttons -->
+    <div class="absolute top-36 left-4 z-40">
+      <div class="glass bg-white/80 dark:bg-slate-900/80 p-2 rounded-2xl border border-white/30 dark:border-slate-800/30 shadow-xl flex flex-col gap-3">
+        <button id="routeBtn" class="w-10 h-10 rounded-xl bg-acc-green text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform" title="Plan Route">
+          <span class="material-icons-round">route</span>
+        </button>
+        <button id="editBtn" class="w-10 h-10 rounded-xl bg-primary text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform" title="Report Issue">
+          <span class="material-icons-round">edit_road</span>
+        </button>
+        <button id="communityBtn" class="w-10 h-10 rounded-xl bg-acc-yellow text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform" title="Community">
+          <span class="material-icons-round">groups</span>
+        </button>
+        <div class="h-px bg-gray-200 dark:bg-gray-700 mx-1"></div>
+        <button id="layersBtn" class="w-10 h-10 rounded-xl glass bg-white/50 dark:bg-slate-800/50 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:scale-105 transition-transform" title="Layers">
+          <span class="material-icons-round">layers</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Legend Pills -->
+    <div class="absolute top-36 right-4 z-40 flex flex-col gap-2">
+      <div class="glass bg-white/80 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-white/30 shadow-lg">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <div class="w-3 h-3 rounded-full bg-acc-green"></div>
+          <span class="dark:text-white">Open</span>
+        </div>
+      </div>
+      <div class="glass bg-white/80 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-white/30 shadow-lg">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <div class="w-3 h-3 rounded-full bg-acc-orange"></div>
+          <span class="dark:text-white">Building</span>
+        </div>
+      </div>
+      <div class="glass bg-white/80 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-white/30 shadow-lg">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <div class="w-3 h-3 rounded-full bg-acc-blue"></div>
+          <span class="dark:text-white">Funded</span>
+        </div>
+      </div>
+      <div class="glass bg-white/80 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-white/30 shadow-lg">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <div class="w-3 h-3 rounded-full bg-primary"></div>
+          <span class="dark:text-white">Planned</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Network Stats Banner -->
+    <div id="statsBanner" class="absolute bottom-[340px] left-4 right-4 md:left-1/4 md:right-1/4 z-30">
+      <div class="glass bg-white/90 dark:bg-slate-900/90 rounded-2xl border border-white/40 shadow-xl p-4 flex justify-around">
+        <div class="text-center">
+          <div class="text-2xl font-bold text-acc-green" id="statsKm">35</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">km Network</div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 dark:bg-gray-700"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-primary" id="statsProjects">9</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Projects</div>
+        </div>
+        <div class="h-10 w-px bg-gray-200 dark:bg-gray-700"></div>
+        <div class="text-center">
+          <div class="text-2xl font-bold text-acc-yellow" id="statsTrips">45k</div>
+          <div class="text-xs text-gray-500 dark:text-gray-400 font-medium">Daily Trips</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Sheet - Project/Segment Details -->
+    <div id="bottomSheet" class="bottom-sheet absolute bottom-0 left-0 right-0 z-40 collapsed">
+      <div class="glass bg-white/95 dark:bg-slate-900/95 rounded-t-[2rem] border-t border-white/40 dark:border-slate-800/40 shadow-2xl max-h-[70vh] overflow-hidden">
+
+        <!-- Drag Handle -->
+        <div class="flex justify-center pt-3 pb-2 cursor-pointer" id="sheetHandle">
+          <div class="w-10 h-1 bg-gray-300 dark:bg-gray-700 rounded-full"></div>
+        </div>
+
+        <!-- Sheet Header - Always Visible -->
+        <div class="px-5 pb-4" id="sheetHeader">
+          <div class="flex justify-between items-start">
+            <div class="flex-1">
+              <div class="flex items-center gap-2 mb-1">
+                <span class="text-xs font-bold text-acc-green bg-green-100 dark:bg-green-900/30 px-2 py-0.5 rounded-full" id="sheetBadge">
+                  OPEN
+                </span>
+              </div>
+              <h2 class="text-xl font-bold dark:text-white" id="sheetTitle">Select a cycleway</h2>
+              <div class="flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                <span class="material-icons-round text-acc-green text-sm">check_circle</span>
+                <span id="sheetMeta">Tap on the map to view details</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-end">
+              <div class="flex items-center gap-0.5 text-acc-yellow">
+                <span class="material-icons-round text-sm">star</span>
+                <span class="text-sm font-bold dark:text-white" id="sheetRating">--</span>
+              </div>
+              <span class="text-[10px] text-gray-400 uppercase tracking-wider font-bold" id="sheetReviewCount">-- Reviews</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Expandable Content -->
+        <div class="px-5 pb-6 overflow-y-auto hide-scrollbar" id="sheetContent" style="max-height: calc(70vh - 120px);">
+
+          <!-- Stats Grid -->
+          <div class="grid grid-cols-2 gap-3 mb-6" id="sheetStats">
+            <div class="bg-white/40 dark:bg-slate-800/40 p-3 rounded-2xl border border-white/20">
+              <span class="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Safety Score</span>
+              <div class="flex items-center gap-2 mt-1">
+                <div class="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-acc-green progress-bar" id="safetyBar" style="width: 0%"></div>
+                </div>
+                <span class="text-xs font-bold dark:text-white" id="safetyScore">--</span>
+              </div>
+            </div>
+            <div class="bg-white/40 dark:bg-slate-800/40 p-3 rounded-2xl border border-white/20">
+              <span class="text-[10px] text-gray-500 font-bold uppercase tracking-tight">Surface Quality</span>
+              <div class="flex items-center gap-2 mt-1">
+                <div class="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+                  <div class="h-full bg-primary progress-bar" id="surfaceBar" style="width: 0%"></div>
+                </div>
+                <span class="text-xs font-bold dark:text-white" id="surfaceScore">--</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Project Info -->
+          <div id="projectInfo" class="mb-6 hidden">
+            <div class="grid grid-cols-3 gap-3 mb-4">
+              <div class="text-center">
+                <div class="text-lg font-bold text-acc-green" id="projectBudget">--</div>
+                <div class="text-[10px] text-gray-500 uppercase">Budget</div>
+              </div>
+              <div class="text-center">
+                <div class="text-lg font-bold text-primary" id="projectLength">--</div>
+                <div class="text-[10px] text-gray-500 uppercase">Length</div>
+              </div>
+              <div class="text-center">
+                <div class="text-lg font-bold text-acc-yellow" id="projectCompletion">--</div>
+                <div class="text-[10px] text-gray-500 uppercase">Completion</div>
+              </div>
+            </div>
+
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-4" id="projectDescription"></p>
+
+            <div id="projectBenefits" class="mb-4 hidden">
+              <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Benefits</h4>
+              <ul class="space-y-1" id="benefitsList"></ul>
+            </div>
+
+            <div id="projectConnections" class="hidden">
+              <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Connects To</h4>
+              <p class="text-sm text-gray-600 dark:text-gray-300" id="connectionsList"></p>
+            </div>
+          </div>
+
+          <!-- Recent Review -->
+          <div id="reviewSection" class="mb-6 hidden">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center">
+                <span class="text-white text-xs font-bold" id="reviewerInitial">A</span>
+              </div>
+              <span class="text-xs font-semibold dark:text-white" id="reviewerName">Alex M.</span>
+              <span class="text-[10px] text-gray-400" id="reviewTime">2h ago</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 italic" id="reviewText">"Great infrastructure!"</p>
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-3">
+            <button id="directionsBtn" class="flex-1 bg-primary text-white font-bold py-3 rounded-2xl flex items-center justify-center gap-2 shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+              <span class="material-icons-round">directions</span>
+              Get Directions
+            </button>
+            <button id="favoriteBtn" class="w-14 h-14 bg-white dark:bg-slate-800 text-gray-400 rounded-2xl flex items-center justify-center border border-gray-100 dark:border-slate-700 hover:text-red-500 transition-colors">
+              <span class="material-icons-round">favorite_border</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Dark Mode Toggle -->
+    <button id="darkModeBtn" class="fixed bottom-4 right-4 z-50 w-12 h-12 rounded-full bg-white dark:bg-slate-800 shadow-xl flex items-center justify-center border border-gray-200 dark:border-slate-700 hover:scale-105 transition-transform">
+      <span class="material-icons-round dark:text-white">dark_mode</span>
+    </button>
+
+    <!-- Report Modal -->
+    <div id="reportModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeReportModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative">
+        <button onclick="closeReportModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <h2 class="text-xl font-bold dark:text-white mb-4">Report an Issue</h2>
+
+        <div class="grid grid-cols-4 gap-2 mb-6">
+          <button class="report-type flex flex-col items-center p-3 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors" data-type="glass">
+            <span class="text-2xl mb-1">🔶</span>
+            <span class="text-[10px] font-medium dark:text-white">Glass</span>
+          </button>
+          <button class="report-type flex flex-col items-center p-3 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors" data-type="pothole">
+            <span class="text-2xl mb-1">🕳️</span>
+            <span class="text-[10px] font-medium dark:text-white">Pothole</span>
+          </button>
+          <button class="report-type flex flex-col items-center p-3 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors" data-type="construction">
+            <span class="text-2xl mb-1">🚧</span>
+            <span class="text-[10px] font-medium dark:text-white">Works</span>
+          </button>
+          <button class="report-type flex flex-col items-center p-3 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors" data-type="hazard">
+            <span class="text-2xl mb-1">⚠️</span>
+            <span class="text-[10px] font-medium dark:text-white">Hazard</span>
+          </button>
+        </div>
+
+        <textarea class="w-full p-3 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm dark:text-white placeholder-gray-400 resize-none" rows="3" placeholder="Describe the issue (optional)..."></textarea>
+
+        <button class="w-full mt-4 bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+          Submit Report
+        </button>
+      </div>
+    </div>
+
+    <!-- Community Modal -->
+    <div id="communityModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeCommunityModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto">
+        <button onclick="closeCommunityModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <h2 class="text-xl font-bold dark:text-white mb-2">Community Feed</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Recent reports from Sydney cyclists</p>
+
+        <div id="communityFeed" class="space-y-3">
+          <!-- Events populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast fixed bottom-20 left-1/2 -translate-x-1/2 z-50 glass bg-slate-900/90 text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-xl">
+      <span class="material-icons-round text-acc-green">check_circle</span>
+      <span id="toastMessage">Thanks, legend!</span>
+    </div>
+
+  </div>
+
+  <!-- Google Maps API -->
+  <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBsx-0zC7DwLYI1EtWJODb_3zW7S1NPfsY&libraries=places,geometry&callback=initMap" async defer></script>
+
+  <!-- Data -->
+  <script src="js/data-planned.js"></script>
+
+  <!-- App Logic -->
+  <script>
+    // ============================================
+    // GLOBAL STATE
+    // ============================================
+    let map = null;
+    let polylines = [];
+    let selectedProject = null;
+    let currentView = 'current';
+    let isSheetExpanded = false;
+
+    // ============================================
+    // MAP INITIALIZATION
+    // ============================================
+    function initMap() {
+      // Sydney CBD center
+      const sydneyCenter = { lat: -33.8688, lng: 151.2093 };
+
+      map = new google.maps.Map(document.getElementById('map'), {
+        center: sydneyCenter,
+        zoom: 14,
+        disableDefaultUI: true,
+        zoomControl: true,
+        zoomControlOptions: {
+          position: google.maps.ControlPosition.RIGHT_CENTER
+        },
+        styles: getMapStyles()
+      });
+
+      // Add cycleways to map
+      addCyclewaysToMap();
+
+      // Map click - deselect
+      map.addListener('click', () => {
+        deselectProject();
+      });
+
+      // Update stats
+      updateStats('current');
+    }
+
+    // ============================================
+    // MAP STYLES
+    // ============================================
+    function getMapStyles() {
+      const isDark = document.documentElement.classList.contains('dark');
+
+      if (isDark) {
+        return [
+          { elementType: "geometry", stylers: [{ color: "#1a1a2e" }] },
+          { elementType: "labels.text.stroke", stylers: [{ color: "#1a1a2e" }] },
+          { elementType: "labels.text.fill", stylers: [{ color: "#8a8a8a" }] },
+          { featureType: "road", elementType: "geometry", stylers: [{ color: "#2d2d44" }] },
+          { featureType: "water", elementType: "geometry", stylers: [{ color: "#0e1626" }] },
+          { featureType: "poi", stylers: [{ visibility: "off" }] },
+          { featureType: "transit", stylers: [{ visibility: "off" }] }
+        ];
+      }
+
+      return [
+        { featureType: "water", elementType: "geometry", stylers: [{ color: "#e9e9e9" }] },
+        { featureType: "road", elementType: "geometry.fill", stylers: [{ color: "#ffffff" }] },
+        { featureType: "road", elementType: "geometry.stroke", stylers: [{ color: "#e0e0e0" }] },
+        { featureType: "poi", stylers: [{ visibility: "off" }] },
+        { featureType: "transit", stylers: [{ visibility: "off" }] }
+      ];
+    }
+
+    // ============================================
+    // ADD CYCLEWAYS TO MAP
+    // ============================================
+    function addCyclewaysToMap() {
+      if (typeof EXISTING_CYCLEWAYS !== 'undefined') {
+        EXISTING_CYCLEWAYS.forEach(cycleway => {
+          if (!cycleway.coordinates || cycleway.coordinates.length < 2) return;
+          createPolyline(cycleway);
+        });
+      }
+
+      if (typeof PLANNED_CYCLEWAYS !== 'undefined') {
+        PLANNED_CYCLEWAYS.forEach(project => {
+          if (!project.coordinates || project.coordinates.length < 2) return;
+          createPolyline(project);
+        });
+      }
+
+      // Apply initial view filter
+      switchNetworkView('current');
+    }
+
+    function createPolyline(project) {
+      const color = getStatusColor(project.status);
+      const isPlanned = project.status === 'planned' || project.status === 'proposed';
+
+      const polylineOptions = {
+        path: project.coordinates,
+        strokeColor: color,
+        strokeOpacity: isPlanned ? 0 : 1,
+        strokeWeight: 6,
+        map: null,
+        zIndex: project.status === 'existing' ? 100 : 50
+      };
+
+      const polyline = new google.maps.Polyline(polylineOptions);
+
+      // Dashed line for planned/proposed
+      if (isPlanned) {
+        polyline.setOptions({
+          icons: [{
+            icon: {
+              path: 'M 0,-1 0,1',
+              strokeOpacity: 0.8,
+              strokeColor: color,
+              strokeWeight: 6,
+              scale: 4
+            },
+            offset: '0',
+            repeat: '20px'
+          }]
+        });
+      }
+
+      polyline.projectData = project;
+      polylines.push(polyline);
+
+      // Click listener
+      polyline.addListener('click', () => {
+        selectProject(project);
+      });
+
+      // Hover effects
+      polyline.addListener('mouseover', () => {
+        polyline.setOptions({ strokeWeight: 10 });
+      });
+
+      polyline.addListener('mouseout', () => {
+        polyline.setOptions({ strokeWeight: 6 });
+      });
+    }
+
+    function getStatusColor(status) {
+      const colors = {
+        'existing': '#22C55E',
+        'completed_2026': '#10B981',
+        'under_construction': '#F59E0B',
+        'funded': '#3B82F6',
+        'planned': '#8B5CF6',
+        'proposed': '#6B7280'
+      };
+      return colors[status] || '#6B7280';
+    }
+
+    // ============================================
+    // SWITCH NETWORK VIEW
+    // ============================================
+    function switchNetworkView(view) {
+      currentView = view;
+
+      polylines.forEach(polyline => {
+        const project = polyline.projectData;
+        let shouldShow = false;
+
+        switch (view) {
+          case 'current':
+            shouldShow = project.status === 'existing';
+            break;
+          case 'future':
+            shouldShow = ['existing', 'completed_2026', 'under_construction', 'funded'].includes(project.status);
+            break;
+          case 'all':
+            shouldShow = true;
+            break;
+        }
+
+        polyline.setMap(shouldShow ? map : null);
+      });
+
+      updateStats(view);
+    }
+
+    // ============================================
+    // UPDATE STATS
+    // ============================================
+    function updateStats(view) {
+      const stats = typeof NETWORK_STATS !== 'undefined' ? NETWORK_STATS : null;
+      if (!stats) return;
+
+      let data;
+      switch (view) {
+        case 'current':
+          data = stats.current;
+          break;
+        case 'future':
+          data = stats.planned_2026;
+          break;
+        case 'all':
+          data = stats.strategic_2030;
+          break;
+      }
+
+      if (data) {
+        document.getElementById('statsKm').textContent = data.total_km || '--';
+        document.getElementById('statsTrips').textContent =
+          data.daily_trips ? (data.daily_trips / 1000).toFixed(0) + 'k' :
+          data.estimated_daily_trips ? (data.estimated_daily_trips / 1000).toFixed(0) + 'k' : '--';
+      }
+
+      // Count projects
+      const projectCount = polylines.filter(p => {
+        const project = p.projectData;
+        switch (view) {
+          case 'current': return project.status === 'existing';
+          case 'future': return ['existing', 'completed_2026', 'under_construction', 'funded'].includes(project.status);
+          case 'all': return true;
+        }
+      }).length;
+      document.getElementById('statsProjects').textContent = projectCount;
+    }
+
+    // ============================================
+    // SELECT PROJECT
+    // ============================================
+    function selectProject(project) {
+      selectedProject = project;
+
+      // Update sheet content
+      const statusLabels = {
+        'existing': 'OPEN',
+        'completed_2026': 'OPENED 2026',
+        'under_construction': 'UNDER CONSTRUCTION',
+        'funded': 'FUNDED',
+        'planned': 'PLANNED',
+        'proposed': 'UNDER INVESTIGATION'
+      };
+
+      const badge = document.getElementById('sheetBadge');
+      badge.textContent = statusLabels[project.status] || project.status.toUpperCase();
+      badge.className = 'text-xs font-bold px-2 py-0.5 rounded-full ';
+
+      switch (project.status) {
+        case 'existing':
+        case 'completed_2026':
+          badge.className += 'text-acc-green bg-green-100 dark:bg-green-900/30';
+          break;
+        case 'under_construction':
+          badge.className += 'text-acc-orange bg-orange-100 dark:bg-orange-900/30';
+          break;
+        case 'funded':
+          badge.className += 'text-acc-blue bg-blue-100 dark:bg-blue-900/30';
+          break;
+        case 'planned':
+          badge.className += 'text-primary bg-purple-100 dark:bg-purple-900/30';
+          break;
+        default:
+          badge.className += 'text-gray-600 bg-gray-100 dark:bg-gray-800';
+      }
+
+      document.getElementById('sheetTitle').textContent = project.name;
+      document.getElementById('sheetMeta').textContent =
+        (project.local_areas?.join(', ') || '') +
+        (project.length_km ? ' • ' + project.length_km + ' km' : '');
+
+      // Ratings
+      const rating = project.daily_trips ? (project.daily_trips / 1000 + 3).toFixed(1) : '--';
+      document.getElementById('sheetRating').textContent = rating;
+      document.getElementById('sheetReviewCount').textContent =
+        project.daily_trips ? Math.floor(project.daily_trips / 50) + ' Reviews' : '-- Reviews';
+
+      // Safety/Surface scores (simulated)
+      const safetyScore = project.facility_type === 'separated_cycleway' ? 8.5 : 6.0;
+      const surfaceScore = project.status === 'existing' ? 7.5 : 8.0;
+
+      document.getElementById('safetyBar').style.width = (safetyScore * 10) + '%';
+      document.getElementById('safetyScore').textContent = safetyScore.toFixed(1);
+      document.getElementById('surfaceBar').style.width = (surfaceScore * 10) + '%';
+      document.getElementById('surfaceScore').textContent = surfaceScore.toFixed(1);
+
+      // Project info
+      const projectInfo = document.getElementById('projectInfo');
+      if (project.budget_aud || project.description) {
+        projectInfo.classList.remove('hidden');
+
+        document.getElementById('projectBudget').textContent =
+          project.budget_aud ? '$' + (project.budget_aud / 1000000).toFixed(1) + 'M' : 'TBC';
+        document.getElementById('projectLength').textContent =
+          project.length_km ? project.length_km + ' km' : '--';
+        document.getElementById('projectCompletion').textContent =
+          project.expected_completion || project.completion_date || 'TBC';
+        document.getElementById('projectDescription').textContent = project.description || '';
+
+        // Benefits
+        const benefitsSection = document.getElementById('projectBenefits');
+        const benefitsList = document.getElementById('benefitsList');
+        if (project.benefits && project.benefits.length > 0) {
+          benefitsSection.classList.remove('hidden');
+          benefitsList.innerHTML = project.benefits.map(b =>
+            `<li class="text-sm text-gray-600 dark:text-gray-300 flex items-start gap-2">
+              <span class="text-acc-green">✓</span> ${b}
+            </li>`
+          ).join('');
+        } else {
+          benefitsSection.classList.add('hidden');
+        }
+
+        // Connections
+        const connectionsSection = document.getElementById('projectConnections');
+        if (project.connects_to && project.connects_to.length > 0) {
+          connectionsSection.classList.remove('hidden');
+          document.getElementById('connectionsList').textContent = project.connects_to.join(', ');
+        } else {
+          connectionsSection.classList.add('hidden');
+        }
+      } else {
+        projectInfo.classList.add('hidden');
+      }
+
+      // Show review section for existing cycleways
+      const reviewSection = document.getElementById('reviewSection');
+      if (project.status === 'existing' && project.daily_trips) {
+        reviewSection.classList.remove('hidden');
+        document.getElementById('reviewText').textContent =
+          '"Great protected lane, perfect for morning commutes!"';
+      } else {
+        reviewSection.classList.add('hidden');
+      }
+
+      // Expand sheet
+      expandSheet();
+
+      // Pan map
+      if (project.coordinates && project.coordinates.length > 0) {
+        const midIdx = Math.floor(project.coordinates.length / 2);
+        map.panTo(project.coordinates[midIdx]);
+      }
+    }
+
+    function deselectProject() {
+      selectedProject = null;
+      collapseSheet();
+
+      document.getElementById('sheetTitle').textContent = 'Select a cycleway';
+      document.getElementById('sheetMeta').textContent = 'Tap on the map to view details';
+      document.getElementById('sheetBadge').textContent = 'BROWSE';
+      document.getElementById('sheetBadge').className = 'text-xs font-bold px-2 py-0.5 rounded-full text-gray-600 bg-gray-100 dark:bg-gray-800';
+      document.getElementById('sheetRating').textContent = '--';
+      document.getElementById('sheetReviewCount').textContent = '-- Reviews';
+      document.getElementById('projectInfo').classList.add('hidden');
+      document.getElementById('reviewSection').classList.add('hidden');
+    }
+
+    // ============================================
+    // BOTTOM SHEET
+    // ============================================
+    function expandSheet() {
+      const sheet = document.getElementById('bottomSheet');
+      sheet.classList.remove('collapsed');
+      isSheetExpanded = true;
+      document.getElementById('statsBanner').style.display = 'none';
+    }
+
+    function collapseSheet() {
+      const sheet = document.getElementById('bottomSheet');
+      sheet.classList.add('collapsed');
+      isSheetExpanded = false;
+      document.getElementById('statsBanner').style.display = 'block';
+    }
+
+    // ============================================
+    // MODALS
+    // ============================================
+    function openReportModal() {
+      document.getElementById('reportModal').classList.add('visible');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.remove('visible');
+    }
+
+    function openCommunityModal() {
+      document.getElementById('communityModal').classList.add('visible');
+      loadCommunityFeed();
+    }
+
+    function closeCommunityModal() {
+      document.getElementById('communityModal').classList.remove('visible');
+    }
+
+    function loadCommunityFeed() {
+      const feed = document.getElementById('communityFeed');
+      feed.innerHTML = `
+        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-lg">🚧</span>
+            <span class="font-semibold dark:text-white">Construction on King St</span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Lane partially blocked near Pitt St intersection</p>
+          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
+            <span>2 hours ago</span>
+            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 12</span>
+          </div>
+        </div>
+        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-lg">🔶</span>
+            <span class="font-semibold dark:text-white">Glass on Bourke St</span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Broken bottle near Devonshire St</p>
+          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
+            <span>5 hours ago</span>
+            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 8</span>
+          </div>
+        </div>
+        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+          <div class="flex items-center gap-2 mb-2">
+            <span class="text-lg">✨</span>
+            <span class="font-semibold dark:text-white">New ramp on Harbour Bridge!</span>
+          </div>
+          <p class="text-sm text-gray-600 dark:text-gray-300">Step-free access now open - great improvement!</p>
+          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
+            <span>1 day ago</span>
+            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 156</span>
+          </div>
+        </div>
+      `;
+    }
+
+    // ============================================
+    // TOAST
+    // ============================================
+    function showToast(message) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toastMessage').textContent = message;
+      toast.classList.add('visible');
+      setTimeout(() => toast.classList.remove('visible'), 3000);
+    }
+
+    // ============================================
+    // EVENT LISTENERS
+    // ============================================
+    document.addEventListener('DOMContentLoaded', () => {
+      // Network toggle
+      document.querySelectorAll('.toggle-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.toggle-btn').forEach(b => {
+            b.classList.remove('bg-acc-green', 'text-white');
+            b.classList.add('text-gray-600', 'dark:text-gray-300');
+          });
+          btn.classList.add('bg-acc-green', 'text-white');
+          btn.classList.remove('text-gray-600', 'dark:text-gray-300');
+          switchNetworkView(btn.dataset.view);
+        });
+      });
+
+      // Dark mode toggle
+      document.getElementById('darkModeBtn').addEventListener('click', () => {
+        document.documentElement.classList.toggle('dark');
+        if (map) {
+          map.setOptions({ styles: getMapStyles() });
+        }
+      });
+
+      // Sidebar buttons
+      document.getElementById('editBtn').addEventListener('click', openReportModal);
+      document.getElementById('communityBtn').addEventListener('click', openCommunityModal);
+
+      // Sheet handle
+      document.getElementById('sheetHandle').addEventListener('click', () => {
+        if (isSheetExpanded) {
+          collapseSheet();
+        } else if (selectedProject) {
+          expandSheet();
+        }
+      });
+
+      // Report types
+      document.querySelectorAll('.report-type').forEach(btn => {
+        btn.addEventListener('click', () => {
+          document.querySelectorAll('.report-type').forEach(b => b.classList.remove('ring-2', 'ring-primary'));
+          btn.classList.add('ring-2', 'ring-primary');
+        });
+      });
+
+      // Directions button
+      document.getElementById('directionsBtn').addEventListener('click', () => {
+        if (selectedProject && selectedProject.coordinates) {
+          const coord = selectedProject.coordinates[0];
+          window.open(`https://www.google.com/maps/dir/?api=1&destination=${coord.lat},${coord.lng}&travelmode=bicycling`, '_blank');
+        }
+      });
+
+      // Favorite button
+      document.getElementById('favoriteBtn').addEventListener('click', () => {
+        const btn = document.getElementById('favoriteBtn');
+        const icon = btn.querySelector('.material-icons-round');
+        if (icon.textContent === 'favorite_border') {
+          icon.textContent = 'favorite';
+          btn.classList.add('text-red-500');
+          showToast('Added to favorites!');
+        } else {
+          icon.textContent = 'favorite_border';
+          btn.classList.remove('text-red-500');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

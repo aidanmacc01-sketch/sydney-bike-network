@@ -1,0 +1,15 @@
+# Data Folder
+
+This folder stores fetched and transformed cycling data.
+
+## Expected Files (after running scripts)
+
+- `cycle-network-raw.geojson` - Raw data from City of Sydney
+- `segments.json` - Transformed segment data
+
+## Manual Download
+
+If scripts fail, download from:
+https://data.cityofsydney.nsw.gov.au/datasets/cityofsydney::cycle-network-3
+
+Save as: `cycle-network-raw.geojson`
