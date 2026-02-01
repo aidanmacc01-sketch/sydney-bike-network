@@ -401,16 +401,118 @@
     <!-- Community Modal -->
     <div id="communityModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
       <div class="absolute inset-0 bg-black/50" onclick="closeCommunityModal()"></div>
-      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[80vh] overflow-y-auto">
-        <button onclick="closeCommunityModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-lg p-6 relative max-h-[85vh] overflow-hidden flex flex-col">
+        <button onclick="closeCommunityModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
           <span class="material-icons-round text-gray-500">close</span>
         </button>
 
-        <h2 class="text-xl font-bold dark:text-white mb-2">Community Feed</h2>
-        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4">Recent reports from Sydney cyclists</p>
+        <h2 class="text-xl font-bold dark:text-white mb-4">Community Hub</h2>
 
-        <div id="communityFeed" class="space-y-3">
-          <!-- Events populated by JS -->
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-4 overflow-x-auto hide-scrollbar">
+          <button class="community-tab px-4 py-2 rounded-full text-sm font-semibold bg-primary text-white whitespace-nowrap" data-tab="feed">Feed</button>
+          <button class="community-tab px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 whitespace-nowrap" data-tab="groups">Groups</button>
+          <button class="community-tab px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 whitespace-nowrap" data-tab="charging">⚡ Charging</button>
+          <button class="community-tab px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 whitespace-nowrap" data-tab="stores">🏪 Stores</button>
+        </div>
+
+        <div class="overflow-y-auto flex-1 hide-scrollbar">
+          <!-- Feed Tab -->
+          <div id="tabFeed" class="tab-content space-y-3">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Groups Tab -->
+          <div id="tabGroups" class="tab-content space-y-3 hidden">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Charging Tab -->
+          <div id="tabCharging" class="tab-content space-y-3 hidden">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Stores Tab -->
+          <div id="tabStores" class="tab-content space-y-3 hidden">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Layers Modal -->
+    <div id="layersModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeLayersModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-sm p-6 relative">
+        <button onclick="closeLayersModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <h2 class="text-xl font-bold dark:text-white mb-4">Map Layers</h2>
+
+        <div class="space-y-3">
+          <label class="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer">
+            <div class="flex items-center gap-3">
+              <span class="text-xl">⚡</span>
+              <span class="font-medium dark:text-white">E-Bike Charging</span>
+            </div>
+            <input type="checkbox" id="layerCharging" checked class="w-5 h-5 rounded text-primary focus:ring-primary">
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer">
+            <div class="flex items-center gap-3">
+              <span class="text-xl">🏪</span>
+              <span class="font-medium dark:text-white">E-Bike Stores</span>
+            </div>
+            <input type="checkbox" id="layerStores" checked class="w-5 h-5 rounded text-primary focus:ring-primary">
+          </label>
+
+          <label class="flex items-center justify-between p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer">
+            <div class="flex items-center gap-3">
+              <span class="text-xl">👥</span>
+              <span class="font-medium dark:text-white">Communities</span>
+            </div>
+            <input type="checkbox" id="layerCommunities" checked class="w-5 h-5 rounded text-primary focus:ring-primary">
+          </label>
+        </div>
+      </div>
+    </div>
+
+    <!-- POI Detail Modal -->
+    <div id="poiModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closePoiModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[85vh] overflow-y-auto">
+        <button onclick="closePoiModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <div id="poiContent">
+          <!-- Populated by JS -->
+        </div>
+      </div>
+    </div>
+
+    <!-- Comments Modal -->
+    <div id="commentsModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeCommentsModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[85vh] overflow-hidden flex flex-col">
+        <button onclick="closeCommentsModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <h2 class="text-xl font-bold dark:text-white mb-2" id="commentsTitle">Comments</h2>
+        <p class="text-sm text-gray-500 dark:text-gray-400 mb-4" id="commentsSubtitle">Community feedback</p>
+
+        <div class="overflow-y-auto flex-1 hide-scrollbar mb-4" id="commentsList">
+          <!-- Populated by JS -->
+        </div>
+
+        <!-- Add Comment -->
+        <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+          <textarea id="newComment" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm dark:text-white placeholder-gray-400 resize-none" rows="2" placeholder="Add a comment..."></textarea>
+          <button onclick="submitComment()" class="w-full mt-2 bg-primary text-white font-bold py-2 rounded-xl hover:bg-primary/90 transition-colors">
+            Post Comment
+          </button>
         </div>
       </div>
     </div>
@@ -438,6 +540,7 @@
 
   <!-- Data -->
   <script src="js/data-planned.js"></script>
+  <script src="js/data-community.js"></script>
 
   <!-- App Logic -->
   <script>
@@ -446,9 +549,14 @@
     // ============================================
     let map = null;
     let polylines = [];
+    let poiMarkers = [];
     let selectedProject = null;
+    let selectedPoi = null;
     let currentView = 'current';
     let isSheetExpanded = false;
+    let showCharging = true;
+    let showStores = true;
+    let showCommunities = true;
 
     // ============================================
     // MAP INITIALIZATION
@@ -471,6 +579,9 @@
       // Add cycleways to map
       addCyclewaysToMap();
 
+      // Add POI markers
+      addPoiMarkers();
+
       // Map click - deselect
       map.addListener('click', () => {
         deselectProject();
@@ -478,6 +589,81 @@
 
       // Update stats
       updateStats('current');
+    }
+
+    // ============================================
+    // ADD POI MARKERS
+    // ============================================
+    function addPoiMarkers() {
+      // Charging Stations
+      if (typeof EBIKE_CHARGING_STATIONS !== 'undefined') {
+        EBIKE_CHARGING_STATIONS.forEach(station => {
+          const marker = createPoiMarker(station, '⚡', '#10B981', 'charging');
+          poiMarkers.push(marker);
+        });
+      }
+
+      // E-Bike Stores
+      if (typeof EBIKE_STORES !== 'undefined') {
+        EBIKE_STORES.forEach(store => {
+          const marker = createPoiMarker(store, '🏪', '#3B82F6', 'store');
+          poiMarkers.push(marker);
+        });
+      }
+
+      // Communities
+      if (typeof BIKE_COMMUNITIES !== 'undefined') {
+        BIKE_COMMUNITIES.forEach(community => {
+          const marker = createPoiMarker(community, '👥', '#F59E0B', 'community');
+          poiMarkers.push(marker);
+        });
+      }
+    }
+
+    function createPoiMarker(poi, emoji, color, type) {
+      const marker = new google.maps.Marker({
+        position: poi.location,
+        map: map,
+        icon: {
+          url: `data:image/svg+xml,${encodeURIComponent(`
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="50" viewBox="0 0 40 50">
+              <defs>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                  <feDropShadow dx="0" dy="2" stdDeviation="2" flood-opacity="0.3"/>
+                </filter>
+              </defs>
+              <path d="M20 0 C9 0 0 9 0 20 C0 35 20 50 20 50 C20 50 40 35 40 20 C40 9 31 0 20 0Z" fill="${color}" filter="url(#shadow)"/>
+              <circle cx="20" cy="18" r="12" fill="white"/>
+              <text x="20" y="23" text-anchor="middle" font-size="14">${emoji}</text>
+            </svg>
+          `)}`,
+          scaledSize: new google.maps.Size(40, 50),
+          anchor: new google.maps.Point(20, 50)
+        },
+        title: poi.name
+      });
+
+      marker.poiData = poi;
+      marker.poiType = type;
+
+      marker.addListener('click', () => {
+        openPoiDetail(poi, type);
+      });
+
+      return marker;
+    }
+
+    function updatePoiVisibility() {
+      poiMarkers.forEach(marker => {
+        const type = marker.poiType;
+        let visible = false;
+
+        if (type === 'charging' && showCharging) visible = true;
+        if (type === 'store' && showStores) visible = true;
+        if (type === 'community' && showCommunities) visible = true;
+
+        marker.setMap(visible ? map : null);
+      });
     }
 
     // ============================================
@@ -827,42 +1013,445 @@
     }
 
     function loadCommunityFeed() {
-      const feed = document.getElementById('communityFeed');
-      feed.innerHTML = `
-        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-lg">🚧</span>
-            <span class="font-semibold dark:text-white">Construction on King St</span>
+      // Load Feed Tab
+      const feed = document.getElementById('tabFeed');
+      if (typeof INFRASTRUCTURE_COMMENTS !== 'undefined') {
+        feed.innerHTML = INFRASTRUCTURE_COMMENTS.map(comment => `
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center">
+                <span class="text-white text-xs font-bold">${comment.user.avatar}</span>
+              </div>
+              <span class="font-semibold dark:text-white">${comment.user.name}</span>
+              ${comment.user.verified ? '<span class="material-icons-round text-acc-blue text-sm">verified</span>' : ''}
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-2">${comment.text}</p>
+            <div class="flex items-center justify-between">
+              <span class="text-xs text-gray-400">${formatTimeAgo(comment.timestamp)}</span>
+              <div class="flex items-center gap-3">
+                <button onclick="vote('${comment.id}', 'up')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green transition-colors">
+                  <span class="material-icons-round text-sm">thumb_up</span>
+                  <span>${comment.upvotes}</span>
+                </button>
+                <button onclick="vote('${comment.id}', 'down')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500 transition-colors">
+                  <span class="material-icons-round text-sm">thumb_down</span>
+                  <span>${comment.downvotes}</span>
+                </button>
+              </div>
+            </div>
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Lane partially blocked near Pitt St intersection</p>
-          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
-            <span>2 hours ago</span>
-            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 12</span>
+        `).join('');
+      }
+
+      // Load Groups Tab
+      const groups = document.getElementById('tabGroups');
+      if (typeof BIKE_COMMUNITIES !== 'undefined') {
+        groups.innerHTML = BIKE_COMMUNITIES.map(comm => `
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+            <div class="flex justify-between items-start mb-2">
+              <h3 class="font-bold dark:text-white">${comm.name}</h3>
+              <span class="text-xs text-gray-400">${comm.members.toLocaleString()} members</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300 mb-3">${comm.description}</p>
+            <div class="flex flex-wrap gap-1 mb-3">
+              ${comm.focus.map(f => `<span class="text-xs px-2 py-0.5 rounded-full bg-primary/10 text-primary">${f}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <button onclick="vote('${comm.id}', 'up')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green">
+                  <span class="material-icons-round text-sm">thumb_up</span> ${comm.upvotes}
+                </button>
+                <button onclick="vote('${comm.id}', 'down')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500">
+                  <span class="material-icons-round text-sm">thumb_down</span> ${comm.downvotes}
+                </button>
+              </div>
+              <a href="${comm.website}" target="_blank" class="text-xs text-primary font-medium">Visit →</a>
+            </div>
           </div>
-        </div>
-        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-lg">🔶</span>
-            <span class="font-semibold dark:text-white">Glass on Bourke St</span>
+        `).join('');
+      }
+
+      // Load Charging Tab
+      const charging = document.getElementById('tabCharging');
+      if (typeof EBIKE_CHARGING_STATIONS !== 'undefined') {
+        charging.innerHTML = EBIKE_CHARGING_STATIONS.map(station => `
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl" onclick="openPoiDetail(EBIKE_CHARGING_STATIONS.find(s => s.id === '${station.id}'), 'charging')">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xl">⚡</span>
+                <h3 class="font-bold dark:text-white">${station.name}</h3>
+              </div>
+              <span class="text-xs px-2 py-0.5 rounded-full ${station.available > 3 ? 'bg-green-100 text-green-700' : 'bg-orange-100 text-orange-700'}">
+                ${station.available}/${station.capacity} available
+              </span>
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">${station.address}</p>
+            <div class="flex items-center gap-2 mb-2">
+              ${station.amenities.slice(0, 3).map(a => `<span class="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 dark:text-gray-300">${getAmenityIcon(a)} ${getAmenityLabel(a)}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1 text-acc-yellow">
+                <span class="material-icons-round text-sm">star</span>
+                <span class="text-sm font-bold dark:text-white">${station.rating}</span>
+                <span class="text-xs text-gray-400">(${station.reviews})</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); vote('${station.id}', 'up')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green">
+                  <span class="material-icons-round text-sm">thumb_up</span> ${station.upvotes}
+                </button>
+                <button onclick="event.stopPropagation(); vote('${station.id}', 'down')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500">
+                  <span class="material-icons-round text-sm">thumb_down</span> ${station.downvotes}
+                </button>
+              </div>
+            </div>
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Broken bottle near Devonshire St</p>
-          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
-            <span>5 hours ago</span>
-            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 8</span>
+        `).join('');
+      }
+
+      // Load Stores Tab
+      const stores = document.getElementById('tabStores');
+      if (typeof EBIKE_STORES !== 'undefined') {
+        stores.innerHTML = EBIKE_STORES.map(store => `
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl" onclick="openPoiDetail(EBIKE_STORES.find(s => s.id === '${store.id}'), 'store')">
+            <div class="flex justify-between items-start mb-2">
+              <div class="flex items-center gap-2">
+                <span class="text-xl">🏪</span>
+                <h3 class="font-bold dark:text-white">${store.name}</h3>
+              </div>
+              ${store.demo_available ? '<span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">Demos ✓</span>' : ''}
+            </div>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mb-2">${store.address}</p>
+            <div class="flex flex-wrap gap-1 mb-2">
+              ${store.services.map(s => `<span class="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400">${s}</span>`).join('')}
+            </div>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-1 text-acc-yellow">
+                <span class="material-icons-round text-sm">star</span>
+                <span class="text-sm font-bold dark:text-white">${store.rating}</span>
+                <span class="text-xs text-gray-400">(${store.reviews})</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <button onclick="event.stopPropagation(); vote('${store.id}', 'up')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green">
+                  <span class="material-icons-round text-sm">thumb_up</span> ${store.upvotes}
+                </button>
+                <button onclick="event.stopPropagation(); vote('${store.id}', 'down')" class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500">
+                  <span class="material-icons-round text-sm">thumb_down</span> ${store.downvotes}
+                </button>
+              </div>
+            </div>
           </div>
-        </div>
-        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
-          <div class="flex items-center gap-2 mb-2">
-            <span class="text-lg">✨</span>
-            <span class="font-semibold dark:text-white">New ramp on Harbour Bridge!</span>
+        `).join('');
+      }
+    }
+
+    // ============================================
+    // POI DETAIL MODAL
+    // ============================================
+    function openPoiDetail(poi, type) {
+      selectedPoi = poi;
+      const content = document.getElementById('poiContent');
+
+      if (type === 'charging') {
+        content.innerHTML = `
+          <div class="text-center mb-4">
+            <span class="text-5xl">⚡</span>
           </div>
-          <p class="text-sm text-gray-600 dark:text-gray-300">Step-free access now open - great improvement!</p>
-          <div class="flex items-center gap-4 mt-2 text-xs text-gray-400">
-            <span>1 day ago</span>
-            <span class="flex items-center gap-1"><span class="material-icons-round text-sm">thumb_up</span> 156</span>
+          <h2 class="text-xl font-bold dark:text-white text-center mb-1">${poi.name}</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">${poi.address}</p>
+
+          <div class="flex justify-center gap-1 mb-4">
+            ${[...Array(5)].map((_, i) => `<span class="material-icons-round ${i < Math.floor(poi.rating) ? 'text-acc-yellow' : 'text-gray-300'} text-xl">star</span>`).join('')}
+            <span class="ml-2 font-bold dark:text-white">${poi.rating}</span>
+          </div>
+
+          <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-4 mb-4">
+            <div class="flex justify-between items-center mb-2">
+              <span class="text-sm text-gray-600 dark:text-gray-300">Available Spots</span>
+              <span class="text-lg font-bold ${poi.available > 3 ? 'text-acc-green' : 'text-acc-orange'}">${poi.available}/${poi.capacity}</span>
+            </div>
+            <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div class="h-full ${poi.available > 3 ? 'bg-acc-green' : 'bg-acc-orange'}" style="width: ${(poi.available / poi.capacity) * 100}%"></div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-2 mb-4">
+            ${poi.amenities.map(a => `
+              <div class="flex items-center gap-2 p-2 bg-gray-50 dark:bg-slate-800 rounded-lg">
+                <span>${getAmenityIcon(a)}</span>
+                <span class="text-sm dark:text-white">${getAmenityLabel(a)}</span>
+              </div>
+            `).join('')}
+          </div>
+
+          <div class="flex items-center justify-between mb-4 p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">
+            <span class="text-sm text-gray-600 dark:text-gray-300">Hours</span>
+            <span class="font-medium dark:text-white">${poi.hours}</span>
+          </div>
+
+          <div class="flex items-center justify-center gap-6 mb-4">
+            <button onclick="vote('${poi.id}', 'up')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-acc-green">thumb_up</span>
+              <span class="text-sm font-bold dark:text-white">${poi.upvotes}</span>
+            </button>
+            <button onclick="vote('${poi.id}', 'down')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-red-500">thumb_down</span>
+              <span class="text-sm font-bold dark:text-white">${poi.downvotes}</span>
+            </button>
+          </div>
+
+          <button onclick="openCommentsForPoi('${poi.id}')" class="w-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white font-bold py-3 rounded-2xl mb-3 hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+            💬 View Comments (${poi.reviews})
+          </button>
+
+          <button onclick="getDirectionsToPoi()" class="w-full bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+            <span class="material-icons-round align-middle mr-1">directions</span> Get Directions
+          </button>
+        `;
+      } else if (type === 'store') {
+        content.innerHTML = `
+          <div class="text-center mb-4">
+            <span class="text-5xl">🏪</span>
+          </div>
+          <h2 class="text-xl font-bold dark:text-white text-center mb-1">${poi.name}</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">${poi.address}</p>
+
+          <div class="flex justify-center gap-1 mb-4">
+            ${[...Array(5)].map((_, i) => `<span class="material-icons-round ${i < Math.floor(poi.rating) ? 'text-acc-yellow' : 'text-gray-300'} text-xl">star</span>`).join('')}
+            <span class="ml-2 font-bold dark:text-white">${poi.rating}</span>
+          </div>
+
+          ${poi.demo_available ? `
+            <div class="bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-400 p-3 rounded-xl text-center mb-4 font-medium">
+              ✓ Test Rides / Demos Available
+            </div>
+          ` : ''}
+
+          <div class="mb-4">
+            <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Services</h4>
+            <div class="flex flex-wrap gap-2">
+              ${poi.services.map(s => `<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 dark:bg-blue-900/30 dark:text-blue-400 text-sm">${s}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Brands</h4>
+            <div class="flex flex-wrap gap-2">
+              ${poi.brands.map(b => `<span class="px-3 py-1 rounded-full bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-gray-300 text-sm">${b}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="space-y-2 mb-4">
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">
+              <span class="text-sm text-gray-600 dark:text-gray-300">Hours</span>
+              <span class="font-medium dark:text-white text-sm">${poi.hours}</span>
+            </div>
+            <div class="flex items-center justify-between p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">
+              <span class="text-sm text-gray-600 dark:text-gray-300">Phone</span>
+              <a href="tel:${poi.phone}" class="font-medium text-primary">${poi.phone}</a>
+            </div>
+          </div>
+
+          <div class="flex items-center justify-center gap-6 mb-4">
+            <button onclick="vote('${poi.id}', 'up')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-acc-green">thumb_up</span>
+              <span class="text-sm font-bold dark:text-white">${poi.upvotes}</span>
+            </button>
+            <button onclick="vote('${poi.id}', 'down')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-red-500">thumb_down</span>
+              <span class="text-sm font-bold dark:text-white">${poi.downvotes}</span>
+            </button>
+          </div>
+
+          <button onclick="getDirectionsToPoi()" class="w-full bg-primary text-white font-bold py-3 rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+            <span class="material-icons-round align-middle mr-1">directions</span> Get Directions
+          </button>
+        `;
+      } else if (type === 'community') {
+        content.innerHTML = `
+          <div class="text-center mb-4">
+            <span class="text-5xl">👥</span>
+          </div>
+          <h2 class="text-xl font-bold dark:text-white text-center mb-1">${poi.name}</h2>
+          <p class="text-sm text-gray-500 dark:text-gray-400 text-center mb-4">${poi.members.toLocaleString()} members</p>
+
+          <p class="text-sm text-gray-600 dark:text-gray-300 text-center mb-4">${poi.description}</p>
+
+          <div class="flex flex-wrap justify-center gap-2 mb-4">
+            ${poi.focus.map(f => `<span class="px-3 py-1 rounded-full bg-primary/10 text-primary text-sm font-medium">${f}</span>`).join('')}
+          </div>
+
+          ${poi.rides && poi.rides.length > 0 ? `
+            <div class="mb-4">
+              <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Regular Rides</h4>
+              <div class="space-y-2">
+                ${poi.rides.map(r => `
+                  <div class="p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">
+                    <div class="flex justify-between items-center">
+                      <span class="font-medium dark:text-white">${r.type}</span>
+                      <span class="text-xs px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 dark:text-gray-300">${r.difficulty}</span>
+                    </div>
+                    <p class="text-sm text-gray-500 dark:text-gray-400">${r.day} at ${r.time}</p>
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          ` : ''}
+
+          <div class="flex items-center justify-center gap-6 mb-4">
+            <button onclick="vote('${poi.id}', 'up')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-acc-green">thumb_up</span>
+              <span class="text-sm font-bold dark:text-white">${poi.upvotes}</span>
+            </button>
+            <button onclick="vote('${poi.id}', 'down')" class="flex flex-col items-center gap-1 p-3 rounded-xl hover:bg-gray-100 dark:hover:bg-slate-800 transition-colors">
+              <span class="material-icons-round text-2xl text-red-500">thumb_down</span>
+              <span class="text-sm font-bold dark:text-white">${poi.downvotes}</span>
+            </button>
+          </div>
+
+          <a href="https://${poi.website}" target="_blank" class="block w-full bg-primary text-white font-bold py-3 rounded-2xl text-center shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors">
+            Visit Website →
+          </a>
+        `;
+      }
+
+      document.getElementById('poiModal').classList.add('visible');
+
+      // Pan to POI
+      if (poi.location) {
+        map.panTo(poi.location);
+        map.setZoom(16);
+      }
+    }
+
+    function closePoiModal() {
+      document.getElementById('poiModal').classList.remove('visible');
+      selectedPoi = null;
+    }
+
+    function getDirectionsToPoi() {
+      if (selectedPoi && selectedPoi.location) {
+        window.open(`https://www.google.com/maps/dir/?api=1&destination=${selectedPoi.location.lat},${selectedPoi.location.lng}&travelmode=bicycling`, '_blank');
+      }
+    }
+
+    // ============================================
+    // LAYERS MODAL
+    // ============================================
+    function openLayersModal() {
+      document.getElementById('layersModal').classList.add('visible');
+    }
+
+    function closeLayersModal() {
+      document.getElementById('layersModal').classList.remove('visible');
+    }
+
+    // ============================================
+    // COMMENTS MODAL
+    // ============================================
+    function openCommentsForPoi(poiId) {
+      document.getElementById('commentsTitle').textContent = 'Comments';
+      document.getElementById('commentsSubtitle').textContent = 'Community feedback';
+
+      const commentsList = document.getElementById('commentsList');
+      commentsList.innerHTML = `
+        <div class="space-y-3">
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-blue-500 to-cyan-500 flex items-center justify-center">
+                <span class="text-white text-xs font-bold">J</span>
+              </div>
+              <span class="font-semibold dark:text-white">Jake S.</span>
+              <span class="text-xs text-gray-400">1 day ago</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Great location! Always has spots available in the morning.</p>
+            <div class="flex items-center gap-3 mt-2">
+              <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green">
+                <span class="material-icons-round text-sm">thumb_up</span> 8
+              </button>
+              <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500">
+                <span class="material-icons-round text-sm">thumb_down</span> 0
+              </button>
+            </div>
+          </div>
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl">
+            <div class="flex items-center gap-2 mb-2">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-orange-500 to-red-500 flex items-center justify-center">
+                <span class="text-white text-xs font-bold">M</span>
+              </div>
+              <span class="font-semibold dark:text-white">Maya T.</span>
+              <span class="text-xs text-gray-400">3 days ago</span>
+            </div>
+            <p class="text-sm text-gray-600 dark:text-gray-300">Fast charging works perfectly. My e-bike was fully charged in under an hour.</p>
+            <div class="flex items-center gap-3 mt-2">
+              <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-acc-green">
+                <span class="material-icons-round text-sm">thumb_up</span> 12
+              </button>
+              <button class="flex items-center gap-1 text-xs text-gray-500 hover:text-red-500">
+                <span class="material-icons-round text-sm">thumb_down</span> 1
+              </button>
+            </div>
           </div>
         </div>
       `;
+
+      document.getElementById('commentsModal').classList.add('visible');
+    }
+
+    function closeCommentsModal() {
+      document.getElementById('commentsModal').classList.remove('visible');
+    }
+
+    function submitComment() {
+      const textarea = document.getElementById('newComment');
+      if (textarea.value.trim()) {
+        showToast('Comment posted! 💬');
+        textarea.value = '';
+        closeCommentsModal();
+      }
+    }
+
+    // ============================================
+    // VOTING
+    // ============================================
+    function vote(id, direction) {
+      showToast(direction === 'up' ? 'Upvoted! 👍' : 'Downvoted 👎');
+    }
+
+    // ============================================
+    // HELPER FUNCTIONS
+    // ============================================
+    function formatTimeAgo(timestamp) {
+      const now = new Date();
+      const date = new Date(timestamp);
+      const seconds = Math.floor((now - date) / 1000);
+
+      if (seconds < 60) return 'just now';
+      if (seconds < 3600) return Math.floor(seconds / 60) + 'm ago';
+      if (seconds < 86400) return Math.floor(seconds / 3600) + 'h ago';
+      if (seconds < 604800) return Math.floor(seconds / 86400) + 'd ago';
+      return date.toLocaleDateString();
+    }
+
+    function getAmenityIcon(amenity) {
+      const icons = {
+        'fast_charging': '⚡',
+        'secure_lock': '🔒',
+        'covered': '🏠',
+        'repair_tools': '🔧',
+        'student_discount': '🎓'
+      };
+      return icons[amenity] || '✓';
+    }
+
+    function getAmenityLabel(amenity) {
+      const labels = {
+        'fast_charging': 'Fast Charging',
+        'secure_lock': 'Secure Lock',
+        'covered': 'Covered',
+        'repair_tools': 'Repair Tools',
+        'student_discount': 'Student Discount'
+      };
+      return labels[amenity] || amenity;
     }
 
     // ============================================
@@ -903,6 +1492,36 @@
       // Sidebar buttons
       document.getElementById('editBtn').addEventListener('click', openReportModal);
       document.getElementById('communityBtn').addEventListener('click', openCommunityModal);
+      document.getElementById('layersBtn').addEventListener('click', openLayersModal);
+
+      // Community tabs
+      document.querySelectorAll('.community-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.community-tab').forEach(t => {
+            t.classList.remove('bg-primary', 'text-white');
+            t.classList.add('bg-gray-100', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+          });
+          tab.classList.add('bg-primary', 'text-white');
+          tab.classList.remove('bg-gray-100', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+
+          document.querySelectorAll('.tab-content').forEach(c => c.classList.add('hidden'));
+          document.getElementById('tab' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1)).classList.remove('hidden');
+        });
+      });
+
+      // Layer toggles
+      document.getElementById('layerCharging').addEventListener('change', (e) => {
+        showCharging = e.target.checked;
+        updatePoiVisibility();
+      });
+      document.getElementById('layerStores').addEventListener('change', (e) => {
+        showStores = e.target.checked;
+        updatePoiVisibility();
+      });
+      document.getElementById('layerCommunities').addEventListener('change', (e) => {
+        showCommunities = e.target.checked;
+        updatePoiVisibility();
+      });
 
       // Sheet handle
       document.getElementById('sheetHandle').addEventListener('click', () => {
