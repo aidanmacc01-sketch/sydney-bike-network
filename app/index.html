@@ -186,6 +186,9 @@
         <button id="communityBtn" class="w-10 h-10 rounded-xl bg-acc-yellow text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform" title="Community">
           <span class="material-icons-round">groups</span>
         </button>
+        <button id="educationBtn" class="w-10 h-10 rounded-xl bg-acc-blue text-white flex items-center justify-center shadow-md hover:scale-105 transition-transform" title="Learn & Earn">
+          <span class="material-icons-round">school</span>
+        </button>
         <div class="h-px bg-gray-200 dark:bg-gray-700 mx-1"></div>
         <button id="layersBtn" class="w-10 h-10 rounded-xl glass bg-white/50 dark:bg-slate-800/50 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:scale-105 transition-transform" title="Layers">
           <span class="material-icons-round">layers</span>
@@ -642,6 +645,179 @@
       </div>
     </div>
 
+    <!-- Education & Rewards Modal -->
+    <div id="educationModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeEducationModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-lg p-6 relative max-h-[90vh] overflow-hidden flex flex-col">
+        <button onclick="closeEducationModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <!-- Header with Points -->
+        <div class="flex items-center justify-between mb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center">
+              <span class="material-icons-round text-white text-2xl">school</span>
+            </div>
+            <div>
+              <h2 class="text-xl font-bold dark:text-white">Learn & Earn</h2>
+              <p class="text-xs text-gray-500">Complete modules, earn rewards</p>
+            </div>
+          </div>
+          <div class="text-right">
+            <div class="text-2xl font-bold text-acc-blue" id="eduTotalPoints">850</div>
+            <div class="text-[10px] text-gray-500 uppercase">Points</div>
+          </div>
+        </div>
+
+        <!-- Level Progress -->
+        <div class="bg-gradient-to-r from-blue-50 to-cyan-50 dark:from-blue-900/20 dark:to-cyan-900/20 rounded-xl p-4 mb-4">
+          <div class="flex items-center justify-between mb-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xl" id="eduLevelIcon">🚴</span>
+              <span class="font-bold dark:text-white" id="eduLevelName">Confident Cyclist</span>
+            </div>
+            <span class="text-xs text-gray-500" id="eduLevelLabel">Level 3</span>
+          </div>
+          <div class="w-full h-2 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-gradient-to-r from-blue-500 to-cyan-400 progress-bar" id="eduLevelBar" style="width: 70%"></div>
+          </div>
+          <div class="flex justify-between mt-1 text-xs text-gray-500">
+            <span id="eduPointsCurrent">850</span>
+            <span id="eduPointsNext">500 more to Urban Navigator</span>
+          </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="flex gap-2 mb-4 overflow-x-auto hide-scrollbar">
+          <button class="edu-tab px-4 py-2 rounded-full text-sm font-semibold bg-acc-blue text-white whitespace-nowrap" data-tab="modules">📚 Modules</button>
+          <button class="edu-tab px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 whitespace-nowrap" data-tab="rewards">🎁 Rewards</button>
+          <button class="edu-tab px-4 py-2 rounded-full text-sm font-semibold bg-gray-100 dark:bg-slate-800 text-gray-600 dark:text-gray-300 whitespace-nowrap" data-tab="badges">🏅 Badges</button>
+        </div>
+
+        <div class="overflow-y-auto flex-1 hide-scrollbar">
+          <!-- Modules Tab -->
+          <div id="eduTabModules" class="edu-tab-content space-y-3">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Rewards Tab -->
+          <div id="eduTabRewards" class="edu-tab-content space-y-3 hidden">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Badges Tab -->
+          <div id="eduTabBadges" class="edu-tab-content space-y-3 hidden">
+            <!-- Populated by JS -->
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Quiz Modal -->
+    <div id="quizModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeQuizModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-hidden flex flex-col">
+        <button onclick="closeQuizModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <!-- Quiz Header -->
+        <div class="mb-4">
+          <h2 class="text-xl font-bold dark:text-white" id="quizTitle">Road Rules Quiz</h2>
+          <div class="flex items-center gap-2 mt-1">
+            <span class="text-xs text-gray-500" id="quizProgress">Question 1 of 5</span>
+            <div class="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+              <div class="h-full bg-acc-blue progress-bar" id="quizProgressBar" style="width: 20%"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Content -->
+        <div id="quizContent" class="flex-1 overflow-y-auto">
+          <!-- Question -->
+          <div id="quizQuestion" class="mb-6">
+            <p class="text-lg font-medium dark:text-white" id="quizQuestionText">What is the fine for not wearing a helmet in NSW?</p>
+          </div>
+
+          <!-- Options -->
+          <div id="quizOptions" class="space-y-2">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Explanation (shown after answer) -->
+          <div id="quizExplanation" class="hidden mt-4 p-4 rounded-xl bg-blue-50 dark:bg-blue-900/20">
+            <div class="flex items-start gap-2">
+              <span class="material-icons-round text-acc-blue">info</span>
+              <p class="text-sm text-gray-700 dark:text-gray-300" id="quizExplanationText"></p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Quiz Actions -->
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700">
+          <button id="quizNextBtn" onclick="nextQuizQuestion()" class="hidden w-full bg-acc-blue text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-acc-blue/90 transition-colors">
+            Next Question
+          </button>
+          <div id="quizScore" class="hidden text-center">
+            <div class="text-4xl mb-2" id="quizScoreEmoji">🎉</div>
+            <div class="text-2xl font-bold text-acc-green" id="quizScoreText">+50 Points!</div>
+            <p class="text-sm text-gray-500 mt-1" id="quizScoreDetail">You got 5/5 correct!</p>
+            <button onclick="closeQuizModal()" class="mt-4 w-full bg-acc-green text-white font-bold py-3 rounded-2xl">
+              Collect Points
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Module Content Modal -->
+    <div id="moduleModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeModuleModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-hidden flex flex-col">
+        <button onclick="closeModuleModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <!-- Module Header -->
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-blue-500 to-cyan-400 flex items-center justify-center">
+            <span class="text-2xl" id="moduleIcon">📜</span>
+          </div>
+          <div>
+            <h2 class="text-lg font-bold dark:text-white" id="moduleTitle">Module Title</h2>
+            <p class="text-xs text-gray-500" id="moduleMeta">8 min • 100 points</p>
+          </div>
+        </div>
+
+        <!-- Progress -->
+        <div class="flex items-center gap-2 mb-4">
+          <span class="text-xs text-gray-500" id="moduleSectionProgress">Section 1 of 4</span>
+          <div class="flex-1 h-1.5 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden">
+            <div class="h-full bg-acc-blue progress-bar" id="moduleSectionBar" style="width: 25%"></div>
+          </div>
+        </div>
+
+        <!-- Content -->
+        <div id="moduleContent" class="flex-1 overflow-y-auto">
+          <h3 class="font-bold dark:text-white mb-2" id="moduleSectionTitle">Section Title</h3>
+          <p class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed" id="moduleSectionText">
+            Section content here...
+          </p>
+        </div>
+
+        <!-- Actions -->
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex gap-3">
+          <button id="modulePrevBtn" onclick="prevModuleSection()" class="flex-1 bg-gray-100 dark:bg-slate-800 text-gray-700 dark:text-white font-bold py-3 rounded-2xl hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+            Previous
+          </button>
+          <button id="moduleNextBtn" onclick="nextModuleSection()" class="flex-1 bg-acc-blue text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-acc-blue/90 transition-colors">
+            Next
+          </button>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast fixed bottom-20 left-1/2 -translate-x-1/2 z-50 glass bg-slate-900/90 text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-xl">
       <span class="material-icons-round text-acc-green">check_circle</span>
@@ -666,6 +842,7 @@
   <!-- Data -->
   <script src="js/data-planned.js"></script>
   <script src="js/data-community.js"></script>
+  <script src="js/data-education.js"></script>
 
   <!-- App Logic -->
   <script>
@@ -2018,6 +2195,387 @@ Include real Sydney locations, coffee shops, cycleways, and points of interest. 
     }
 
     // ============================================
+    // EDUCATION & REWARDS SYSTEM
+    // ============================================
+    let currentModule = null;
+    let currentModuleSection = 0;
+    let currentQuiz = null;
+    let currentQuizQuestion = 0;
+    let quizScore = 0;
+    let quizAnswered = false;
+
+    function openEducationModal() {
+      document.getElementById('educationModal').classList.add('visible');
+      updateEducationUI();
+      loadEducationModules();
+    }
+
+    function closeEducationModal() {
+      document.getElementById('educationModal').classList.remove('visible');
+    }
+
+    function updateEducationUI() {
+      if (typeof USER_PROGRESS === 'undefined') return;
+
+      const points = USER_PROGRESS.total_points;
+      document.getElementById('eduTotalPoints').textContent = points.toLocaleString();
+      document.getElementById('eduPointsCurrent').textContent = points.toLocaleString();
+
+      const level = getUserLevel(points);
+      const nextLevel = getNextLevel(points);
+      const progress = getLevelProgress(points);
+
+      document.getElementById('eduLevelIcon').textContent = level.icon;
+      document.getElementById('eduLevelName').textContent = level.name;
+      document.getElementById('eduLevelLabel').textContent = `Level ${level.level}`;
+      document.getElementById('eduLevelBar').style.width = progress + '%';
+
+      if (nextLevel) {
+        const pointsNeeded = nextLevel.min_points - points;
+        document.getElementById('eduPointsNext').textContent = `${pointsNeeded} more to ${nextLevel.name}`;
+      } else {
+        document.getElementById('eduPointsNext').textContent = 'Max level reached!';
+      }
+    }
+
+    function loadEducationModules() {
+      if (typeof EDUCATION_MODULES === 'undefined') return;
+
+      const container = document.getElementById('eduTabModules');
+      container.innerHTML = EDUCATION_MODULES.map(mod => {
+        const completed = isModuleCompleted(mod.id);
+        return `
+          <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl ${completed ? 'border-2 border-acc-green' : ''}" onclick="openModule('${mod.id}')">
+            <div class="flex items-start gap-3">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-tr ${completed ? 'from-green-400 to-emerald-500' : 'from-blue-400 to-cyan-500'} flex items-center justify-center flex-shrink-0">
+                <span class="text-2xl">${completed ? '✓' : mod.icon}</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <h3 class="font-bold dark:text-white text-sm">${mod.title}</h3>
+                  ${completed ? '<span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700">Completed</span>' : ''}
+                </div>
+                <p class="text-xs text-gray-500 mb-2">${mod.description}</p>
+                <div class="flex items-center gap-3 text-xs text-gray-400">
+                  <span>⏱️ ${mod.duration_mins} min</span>
+                  <span>⭐ ${mod.points} pts</span>
+                  <span class="px-2 py-0.5 rounded-full bg-gray-200 dark:bg-gray-700 dark:text-gray-300">${mod.difficulty}</span>
+                </div>
+              </div>
+              <span class="material-icons-round text-gray-400">chevron_right</span>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // Load rewards
+      loadRewards();
+
+      // Load badges
+      loadBadges();
+    }
+
+    function loadRewards() {
+      if (typeof REWARDS === 'undefined') return;
+
+      const container = document.getElementById('eduTabRewards');
+
+      // Featured rewards first
+      const featured = REWARDS.filter(r => r.featured);
+      const regular = REWARDS.filter(r => !r.featured);
+
+      container.innerHTML = `
+        <div class="mb-4">
+          <h3 class="text-xs font-bold text-gray-500 uppercase mb-2">🚴 E-Bike Discounts</h3>
+          <div class="space-y-2">
+            ${featured.map(reward => renderReward(reward)).join('')}
+          </div>
+        </div>
+        <div>
+          <h3 class="text-xs font-bold text-gray-500 uppercase mb-2">🎁 More Rewards</h3>
+          <div class="space-y-2">
+            ${regular.map(reward => renderReward(reward)).join('')}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderReward(reward) {
+      const canAfford = USER_PROGRESS.total_points >= reward.points_cost;
+      const redeemed = USER_PROGRESS.redeemed_rewards.includes(reward.id);
+
+      return `
+        <div class="bg-gray-50 dark:bg-slate-800 p-4 rounded-xl ${!canAfford && !redeemed ? 'opacity-60' : ''} ${redeemed ? 'border-2 border-acc-green' : ''}">
+          <div class="flex items-start gap-3">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr ${reward.featured ? 'from-yellow-400 to-orange-500' : 'from-gray-400 to-gray-500'} flex items-center justify-center flex-shrink-0">
+              <span class="text-xl">${reward.icon}</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-bold dark:text-white text-sm">${reward.name}</h4>
+              <p class="text-xs text-gray-500">${reward.description}</p>
+              <p class="text-[10px] text-gray-400 mt-1">Partner: ${reward.partner}</p>
+            </div>
+            <div class="text-right">
+              ${redeemed ? `
+                <span class="text-xs px-2 py-1 rounded-full bg-green-100 text-green-700">Redeemed</span>
+              ` : `
+                <button onclick="event.stopPropagation(); redeemReward('${reward.id}')" class="px-3 py-1.5 rounded-full text-xs font-bold ${canAfford ? 'bg-acc-blue text-white hover:bg-acc-blue/90' : 'bg-gray-200 dark:bg-gray-700 text-gray-500 cursor-not-allowed'}">
+                  ${reward.points_cost} pts
+                </button>
+              `}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function loadBadges() {
+      if (typeof BADGES === 'undefined') return;
+
+      const container = document.getElementById('eduTabBadges');
+      container.innerHTML = BADGES.map(badge => {
+        const earned = USER_PROGRESS.badges.includes(badge.id);
+        return `
+          <div class="flex items-center gap-3 p-3 rounded-xl ${earned ? 'bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20' : 'bg-gray-50 dark:bg-slate-800 opacity-50'}">
+            <div class="w-12 h-12 rounded-full ${earned ? 'bg-gradient-to-tr from-yellow-400 to-orange-500' : 'bg-gray-300 dark:bg-gray-600'} flex items-center justify-center">
+              <span class="text-2xl ${earned ? '' : 'grayscale opacity-50'}">${badge.icon}</span>
+            </div>
+            <div class="flex-1">
+              <h4 class="font-bold dark:text-white text-sm">${badge.name}</h4>
+              <p class="text-xs text-gray-500">${badge.description}</p>
+            </div>
+            ${earned ? `
+              <span class="text-xs text-acc-green font-bold">+${badge.points_bonus}</span>
+            ` : `
+              <span class="material-icons-round text-gray-400">lock</span>
+            `}
+          </div>
+        `;
+      }).join('');
+    }
+
+    function redeemReward(rewardId) {
+      const reward = REWARDS.find(r => r.id === rewardId);
+      if (!reward) return;
+
+      if (USER_PROGRESS.total_points < reward.points_cost) {
+        showToast('Not enough points!');
+        return;
+      }
+
+      USER_PROGRESS.total_points -= reward.points_cost;
+      USER_PROGRESS.redeemed_rewards.push(rewardId);
+
+      updateEducationUI();
+      loadRewards();
+      showToast(`🎉 Redeemed: ${reward.name}!`);
+    }
+
+    // Module functions
+    function openModule(moduleId) {
+      currentModule = EDUCATION_MODULES.find(m => m.id === moduleId);
+      if (!currentModule) return;
+
+      currentModuleSection = 0;
+      displayModuleSection();
+      document.getElementById('moduleModal').classList.add('visible');
+    }
+
+    function closeModuleModal() {
+      document.getElementById('moduleModal').classList.remove('visible');
+      currentModule = null;
+    }
+
+    function displayModuleSection() {
+      if (!currentModule) return;
+
+      const section = currentModule.sections[currentModuleSection];
+      const total = currentModule.sections.length;
+      const progress = ((currentModuleSection + 1) / total) * 100;
+
+      document.getElementById('moduleIcon').textContent = currentModule.icon;
+      document.getElementById('moduleTitle').textContent = currentModule.title;
+      document.getElementById('moduleMeta').textContent = `${currentModule.duration_mins} min • ${currentModule.points} points`;
+      document.getElementById('moduleSectionProgress').textContent = `Section ${currentModuleSection + 1} of ${total}`;
+      document.getElementById('moduleSectionBar').style.width = progress + '%';
+      document.getElementById('moduleSectionTitle').textContent = section.title;
+      document.getElementById('moduleSectionText').textContent = section.content;
+
+      // Update buttons
+      document.getElementById('modulePrevBtn').style.display = currentModuleSection === 0 ? 'none' : 'block';
+
+      const nextBtn = document.getElementById('moduleNextBtn');
+      if (currentModuleSection === total - 1) {
+        nextBtn.textContent = currentModule.quiz_id ? 'Take Quiz' : 'Complete';
+        nextBtn.classList.remove('bg-acc-blue');
+        nextBtn.classList.add('bg-acc-green');
+      } else {
+        nextBtn.textContent = 'Next';
+        nextBtn.classList.add('bg-acc-blue');
+        nextBtn.classList.remove('bg-acc-green');
+      }
+    }
+
+    function prevModuleSection() {
+      if (currentModuleSection > 0) {
+        currentModuleSection--;
+        displayModuleSection();
+      }
+    }
+
+    function nextModuleSection() {
+      if (!currentModule) return;
+
+      if (currentModuleSection < currentModule.sections.length - 1) {
+        currentModuleSection++;
+        displayModuleSection();
+      } else {
+        // Module complete
+        if (currentModule.quiz_id) {
+          closeModuleModal();
+          openQuiz(currentModule.quiz_id);
+        } else {
+          completeModule(currentModule.id);
+          closeModuleModal();
+        }
+      }
+    }
+
+    function completeModule(moduleId) {
+      if (!USER_PROGRESS.completed_modules.includes(moduleId)) {
+        const mod = EDUCATION_MODULES.find(m => m.id === moduleId);
+        USER_PROGRESS.completed_modules.push(moduleId);
+        USER_PROGRESS.total_points += mod.points;
+        updateEducationUI();
+        loadEducationModules();
+        showToast(`🎉 +${mod.points} points! Module completed!`);
+      }
+    }
+
+    // Quiz functions
+    function openQuiz(quizId) {
+      currentQuiz = EDUCATION_QUIZZES.find(q => q.id === quizId);
+      if (!currentQuiz) return;
+
+      currentQuizQuestion = 0;
+      quizScore = 0;
+      document.getElementById('quizScore').classList.add('hidden');
+      document.getElementById('quizNextBtn').classList.add('hidden');
+      document.getElementById('quizContent').classList.remove('hidden');
+      displayQuizQuestion();
+      document.getElementById('quizModal').classList.add('visible');
+    }
+
+    function closeQuizModal() {
+      document.getElementById('quizModal').classList.remove('visible');
+      currentQuiz = null;
+      openEducationModal();
+    }
+
+    function displayQuizQuestion() {
+      if (!currentQuiz) return;
+
+      const q = currentQuiz.questions[currentQuizQuestion];
+      const total = currentQuiz.questions.length;
+      const progress = ((currentQuizQuestion + 1) / total) * 100;
+
+      document.getElementById('quizTitle').textContent = currentQuiz.title;
+      document.getElementById('quizProgress').textContent = `Question ${currentQuizQuestion + 1} of ${total}`;
+      document.getElementById('quizProgressBar').style.width = progress + '%';
+      document.getElementById('quizQuestionText').textContent = q.question;
+      document.getElementById('quizExplanation').classList.add('hidden');
+      document.getElementById('quizNextBtn').classList.add('hidden');
+      quizAnswered = false;
+
+      const optionsContainer = document.getElementById('quizOptions');
+      optionsContainer.innerHTML = q.options.map((opt, i) => `
+        <button onclick="selectQuizAnswer(${i})" class="quiz-option w-full text-left p-4 rounded-xl bg-gray-50 dark:bg-slate-800 hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors border-2 border-transparent">
+          <span class="font-medium dark:text-white">${opt}</span>
+        </button>
+      `).join('');
+    }
+
+    function selectQuizAnswer(index) {
+      if (quizAnswered) return;
+      quizAnswered = true;
+
+      const q = currentQuiz.questions[currentQuizQuestion];
+      const options = document.querySelectorAll('.quiz-option');
+
+      options.forEach((opt, i) => {
+        opt.classList.remove('hover:bg-gray-100', 'dark:hover:bg-slate-700');
+        if (i === q.correct) {
+          opt.classList.add('border-acc-green', 'bg-green-50', 'dark:bg-green-900/20');
+        } else if (i === index && index !== q.correct) {
+          opt.classList.add('border-red-500', 'bg-red-50', 'dark:bg-red-900/20');
+        }
+      });
+
+      if (index === q.correct) {
+        quizScore++;
+      }
+
+      // Show explanation
+      document.getElementById('quizExplanationText').textContent = q.explanation;
+      document.getElementById('quizExplanation').classList.remove('hidden');
+
+      // Show next button
+      const nextBtn = document.getElementById('quizNextBtn');
+      if (currentQuizQuestion < currentQuiz.questions.length - 1) {
+        nextBtn.textContent = 'Next Question';
+      } else {
+        nextBtn.textContent = 'See Results';
+      }
+      nextBtn.classList.remove('hidden');
+    }
+
+    function nextQuizQuestion() {
+      if (currentQuizQuestion < currentQuiz.questions.length - 1) {
+        currentQuizQuestion++;
+        displayQuizQuestion();
+      } else {
+        // Quiz complete
+        showQuizResults();
+      }
+    }
+
+    function showQuizResults() {
+      const total = currentQuiz.questions.length;
+      const pointsEarned = quizScore * currentQuiz.points_per_question;
+      const perfectBonus = quizScore === total ? currentQuiz.perfect_bonus : 0;
+      const totalPoints = pointsEarned + perfectBonus;
+
+      document.getElementById('quizContent').classList.add('hidden');
+      document.getElementById('quizNextBtn').classList.add('hidden');
+
+      const scoreDiv = document.getElementById('quizScore');
+      document.getElementById('quizScoreEmoji').textContent = quizScore === total ? '🎉' : quizScore >= total / 2 ? '👍' : '📚';
+      document.getElementById('quizScoreText').textContent = `+${totalPoints} Points!`;
+      document.getElementById('quizScoreDetail').textContent = `You got ${quizScore}/${total} correct!${perfectBonus > 0 ? ' Perfect score bonus!' : ''}`;
+      scoreDiv.classList.remove('hidden');
+
+      // Update progress
+      USER_PROGRESS.total_points += totalPoints;
+      if (!USER_PROGRESS.completed_quizzes.includes(currentQuiz.id)) {
+        USER_PROGRESS.completed_quizzes.push(currentQuiz.id);
+
+        // Also complete the module
+        const mod = EDUCATION_MODULES.find(m => m.quiz_id === currentQuiz.id);
+        if (mod && !USER_PROGRESS.completed_modules.includes(mod.id)) {
+          USER_PROGRESS.completed_modules.push(mod.id);
+          USER_PROGRESS.total_points += mod.points;
+        }
+      }
+
+      // Check for quiz master badge
+      if (quizScore === total && !USER_PROGRESS.badges.includes('quiz_master')) {
+        USER_PROGRESS.badges.push('quiz_master');
+        USER_PROGRESS.total_points += 100;
+        setTimeout(() => showToast('🏅 New Badge: Quiz Master!'), 1000);
+      }
+    }
+
+    // ============================================
     // EVENT LISTENERS
     // ============================================
     document.addEventListener('DOMContentLoaded', () => {
@@ -2046,7 +2604,23 @@ Include real Sydney locations, coffee shops, cycleways, and points of interest. 
       document.getElementById('routeBtn').addEventListener('click', openAiRouteModal);
       document.getElementById('editBtn').addEventListener('click', openReportModal);
       document.getElementById('communityBtn').addEventListener('click', openCommunityModal);
+      document.getElementById('educationBtn').addEventListener('click', openEducationModal);
       document.getElementById('layersBtn').addEventListener('click', openLayersModal);
+
+      // Education tabs
+      document.querySelectorAll('.edu-tab').forEach(tab => {
+        tab.addEventListener('click', () => {
+          document.querySelectorAll('.edu-tab').forEach(t => {
+            t.classList.remove('bg-acc-blue', 'text-white');
+            t.classList.add('bg-gray-100', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+          });
+          tab.classList.add('bg-acc-blue', 'text-white');
+          tab.classList.remove('bg-gray-100', 'dark:bg-slate-800', 'text-gray-600', 'dark:text-gray-300');
+
+          document.querySelectorAll('.edu-tab-content').forEach(c => c.classList.add('hidden'));
+          document.getElementById('eduTab' + tab.dataset.tab.charAt(0).toUpperCase() + tab.dataset.tab.slice(1)).classList.remove('hidden');
+        });
+      });
 
       // Community tabs
       document.querySelectorAll('.community-tab').forEach(tab => {
