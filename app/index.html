@@ -517,6 +517,131 @@
       </div>
     </div>
 
+    <!-- AI Route Planning Modal -->
+    <div id="aiRouteModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeAiRouteModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-hidden flex flex-col">
+        <button onclick="closeAiRouteModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center z-10">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <div class="flex items-center gap-3 mb-4">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center">
+            <span class="material-icons-round text-white">auto_awesome</span>
+          </div>
+          <div>
+            <h2 class="text-xl font-bold dark:text-white">AI Route Planner</h2>
+            <p class="text-xs text-gray-500">Powered by Gemini</p>
+          </div>
+        </div>
+
+        <!-- Route Inputs -->
+        <div class="space-y-3 mb-4">
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">From</label>
+            <div class="flex items-center gap-2 bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+              <span class="material-icons-round text-acc-green">my_location</span>
+              <input id="aiRouteFrom" type="text" placeholder="Current location or address" class="flex-1 bg-transparent border-none focus:ring-0 text-sm dark:text-white placeholder-gray-400">
+            </div>
+          </div>
+          <div>
+            <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">To</label>
+            <div class="flex items-center gap-2 bg-gray-50 dark:bg-slate-800 rounded-xl p-3">
+              <span class="material-icons-round text-red-500">place</span>
+              <input id="aiRouteTo" type="text" placeholder="Destination address" class="flex-1 bg-transparent border-none focus:ring-0 text-sm dark:text-white placeholder-gray-400">
+            </div>
+          </div>
+        </div>
+
+        <!-- Preference Toggles -->
+        <div class="mb-4">
+          <label class="text-xs font-bold text-gray-500 uppercase mb-2 block">Route Preferences</label>
+          <div class="grid grid-cols-2 gap-2">
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefCoffee" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">☕</span>
+              <span class="text-sm font-medium dark:text-white">Coffee Stop</span>
+            </label>
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefShade" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">🌳</span>
+              <span class="text-sm font-medium dark:text-white">Shady Route</span>
+            </label>
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefScenic" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">🌊</span>
+              <span class="text-sm font-medium dark:text-white">Scenic Views</span>
+            </label>
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefCharging" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">⚡</span>
+              <span class="text-sm font-medium dark:text-white">E-Bike Charging</span>
+            </label>
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefFlat" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">📉</span>
+              <span class="text-sm font-medium dark:text-white">Flat Terrain</span>
+            </label>
+            <label class="route-pref flex items-center gap-2 p-3 rounded-xl bg-gray-50 dark:bg-slate-800 cursor-pointer hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors">
+              <input type="checkbox" id="prefSafe" class="w-4 h-4 rounded text-primary focus:ring-primary">
+              <span class="text-lg">🛡️</span>
+              <span class="text-sm font-medium dark:text-white">Safest Route</span>
+            </label>
+          </div>
+        </div>
+
+        <!-- Custom Request -->
+        <div class="mb-4">
+          <label class="text-xs font-bold text-gray-500 uppercase mb-1 block">Special Requests (Optional)</label>
+          <textarea id="aiRouteCustom" class="w-full p-3 rounded-xl bg-gray-50 dark:bg-slate-800 border-none focus:ring-2 focus:ring-primary text-sm dark:text-white placeholder-gray-400 resize-none" rows="2" placeholder="e.g., 'Stop at a bakery near Surry Hills' or 'Avoid busy roads'"></textarea>
+        </div>
+
+        <!-- Generate Button -->
+        <button id="generateRouteBtn" onclick="generateAiRoute()" class="w-full bg-gradient-to-r from-purple-500 to-pink-500 text-white font-bold py-4 rounded-2xl shadow-lg hover:opacity-90 transition-opacity flex items-center justify-center gap-2">
+          <span class="material-icons-round">auto_awesome</span>
+          Generate Smart Route
+        </button>
+
+        <!-- Loading State -->
+        <div id="aiRouteLoading" class="hidden">
+          <div class="flex flex-col items-center justify-center py-8">
+            <div class="w-16 h-16 rounded-full border-4 border-purple-200 border-t-purple-500 animate-spin mb-4"></div>
+            <p class="text-sm font-medium dark:text-white">AI is planning your perfect route...</p>
+            <p class="text-xs text-gray-500">Analyzing preferences & local data</p>
+          </div>
+        </div>
+
+        <!-- AI Response -->
+        <div id="aiRouteResult" class="hidden mt-4 overflow-y-auto max-h-[40vh]">
+          <div class="bg-gradient-to-r from-purple-50 to-pink-50 dark:from-purple-900/20 dark:to-pink-900/20 rounded-xl p-4">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="material-icons-round text-purple-500">smart_toy</span>
+              <span class="font-bold dark:text-white">AI Route Suggestion</span>
+            </div>
+            <div id="aiRouteText" class="text-sm text-gray-700 dark:text-gray-300 space-y-2">
+              <!-- AI response will be populated here -->
+            </div>
+          </div>
+
+          <!-- Route Preview -->
+          <div id="aiRouteStops" class="mt-4 space-y-2">
+            <!-- Stops will be populated here -->
+          </div>
+
+          <!-- Action Buttons -->
+          <div class="flex gap-3 mt-4">
+            <button onclick="applyAiRoute()" class="flex-1 bg-acc-green text-white font-bold py-3 rounded-2xl flex items-center justify-center gap-2 shadow-lg hover:bg-acc-green/90 transition-colors">
+              <span class="material-icons-round">directions</span>
+              Use This Route
+            </button>
+            <button onclick="regenerateAiRoute()" class="w-14 h-14 bg-gray-100 dark:bg-slate-800 rounded-2xl flex items-center justify-center hover:bg-gray-200 dark:hover:bg-slate-700 transition-colors">
+              <span class="material-icons-round text-gray-600 dark:text-gray-300">refresh</span>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
     <!-- Toast Notification -->
     <div id="toast" class="toast fixed bottom-20 left-1/2 -translate-x-1/2 z-50 glass bg-slate-900/90 text-white px-6 py-3 rounded-full flex items-center gap-2 shadow-xl">
       <span class="material-icons-round text-acc-green">check_circle</span>
@@ -1465,6 +1590,434 @@
     }
 
     // ============================================
+    // AI ROUTE PLANNING (GEMINI)
+    // ============================================
+    let aiRoutePolyline = null;
+    let aiRouteMarkers = [];
+    let lastAiRouteData = null;
+
+    function openAiRouteModal() {
+      document.getElementById('aiRouteModal').classList.add('visible');
+      // Reset state
+      document.getElementById('generateRouteBtn').classList.remove('hidden');
+      document.getElementById('aiRouteLoading').classList.add('hidden');
+      document.getElementById('aiRouteResult').classList.add('hidden');
+    }
+
+    function closeAiRouteModal() {
+      document.getElementById('aiRouteModal').classList.remove('visible');
+    }
+
+    async function generateAiRoute() {
+      const from = document.getElementById('aiRouteFrom').value.trim();
+      const to = document.getElementById('aiRouteTo').value.trim();
+
+      if (!from || !to) {
+        showToast('Please enter start and destination');
+        return;
+      }
+
+      // Get preferences
+      const preferences = [];
+      if (document.getElementById('prefCoffee').checked) preferences.push('coffee shop stop');
+      if (document.getElementById('prefShade').checked) preferences.push('shady tree-lined streets');
+      if (document.getElementById('prefScenic').checked) preferences.push('scenic harbour/water views');
+      if (document.getElementById('prefCharging').checked) preferences.push('e-bike charging station');
+      if (document.getElementById('prefFlat').checked) preferences.push('flat terrain with minimal hills');
+      if (document.getElementById('prefSafe').checked) preferences.push('separated bike lanes for safety');
+
+      const customRequest = document.getElementById('aiRouteCustom').value.trim();
+
+      // Show loading
+      document.getElementById('generateRouteBtn').classList.add('hidden');
+      document.getElementById('aiRouteLoading').classList.remove('hidden');
+      document.getElementById('aiRouteResult').classList.add('hidden');
+
+      try {
+        const routeData = await callGeminiForRoute(from, to, preferences, customRequest);
+        displayAiRouteResult(routeData);
+      } catch (error) {
+        console.error('AI Route Error:', error);
+        showToast('AI route generation failed. Check API key.');
+        document.getElementById('generateRouteBtn').classList.remove('hidden');
+        document.getElementById('aiRouteLoading').classList.add('hidden');
+      }
+    }
+
+    async function callGeminiForRoute(from, to, preferences, customRequest) {
+      const apiKey = window.GEMINI_API_KEY;
+
+      if (!apiKey || apiKey === 'YOUR_GEMINI_API_KEY_HERE') {
+        // Demo mode - return mock data
+        return getMockRouteData(from, to, preferences);
+      }
+
+      const prefText = preferences.length > 0 ? preferences.join(', ') : 'most direct bike-friendly route';
+      const customText = customRequest ? `\nAdditional request: ${customRequest}` : '';
+
+      const prompt = `You are a Sydney cycling route planner AI. Plan a bike route from "${from}" to "${to}" in Sydney, Australia.
+
+User preferences: ${prefText}${customText}
+
+Respond in this exact JSON format (no markdown, just raw JSON):
+{
+  "summary": "Brief 1-2 sentence description of the route",
+  "distance_km": 5.2,
+  "duration_mins": 22,
+  "elevation_gain_m": 45,
+  "route_type": "scenic/direct/safe",
+  "stops": [
+    {
+      "name": "Stop name",
+      "type": "coffee/charging/viewpoint/other",
+      "address": "Address in Sydney",
+      "why": "Brief reason for this stop",
+      "lat": -33.8688,
+      "lng": 151.2093
+    }
+  ],
+  "waypoints": [
+    {"lat": -33.8688, "lng": 151.2093},
+    {"lat": -33.8700, "lng": 151.2100}
+  ],
+  "tips": ["Helpful tip 1", "Helpful tip 2"],
+  "shade_rating": 4,
+  "safety_rating": 5,
+  "scenery_rating": 4
+}
+
+Include real Sydney locations, coffee shops, cycleways, and points of interest. Use actual coordinates for Sydney CBD and surrounding areas. Make the route practical and cyclist-friendly.`;
+
+      const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${apiKey}`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: prompt
+            }]
+          }],
+          generationConfig: {
+            temperature: 0.7,
+            maxOutputTokens: 2048,
+          }
+        })
+      });
+
+      if (!response.ok) {
+        throw new Error('Gemini API request failed');
+      }
+
+      const data = await response.json();
+      const text = data.candidates[0].content.parts[0].text;
+
+      // Parse JSON from response (handle markdown code blocks)
+      let jsonStr = text;
+      if (text.includes('```json')) {
+        jsonStr = text.split('```json')[1].split('```')[0];
+      } else if (text.includes('```')) {
+        jsonStr = text.split('```')[1].split('```')[0];
+      }
+
+      return JSON.parse(jsonStr.trim());
+    }
+
+    function getMockRouteData(from, to, preferences) {
+      // Demo data when no API key
+      const hasCoffee = preferences.includes('coffee shop stop');
+      const hasShade = preferences.includes('shady tree-lined streets');
+      const hasCharging = preferences.includes('e-bike charging station');
+      const hasScenic = preferences.includes('scenic harbour/water views');
+
+      const stops = [];
+
+      if (hasCoffee) {
+        stops.push({
+          name: "Single O Surry Hills",
+          type: "coffee",
+          address: "60-64 Reservoir St, Surry Hills",
+          why: "Top-rated specialty coffee, cyclist-friendly outdoor seating",
+          lat: -33.8847,
+          lng: 151.2110
+        });
+      }
+
+      if (hasCharging) {
+        stops.push({
+          name: "Town Hall Charging Hub",
+          type: "charging",
+          address: "George St, Sydney CBD",
+          why: "Fast charging with 6 available spots",
+          lat: -33.8731,
+          lng: 151.2065
+        });
+      }
+
+      if (hasScenic) {
+        stops.push({
+          name: "Mrs Macquarie's Point",
+          type: "viewpoint",
+          address: "Mrs Macquaries Rd, Sydney",
+          why: "Stunning Opera House and Harbour Bridge views",
+          lat: -33.8598,
+          lng: 151.2228
+        });
+      }
+
+      return {
+        summary: `A ${hasShade ? 'tree-lined ' : ''}${hasScenic ? 'scenic ' : ''}bike route from ${from} to ${to}${hasCoffee ? ' with a great coffee stop' : ''}.`,
+        distance_km: 6.8,
+        duration_mins: 28,
+        elevation_gain_m: hasShade ? 25 : 55,
+        route_type: hasScenic ? 'scenic' : (hasShade ? 'safe' : 'direct'),
+        stops: stops,
+        waypoints: [
+          { lat: -33.8688, lng: 151.2093 },
+          { lat: -33.8720, lng: 151.2100 },
+          { lat: -33.8780, lng: 151.2120 },
+          { lat: -33.8847, lng: 151.2110 },
+          { lat: -33.8900, lng: 151.2050 }
+        ],
+        tips: [
+          hasShade ? "Hyde Park and Moore Park offer great shade coverage" : "Apply sunscreen - limited shade on this route",
+          "Kent Street cycleway has the smoothest surface",
+          hasCoffee ? "Single O opens at 7am - perfect for morning rides" : "Several water fountains along Bourke St cycleway"
+        ],
+        shade_rating: hasShade ? 5 : 3,
+        safety_rating: 4,
+        scenery_rating: hasScenic ? 5 : 3
+      };
+    }
+
+    function displayAiRouteResult(routeData) {
+      lastAiRouteData = routeData;
+
+      // Hide loading, show result
+      document.getElementById('aiRouteLoading').classList.add('hidden');
+      document.getElementById('aiRouteResult').classList.remove('hidden');
+
+      // Populate AI response
+      const resultText = document.getElementById('aiRouteText');
+      resultText.innerHTML = `
+        <p class="font-medium">${routeData.summary}</p>
+        <div class="grid grid-cols-3 gap-2 mt-3">
+          <div class="text-center p-2 bg-white dark:bg-slate-800 rounded-lg">
+            <div class="text-lg font-bold text-primary">${routeData.distance_km}km</div>
+            <div class="text-[10px] text-gray-500">Distance</div>
+          </div>
+          <div class="text-center p-2 bg-white dark:bg-slate-800 rounded-lg">
+            <div class="text-lg font-bold text-acc-green">${routeData.duration_mins}min</div>
+            <div class="text-[10px] text-gray-500">Time</div>
+          </div>
+          <div class="text-center p-2 bg-white dark:bg-slate-800 rounded-lg">
+            <div class="text-lg font-bold text-acc-orange">${routeData.elevation_gain_m}m</div>
+            <div class="text-[10px] text-gray-500">Climb</div>
+          </div>
+        </div>
+        <div class="flex items-center gap-4 mt-3 text-xs">
+          <div class="flex items-center gap-1">
+            <span>🌳</span>
+            <span class="dark:text-gray-300">Shade: ${routeData.shade_rating}/5</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span>🛡️</span>
+            <span class="dark:text-gray-300">Safety: ${routeData.safety_rating}/5</span>
+          </div>
+          <div class="flex items-center gap-1">
+            <span>🌊</span>
+            <span class="dark:text-gray-300">Views: ${routeData.scenery_rating}/5</span>
+          </div>
+        </div>
+      `;
+
+      // Populate stops
+      const stopsContainer = document.getElementById('aiRouteStops');
+      if (routeData.stops && routeData.stops.length > 0) {
+        stopsContainer.innerHTML = `
+          <h4 class="text-xs font-bold text-gray-500 uppercase mb-2">Suggested Stops</h4>
+          ${routeData.stops.map((stop, i) => `
+            <div class="flex items-start gap-3 p-3 bg-gray-50 dark:bg-slate-800 rounded-xl">
+              <div class="w-8 h-8 rounded-full bg-gradient-to-tr ${getStopGradient(stop.type)} flex items-center justify-center flex-shrink-0">
+                <span class="text-sm">${getStopEmoji(stop.type)}</span>
+              </div>
+              <div class="flex-1">
+                <h5 class="font-semibold dark:text-white text-sm">${stop.name}</h5>
+                <p class="text-xs text-gray-500">${stop.address}</p>
+                <p class="text-xs text-gray-600 dark:text-gray-400 mt-1">${stop.why}</p>
+              </div>
+            </div>
+          `).join('')}
+        `;
+      } else {
+        stopsContainer.innerHTML = '';
+      }
+
+      // Display tips
+      if (routeData.tips && routeData.tips.length > 0) {
+        stopsContainer.innerHTML += `
+          <h4 class="text-xs font-bold text-gray-500 uppercase mb-2 mt-4">Route Tips</h4>
+          <div class="space-y-1">
+            ${routeData.tips.map(tip => `
+              <div class="flex items-start gap-2 text-xs text-gray-600 dark:text-gray-400">
+                <span class="text-acc-green">💡</span>
+                <span>${tip}</span>
+              </div>
+            `).join('')}
+          </div>
+        `;
+      }
+
+      // Draw route preview on map
+      drawAiRouteOnMap(routeData);
+    }
+
+    function getStopEmoji(type) {
+      const emojis = {
+        coffee: '☕',
+        charging: '⚡',
+        viewpoint: '📸',
+        food: '🍽️',
+        park: '🌳',
+        other: '📍'
+      };
+      return emojis[type] || '📍';
+    }
+
+    function getStopGradient(type) {
+      const gradients = {
+        coffee: 'from-amber-400 to-orange-500',
+        charging: 'from-green-400 to-emerald-500',
+        viewpoint: 'from-blue-400 to-cyan-500',
+        food: 'from-red-400 to-pink-500',
+        park: 'from-green-500 to-teal-500',
+        other: 'from-purple-400 to-indigo-500'
+      };
+      return gradients[type] || 'from-gray-400 to-gray-500';
+    }
+
+    function drawAiRouteOnMap(routeData) {
+      // Clear previous AI route
+      clearAiRoute();
+
+      if (!routeData.waypoints || routeData.waypoints.length < 2) return;
+
+      // Draw the route polyline
+      aiRoutePolyline = new google.maps.Polyline({
+        path: routeData.waypoints,
+        strokeColor: '#9333EA',
+        strokeOpacity: 0,
+        strokeWeight: 6,
+        map: map,
+        zIndex: 200,
+        icons: [{
+          icon: {
+            path: 'M 0,-1 0,1',
+            strokeOpacity: 1,
+            strokeColor: '#9333EA',
+            strokeWeight: 6,
+            scale: 3
+          },
+          offset: '0',
+          repeat: '15px'
+        }]
+      });
+
+      // Add stop markers
+      if (routeData.stops) {
+        routeData.stops.forEach(stop => {
+          if (stop.lat && stop.lng) {
+            const marker = new google.maps.Marker({
+              position: { lat: stop.lat, lng: stop.lng },
+              map: map,
+              icon: {
+                url: `data:image/svg+xml,${encodeURIComponent(`
+                  <svg xmlns="http://www.w3.org/2000/svg" width="36" height="44" viewBox="0 0 36 44">
+                    <defs>
+                      <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#9333EA"/>
+                        <stop offset="100%" style="stop-color:#EC4899"/>
+                      </linearGradient>
+                    </defs>
+                    <path d="M18 0 C8 0 0 8 0 18 C0 31 18 44 18 44 C18 44 36 31 36 18 C36 8 28 0 18 0Z" fill="url(#grad)"/>
+                    <circle cx="18" cy="16" r="10" fill="white"/>
+                    <text x="18" y="20" text-anchor="middle" font-size="12">${getStopEmoji(stop.type)}</text>
+                  </svg>
+                `)}`,
+                scaledSize: new google.maps.Size(36, 44),
+                anchor: new google.maps.Point(18, 44)
+              },
+              title: stop.name,
+              zIndex: 201
+            });
+
+            marker.addListener('click', () => {
+              showToast(`${stop.name}: ${stop.why}`);
+            });
+
+            aiRouteMarkers.push(marker);
+          }
+        });
+      }
+
+      // Fit bounds to show full route
+      const bounds = new google.maps.LatLngBounds();
+      routeData.waypoints.forEach(wp => bounds.extend(wp));
+      if (routeData.stops) {
+        routeData.stops.forEach(stop => {
+          if (stop.lat && stop.lng) bounds.extend({ lat: stop.lat, lng: stop.lng });
+        });
+      }
+      map.fitBounds(bounds, { padding: 80 });
+    }
+
+    function clearAiRoute() {
+      if (aiRoutePolyline) {
+        aiRoutePolyline.setMap(null);
+        aiRoutePolyline = null;
+      }
+      aiRouteMarkers.forEach(marker => marker.setMap(null));
+      aiRouteMarkers = [];
+    }
+
+    function applyAiRoute() {
+      if (!lastAiRouteData || !lastAiRouteData.waypoints || lastAiRouteData.waypoints.length < 2) {
+        showToast('No route to apply');
+        return;
+      }
+
+      // Build Google Maps directions URL with waypoints
+      const waypoints = lastAiRouteData.waypoints;
+      const start = waypoints[0];
+      const end = waypoints[waypoints.length - 1];
+
+      let url = `https://www.google.com/maps/dir/?api=1&origin=${start.lat},${start.lng}&destination=${end.lat},${end.lng}&travelmode=bicycling`;
+
+      // Add intermediate waypoints (max 8 for Google Maps URL)
+      if (lastAiRouteData.stops && lastAiRouteData.stops.length > 0) {
+        const stopCoords = lastAiRouteData.stops
+          .filter(s => s.lat && s.lng)
+          .map(s => `${s.lat},${s.lng}`)
+          .slice(0, 8);
+
+        if (stopCoords.length > 0) {
+          url += `&waypoints=${stopCoords.join('|')}`;
+        }
+      }
+
+      window.open(url, '_blank');
+      closeAiRouteModal();
+      showToast('Opening route in Google Maps! 🗺️');
+    }
+
+    function regenerateAiRoute() {
+      document.getElementById('aiRouteResult').classList.add('hidden');
+      document.getElementById('generateRouteBtn').classList.remove('hidden');
+      clearAiRoute();
+    }
+
+    // ============================================
     // EVENT LISTENERS
     // ============================================
     document.addEventListener('DOMContentLoaded', () => {
@@ -1490,6 +2043,7 @@
       });
 
       // Sidebar buttons
+      document.getElementById('routeBtn').addEventListener('click', openAiRouteModal);
       document.getElementById('editBtn').addEventListener('click', openReportModal);
       document.getElementById('communityBtn').addEventListener('click', openCommunityModal);
       document.getElementById('layersBtn').addEventListener('click', openLayersModal);

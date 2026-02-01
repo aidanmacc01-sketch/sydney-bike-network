@@ -2,3 +2,7 @@
 // Copy this file to config.js and add your key
 // Get your key from: https://console.cloud.google.com/
 window.GOOGLE_MAPS_API_KEY = 'YOUR_API_KEY_HERE';
+
+// Google Gemini API Key (for AI route planning)
+// Get your key from: https://aistudio.google.com/app/apikey
+window.GEMINI_API_KEY = 'YOUR_GEMINI_API_KEY_HERE';
