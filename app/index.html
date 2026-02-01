@@ -222,6 +222,12 @@
           <span class="dark:text-white">Planned</span>
         </div>
       </div>
+      <div class="glass bg-white/80 dark:bg-slate-900/80 px-3 py-2 rounded-xl border border-white/30 shadow-lg">
+        <div class="flex items-center gap-2 text-xs font-medium">
+          <div class="w-3 h-3 rounded-full bg-pink-500"></div>
+          <span class="dark:text-white">Veloway</span>
+        </div>
+      </div>
     </div>
 
     <!-- Network Stats Banner -->
@@ -476,6 +482,16 @@
               <span class="font-medium dark:text-white">Communities</span>
             </div>
             <input type="checkbox" id="layerCommunities" checked class="w-5 h-5 rounded text-primary focus:ring-primary">
+          </label>
+
+          <div class="h-px bg-gray-200 dark:bg-gray-700 my-2"></div>
+
+          <label class="flex items-center justify-between p-3 rounded-xl bg-gradient-to-r from-pink-50 to-purple-50 dark:from-pink-900/20 dark:to-purple-900/20 cursor-pointer">
+            <div class="flex items-center gap-3">
+              <span class="text-xl">🛤️</span>
+              <span class="font-medium dark:text-white">Veloways (Regional)</span>
+            </div>
+            <input type="checkbox" id="layerVeloways" checked class="w-5 h-5 rounded text-pink-500 focus:ring-pink-500">
           </label>
         </div>
       </div>
@@ -843,6 +859,7 @@
   <script src="js/data-planned.js"></script>
   <script src="js/data-community.js"></script>
   <script src="js/data-education.js"></script>
+  <script src="js/data-veloways.js"></script>
 
   <!-- App Logic -->
   <script>
@@ -859,6 +876,7 @@
     let showCharging = true;
     let showStores = true;
     let showCommunities = true;
+    let showVeloways = true;
 
     // ============================================
     // MAP INITIALIZATION
@@ -968,6 +986,32 @@
       });
     }
 
+    function updateVelowayVisibility() {
+      polylines.forEach(polyline => {
+        if (polyline.isVeloway) {
+          const project = polyline.projectData;
+          let shouldShow = showVeloways;
+
+          // Also respect the current network view filter
+          if (shouldShow) {
+            switch (currentView) {
+              case 'current':
+                shouldShow = project.status === 'existing';
+                break;
+              case 'future':
+                shouldShow = ['existing', 'under_construction', 'funded'].includes(project.status);
+                break;
+              case 'all':
+                shouldShow = true;
+                break;
+            }
+          }
+
+          polyline.setMap(shouldShow ? map : null);
+        }
+      });
+    }
+
     // ============================================
     // MAP STYLES
     // ============================================
@@ -1013,21 +1057,31 @@
         });
       }
 
+      // Add Veloway Routes (Eastern Sydney Regional Bike Network)
+      if (typeof VELOWAY_ROUTES !== 'undefined') {
+        VELOWAY_ROUTES.forEach(veloway => {
+          if (!veloway.coordinates || veloway.coordinates.length < 2) return;
+          createPolyline(veloway, true); // true = is veloway
+        });
+      }
+
       // Apply initial view filter
       switchNetworkView('current');
     }
 
-    function createPolyline(project) {
+    function createPolyline(project, isVeloway = false) {
       const color = getStatusColor(project.status);
       const isPlanned = project.status === 'planned' || project.status === 'proposed';
+      const baseWeight = isVeloway ? 8 : 6;
+      const hoverWeight = isVeloway ? 12 : 10;
 
       const polylineOptions = {
         path: project.coordinates,
-        strokeColor: color,
-        strokeOpacity: isPlanned ? 0 : 1,
-        strokeWeight: 6,
+        strokeColor: isVeloway ? '#EC4899' : color, // Pink for veloways
+        strokeOpacity: isPlanned ? 0 : (isVeloway ? 0.9 : 1),
+        strokeWeight: baseWeight,
         map: null,
-        zIndex: project.status === 'existing' ? 100 : 50
+        zIndex: isVeloway ? 150 : (project.status === 'existing' ? 100 : 50)
       };
 
       const polyline = new google.maps.Polyline(polylineOptions);
@@ -1039,17 +1093,18 @@
             icon: {
               path: 'M 0,-1 0,1',
               strokeOpacity: 0.8,
-              strokeColor: color,
-              strokeWeight: 6,
-              scale: 4
+              strokeColor: isVeloway ? '#EC4899' : color,
+              strokeWeight: baseWeight,
+              scale: isVeloway ? 5 : 4
             },
             offset: '0',
-            repeat: '20px'
+            repeat: isVeloway ? '25px' : '20px'
           }]
         });
       }
 
       polyline.projectData = project;
+      polyline.isVeloway = isVeloway;
       polylines.push(polyline);
 
       // Click listener
@@ -1059,11 +1114,11 @@
 
       // Hover effects
       polyline.addListener('mouseover', () => {
-        polyline.setOptions({ strokeWeight: 10 });
+        polyline.setOptions({ strokeWeight: hoverWeight });
       });
 
       polyline.addListener('mouseout', () => {
-        polyline.setOptions({ strokeWeight: 6 });
+        polyline.setOptions({ strokeWeight: baseWeight });
       });
     }
 
@@ -1088,6 +1143,12 @@
       polylines.forEach(polyline => {
         const project = polyline.projectData;
         let shouldShow = false;
+
+        // Check if veloway layer is enabled
+        if (polyline.isVeloway && !showVeloways) {
+          polyline.setMap(null);
+          return;
+        }
 
         switch (view) {
           case 'current':
@@ -2649,6 +2710,10 @@ Include real Sydney locations, coffee shops, cycleways, and points of interest. 
       document.getElementById('layerCommunities').addEventListener('change', (e) => {
         showCommunities = e.target.checked;
         updatePoiVisibility();
+      });
+      document.getElementById('layerVeloways').addEventListener('change', (e) => {
+        showVeloways = e.target.checked;
+        updateVelowayVisibility();
       });
 
       // Sheet handle
