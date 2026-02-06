@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git branch:*)",
+      "Bash(git push:*)",
+      "WebFetch(domain:www.google.com)",
+      "Bash(python -m http.server:*)",
+      "Bash(start \"\" \"c:\\\\Users\\\\aidan\\\\Micro2Move Waze Feature''s \\(Design 1\\)\\\\app\\\\index.html\")",
+      "Bash(netstat:*)",
+      "Bash(findstr:*)"
+    ]
+  }
+}

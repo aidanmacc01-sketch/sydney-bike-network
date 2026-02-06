@@ -1,0 +1,3055 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+  <title>Micro2Move Sydney</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script>
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            primary: "#7C3AED",
+            "primary-dark": "#6D28D9",
+            "acc-green": "#22C55E",
+            "accent-green": "#4ADE80",
+            "background-light": "#f7f6f8",
+            "background-dark": "#171121",
+          },
+          fontFamily: {
+            display: ["Space Grotesk", "Inter", "sans-serif"],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .font-display { font-family: 'Space Grotesk', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+    }
+    .btn-ios-active:active {
+      transform: scale(0.98);
+      background-color: #7C3AED !important;
+      color: white !important;
+    }
+    .btn-ios-active:active * {
+      color: white !important;
+      border-color: rgba(255,255,255,0.3) !important;
+    }
+    .hide-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    .hide-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
+</head>
+<body class="overflow-hidden bg-background-light">
+
+  <!-- ============================================
+       SPLASH SCREEN
+       ============================================ -->
+  <div id="splashScreen" class="fixed inset-0 z-50 flex flex-col items-center justify-center" style="background-color: #1a1a4e;">
+    <div class="flex flex-col items-center justify-center flex-1 px-8">
+      <p class="text-white text-xl mb-12 tracking-wide">Making Sydney E-bike Friendly</p>
+
+      <div class="relative mb-16">
+        <svg class="absolute -left-4 -top-2 w-8 h-12" viewBox="0 0 24 36" fill="none">
+          <path d="M14 2L4 18h8l-2 16 12-20h-9l5-12h-4z" fill="#9333EA"/>
+        </svg>
+        <svg class="w-32 h-20" viewBox="0 0 120 80" fill="none">
+          <circle cx="25" cy="55" r="18" stroke="#22C55E" stroke-width="4" fill="none"/>
+          <circle cx="95" cy="55" r="18" stroke="#22C55E" stroke-width="4" fill="none"/>
+          <path d="M25 55 L50 30 L75 55 L95 55" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50 30 L50 20 L55 20" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M50 30 L75 30 L75 55" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M45 20 L55 20" stroke="#22C55E" stroke-width="4" stroke-linecap="round"/>
+          <path d="M85 25 L95 25 L95 35" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round"/>
+          <path d="M75 30 L95 25" stroke="#22C55E" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <p class="text-center mt-2">
+          <span class="text-primary text-xl font-bold">micro</span><span class="text-acc-green text-xl font-bold">2</span><span class="text-primary text-xl font-bold">move</span>
+        </p>
+      </div>
+
+      <div class="flex gap-2 text-xl font-semibold">
+        <span class="text-acc-green">Affordable</span>
+        <span class="text-primary">Reliable</span>
+        <span class="text-white">Safe</span>
+      </div>
+    </div>
+
+    <button onclick="showSignIn()" class="mb-12 text-white/60 text-sm animate-pulse">
+      Tap to continue
+    </button>
+  </div>
+
+  <!-- ============================================
+       SIGN IN SCREEN
+       ============================================ -->
+  <div id="signInScreen" class="fixed inset-0 z-50 bg-white flex flex-col hidden">
+    <div class="flex-1 px-6 pt-12 pb-6 overflow-y-auto">
+      <div class="flex items-center gap-2 mb-8">
+        <svg class="w-16 h-12" viewBox="0 0 60 45" fill="none">
+          <path d="M8 2L2 14h6l-1.5 12 9-15H9l4-9H8z" fill="#9333EA"/>
+          <circle cx="22" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <circle cx="52" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <path d="M22 32 L34 18 L46 32 L52 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 18 L34 12 L38 12" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M34 18 L46 18 L46 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-primary text-2xl font-bold">micro2move</span>
+      </div>
+
+      <h1 class="text-3xl font-light text-gray-900 mb-8">Sign in to continue</h1>
+
+      <form onsubmit="handleSignIn(event)" class="space-y-4">
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Email</label>
+            <span id="emailError" class="text-red-500 text-sm hidden">Invalid email/ Email does not exist.</span>
+          </div>
+          <input type="email" id="signInEmail" placeholder="johndoe@email.com"
+            class="w-full px-4 py-4 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Password</label>
+            <span id="passwordError" class="text-red-500 text-sm hidden">Incorrect password. Try again.</span>
+          </div>
+          <input type="password" id="signInPassword" placeholder="********"
+            class="w-full px-4 py-4 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <button type="submit"
+          class="w-full py-4 rounded-xl text-white font-semibold text-lg mt-6 transition-colors hover:opacity-90"
+          style="background-color: #A855F7;">
+          Sign In
+        </button>
+      </form>
+
+      <p class="text-center mt-6 text-gray-600">
+        Don't have an account?
+        <button onclick="showSignUp()" class="text-primary font-semibold hover:underline">Sign Up</button>
+      </p>
+
+      <button onclick="showWelcomeHub()" class="w-full text-gray-400 font-medium py-3 mt-4 hover:text-gray-600 transition-colors">
+        Skip for now
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SIGN UP SCREEN
+       ============================================ -->
+  <div id="signUpScreen" class="fixed inset-0 z-50 bg-white flex flex-col hidden">
+    <div class="flex-1 px-6 pt-12 pb-6 overflow-y-auto">
+      <div class="flex items-center gap-2 mb-6">
+        <svg class="w-16 h-12" viewBox="0 0 60 45" fill="none">
+          <path d="M8 2L2 14h6l-1.5 12 9-15H9l4-9H8z" fill="#9333EA"/>
+          <circle cx="22" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <circle cx="52" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <path d="M22 32 L34 18 L46 32 L52 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+        <span class="text-primary text-2xl font-bold">micro2move</span>
+      </div>
+
+      <h1 class="text-2xl font-bold text-gray-900 mb-6">Sign up</h1>
+
+      <form onsubmit="handleSignUp(event)" class="space-y-3">
+        <div>
+          <label class="text-gray-600 text-sm">Full Name (as displayed on government ID)</label>
+          <input type="text" placeholder="John Doe"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <div>
+          <label class="text-gray-600 text-sm">Date of Birth</label>
+          <input type="text" placeholder="DD/MM/YYYY"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <div>
+          <label class="text-gray-600 text-sm">Email (for receipts and rides)</label>
+          <input type="email" placeholder="john@micro2move.com"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <div>
+          <label class="text-gray-600 text-sm">Create Password</label>
+          <input type="password" placeholder="******"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none"
+            style="background-color: #EDE9FE;"/>
+        </div>
+
+        <div class="flex items-start gap-2 pt-2">
+          <input type="checkbox" class="mt-1 w-5 h-5 rounded border-gray-300"/>
+          <label class="text-gray-600 text-sm">I accept the <span class="text-primary font-semibold">Terms & Conditions</span></label>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-dashed border-gray-300 cursor-pointer hover:border-primary transition-colors" style="background-color: #EDE9FE;">
+            <span class="text-gray-500 text-xs text-center mb-2">Upload Government ID</span>
+            <span class="text-2xl text-gray-400">+</span>
+          </div>
+          <div class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-dashed border-gray-300 cursor-pointer hover:border-primary transition-colors" style="background-color: #EDE9FE;">
+            <span class="text-gray-500 text-xs text-center mb-2">Take Selfie Holding same Government ID</span>
+            <span class="material-icons-round text-gray-400">photo_camera</span>
+          </div>
+        </div>
+
+        <button type="submit"
+          class="w-full py-4 rounded-xl text-white font-semibold text-lg mt-4 transition-colors hover:opacity-90"
+          style="background-color: #A855F7;">
+          Continue
+        </button>
+      </form>
+
+      <p class="text-center mt-4 text-gray-600">
+        Already an user?
+        <button onclick="showSignIn()" class="text-primary font-semibold hover:underline">Sign in</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- ============================================
+       WELCOME HUB SCREEN
+       ============================================ -->
+  <div id="welcomeHub" class="fixed inset-0 z-40 bg-background-light flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col bg-white overflow-x-hidden shadow-2xl">
+
+      <!-- Header -->
+      <div class="flex flex-col items-center pt-12 px-10">
+        <h1 class="text-[#131118] tracking-tight text-[32px] font-bold leading-[1.1] text-center mb-8 font-display">
+          Making Sydney E-bike Friendly
+        </h1>
+
+        <!-- Logo -->
+        <div class="relative mb-10 flex items-center justify-center">
+          <div class="relative flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-5xl absolute -left-8 -top-4 rotate-12">bolt</span>
+            <div class="flex items-center">
+              <div class="relative size-24 flex items-center justify-center">
+                <span class="material-symbols-outlined text-7xl text-[#131118]">pedal_bike</span>
+                <div class="absolute bottom-1 left-2 size-8 rounded-full border-4 border-accent-green bg-transparent"></div>
+                <div class="absolute bottom-1 right-2 size-8 rounded-full border-4 border-accent-green bg-transparent"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="text-[#706189] text-center text-xl font-medium leading-normal mb-6">
+          What would you like to do today?
+        </p>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-col gap-4 p-6 grow">
+
+        <!-- View Cycling Communities -->
+        <button onclick="showScreen('cyclingCommunities')" class="btn-ios-active group flex items-center justify-between w-full p-6 rounded-[2rem] border-2 border-[#E5E2EA] bg-white shadow-sm hover:border-primary active:bg-primary transition-all duration-200 text-left">
+          <div class="flex items-center gap-5">
+            <div class="text-primary bg-primary/5 p-4 rounded-full flex items-center justify-center group-active:bg-white/20">
+              <span class="material-symbols-outlined text-3xl">explore</span>
+            </div>
+            <div>
+              <h3 class="text-[#131118] text-xl font-bold font-display leading-tight group-active:text-white">View Cycling Communities</h3>
+              <p class="text-[#706189] text-sm group-active:text-white/80">Explore regional cycling groups</p>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-[#706189] text-2xl font-bold transition-transform group-hover:translate-x-1 group-active:text-white">chevron_right</span>
+        </button>
+
+        <!-- Find an E-bike (Primary CTA) -->
+        <button onclick="showScreen('findEbike')" class="btn-ios-active group flex items-center justify-between w-full p-6 rounded-[2rem] bg-primary text-white shadow-xl shadow-primary/30 hover:bg-primary-dark transition-all duration-200 text-left">
+          <div class="flex items-center gap-5">
+            <div class="bg-white/20 p-4 rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-3xl">electric_bike</span>
+            </div>
+            <div>
+              <h3 class="text-xl font-bold font-display leading-tight">Find an E-bike</h3>
+              <p class="text-white/80 text-sm">Locate nearby rides in Sydney</p>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-2xl font-bold transition-transform group-hover:translate-x-1">chevron_right</span>
+        </button>
+
+        <!-- Community -->
+        <button onclick="handleCommunityClick()" class="btn-ios-active group flex items-center justify-between w-full p-6 rounded-[2rem] border-2 border-[#E5E2EA] bg-white shadow-sm hover:border-primary active:bg-primary transition-all duration-200 text-left">
+          <div class="flex items-center gap-5">
+            <div class="text-primary bg-primary/5 p-4 rounded-full flex items-center justify-center group-active:bg-white/20">
+              <span class="material-symbols-outlined text-3xl">groups</span>
+            </div>
+            <div>
+              <h3 class="text-[#131118] text-xl font-bold font-display leading-tight group-active:text-white">Community</h3>
+              <p class="text-[#706189] text-sm group-active:text-white/80">Join local group rides</p>
+            </div>
+          </div>
+          <span class="material-symbols-outlined text-[#706189] text-2xl font-bold transition-transform group-hover:translate-x-1 group-active:text-white">chevron_right</span>
+        </button>
+
+      </div>
+
+      <!-- Footer -->
+      <div class="pb-10 pt-4 text-center">
+        <p class="text-[#706189] text-sm font-medium">Micro2Move - Sydney, Australia</p>
+      </div>
+
+      <!-- Reset Button (for testing) -->
+      <div class="absolute top-4 right-4">
+        <button onclick="resetOnboarding()" class="text-xs text-gray-400 hover:text-primary">
+          Reset
+        </button>
+      </div>
+
+    </div>
+
+    <!-- ============================================
+         TNC MODAL OVERLAY (4 Steps)
+         ============================================ -->
+    <div id="tncModal" class="absolute inset-0 z-50 bg-white flex flex-col">
+
+      <!-- TNC Step 1: Privacy -->
+      <div id="tncStep1" class="flex flex-col h-full">
+        <!-- Header -->
+        <div class="flex items-center bg-transparent p-4 pb-2 justify-between">
+          <button onclick="closeTncModal()" class="text-primary flex size-12 shrink-0 items-center justify-center">
+            <span class="material-symbols-outlined text-2xl">close</span>
+          </button>
+          <h2 class="text-primary text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Privacy</h2>
+          <div class="size-12"></div>
+        </div>
+
+        <!-- Progress Dots -->
+        <div class="flex w-full flex-row items-center justify-center gap-3 py-4">
+          <div class="h-1.5 w-8 rounded-full bg-primary"></div>
+          <div class="h-1.5 w-1.5 rounded-full bg-primary/20"></div>
+          <div class="h-1.5 w-1.5 rounded-full bg-primary/20"></div>
+          <div class="h-1.5 w-1.5 rounded-full bg-primary/20"></div>
+        </div>
+
+        <!-- Content -->
+        <div class="flex-1 overflow-y-auto pb-32">
+          <div class="flex justify-center pt-10 pb-6">
+            <div class="w-36 h-36 bg-primary/10 rounded-full flex items-center justify-center relative">
+              <div class="absolute inset-0 rounded-full border-2 border-primary/5 animate-pulse"></div>
+              <span class="material-symbols-outlined text-primary text-[72px]">shield_with_heart</span>
+            </div>
+          </div>
+
+          <h1 class="text-primary tracking-tight text-[32px] font-bold leading-tight px-8 text-center pb-3 font-display">
+            Your Privacy Matters
+          </h1>
+
+          <p class="text-slate-600 text-base font-normal leading-relaxed pb-8 pt-1 px-10 text-center">
+            At Micro2Move, we're committed to being transparent about how we handle your data.
+          </p>
+
+          <div class="px-5 space-y-4">
+            <div class="bg-white border border-primary/10 p-5 rounded-2xl flex items-start gap-4 shadow-sm">
+              <div class="bg-primary/10 p-3 rounded-xl">
+                <span class="material-symbols-outlined text-primary">verified_user</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-primary font-bold text-lg mb-1 font-display">Our Privacy Promise</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">We will never sell your personal data to third parties. Your trust is our foundation.</p>
+              </div>
+            </div>
+
+            <div class="bg-white border border-primary/10 p-5 rounded-2xl flex items-start gap-4 shadow-sm">
+              <div class="bg-primary/10 p-3 rounded-xl">
+                <span class="material-symbols-outlined text-primary">gavel</span>
+              </div>
+              <div class="flex-1">
+                <h3 class="text-primary font-bold text-lg mb-1 font-display">Your Rights at a Glance</h3>
+                <p class="text-slate-500 text-sm leading-relaxed">You have full control over your information, including the right to access, edit, or delete it anytime.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-5 mt-10">
+            <div class="w-full bg-primary/5 rounded-2xl min-h-[120px] border-2 border-dashed border-primary/20 flex items-center justify-center">
+              <div class="flex items-center gap-2 opacity-40">
+                <span class="material-symbols-outlined text-primary text-xl">hub</span>
+                <span class="text-primary font-semibold tracking-wide text-sm uppercase">Secure Micro2Move Ecosystem</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom Button -->
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-white/80 backdrop-blur-xl border-t border-slate-100">
+          <button onclick="showTncStep(2)" class="w-full bg-primary hover:bg-primary/90 text-white font-bold h-[60px] rounded-2xl transition-all active:scale-[0.98] shadow-xl shadow-primary/25 flex items-center justify-center gap-2">
+            <span class="text-lg">Continue</span>
+            <span class="material-symbols-outlined font-bold">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- TNC Step 2: Personal Data -->
+      <div id="tncStep2" class="flex flex-col h-full hidden">
+        <div class="flex items-center bg-white/80 backdrop-blur-md sticky top-0 z-20 p-4 pb-2 justify-between">
+          <button onclick="showTncStep(1)" class="text-primary flex size-12 shrink-0 items-center justify-start">
+            <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+          </button>
+          <h2 class="text-slate-900 text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Personal Data</h2>
+          <div class="size-12"></div>
+        </div>
+
+        <div class="flex w-full flex-row items-center justify-center gap-3 py-4 bg-white">
+          <div class="h-1.5 w-6 rounded-full bg-primary/30"></div>
+          <div class="h-1.5 w-6 rounded-full bg-primary"></div>
+          <div class="h-1.5 w-1.5 rounded-full bg-slate-200"></div>
+          <div class="h-1.5 w-1.5 rounded-full bg-slate-200"></div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto pb-32">
+          <div class="px-6 pt-6 pb-2">
+            <h1 class="text-slate-900 tracking-tight text-2xl font-bold leading-tight mb-2 font-display">
+              Manage your data
+            </h1>
+            <p class="text-slate-500 text-base">
+              Choose what information you'd like to share to personalize your Micro2Move experience.
+            </p>
+          </div>
+
+          <div class="mt-6 px-4">
+            <div class="bg-slate-50 rounded-2xl p-2">
+              <!-- Profile Details Toggle -->
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl mb-1 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4">
+                  <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-xl">person</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-900">Profile Details</h4>
+                    <p class="text-xs text-slate-500">Name, email, and avatar</p>
+                  </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+              </div>
+
+              <!-- Location Access Toggle -->
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl mb-1 shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4">
+                  <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-900">Location Access</h4>
+                    <p class="text-xs text-slate-500">Used for local ride finding</p>
+                  </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" checked class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+              </div>
+
+              <!-- Usage Analytics Toggle -->
+              <div class="flex items-center justify-between p-4 bg-white rounded-xl shadow-sm border border-slate-100">
+                <div class="flex items-center gap-4">
+                  <div class="size-10 rounded-full bg-primary/10 flex items-center justify-center">
+                    <span class="material-symbols-outlined text-primary text-xl">analytics</span>
+                  </div>
+                  <div>
+                    <h4 class="font-semibold text-slate-900">Usage Analytics</h4>
+                    <p class="text-xs text-slate-500">Help us improve the app</p>
+                  </div>
+                </div>
+                <label class="relative inline-flex items-center cursor-pointer">
+                  <input type="checkbox" class="sr-only peer">
+                  <div class="w-11 h-6 bg-slate-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+                </label>
+              </div>
+            </div>
+          </div>
+
+          <div class="px-4 mt-6">
+            <div class="bg-primary p-5 rounded-2xl text-white flex items-center gap-4 shadow-lg shadow-primary/20">
+              <div class="bg-white/20 p-2 rounded-lg">
+                <span class="material-symbols-outlined text-white">lock</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-base leading-tight">Secure Storage</h3>
+                <p class="text-purple-100 text-sm">Your data is encrypted using industry-standard protocols.</p>
+              </div>
+            </div>
+          </div>
+
+          <p class="px-8 mt-8 text-center text-xs text-slate-400 leading-relaxed">
+            You can change these settings at any time in the Privacy section of your profile.
+          </p>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-white/90 backdrop-blur-md border-t border-slate-100">
+          <div class="flex flex-col gap-3">
+            <button onclick="showTncStep(3)" class="w-full bg-primary hover:bg-purple-900 text-white font-bold py-4 rounded-xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
+              Continue
+              <span class="material-symbols-outlined">arrow_forward</span>
+            </button>
+            <button class="w-full bg-transparent text-slate-500 font-medium py-2 rounded-xl transition-colors flex items-center justify-center text-sm">
+              Review detailed policy
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- TNC Step 3: Location Data -->
+      <div id="tncStep3" class="flex flex-col h-full hidden bg-[#FDFCFE]">
+        <div class="flex items-center bg-transparent p-4 pb-2 justify-between">
+          <button onclick="showTncStep(2)" class="text-primary flex size-12 shrink-0 items-center">
+            <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+          </button>
+          <h2 class="text-primary text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">Step 3 of 4</h2>
+          <div class="size-12"></div>
+        </div>
+
+        <div class="flex w-full flex-row items-center justify-center gap-3 py-4">
+          <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+          <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+          <div class="h-2 w-6 rounded-full bg-primary"></div>
+          <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto pb-32">
+          <div class="px-6 pt-4 pb-8">
+            <div class="relative w-full aspect-square bg-primary/5 rounded-3xl overflow-hidden border border-primary/10" style="background-image: radial-gradient(circle, #7C3AED 1px, transparent 1px); background-size: 24px 24px;">
+              <div class="absolute inset-0 flex items-center justify-center">
+                <svg class="w-full h-full opacity-20" viewBox="0 0 100 100">
+                  <path d="M10,50 Q30,20 50,50 T90,50" fill="none" stroke="#7C3AED" stroke-linecap="round" stroke-width="4"></path>
+                  <path d="M20,10 Q50,40 80,10" fill="none" stroke="#7C3AED" stroke-linecap="round" stroke-width="4"></path>
+                  <circle cx="50" cy="50" fill="none" r="30" stroke="#7C3AED" stroke-dasharray="4 4" stroke-width="1"></circle>
+                </svg>
+                <div class="relative flex items-center justify-center">
+                  <div class="absolute w-24 h-24 bg-primary/20 rounded-full animate-ping"></div>
+                  <div class="absolute w-16 h-16 bg-primary/30 rounded-full"></div>
+                  <div class="z-10 bg-white p-3 rounded-full shadow-xl">
+                    <span class="material-symbols-outlined text-primary text-4xl">location_on</span>
+                  </div>
+                </div>
+                <div class="absolute top-4 right-4 bg-white/90 backdrop-blur p-2 rounded-lg shadow-sm border border-primary/10">
+                  <span class="material-symbols-outlined text-primary">navigation</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <h1 class="text-primary tracking-tight text-[28px] font-bold leading-tight px-6 text-center pb-3 font-display">
+            Location Data
+          </h1>
+
+          <p class="text-primary/80 text-base font-normal leading-relaxed pb-8 px-10 text-center">
+            We use your location to find nearby vehicles and calculate the most efficient routes for your journey.
+          </p>
+
+          <div class="px-6 space-y-4">
+            <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-primary/5">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 flex items-center justify-center rounded-full">
+                <span class="material-symbols-outlined text-primary text-xl">near_me</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-primary font-display">Precise Pickups</h3>
+                <p class="text-sm text-primary/60">Find the exact spot of your Micro2Move ride.</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-primary/5">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 flex items-center justify-center rounded-full">
+                <span class="material-symbols-outlined text-primary text-xl">route</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-primary font-display">Live Navigation</h3>
+                <p class="text-sm text-primary/60">Get real-time updates and turn-by-turn guidance.</p>
+              </div>
+            </div>
+
+            <div class="flex items-center gap-4 p-4 bg-white rounded-2xl border border-primary/5">
+              <div class="flex-shrink-0 w-10 h-10 bg-primary/10 flex items-center justify-center rounded-full">
+                <span class="material-symbols-outlined text-primary text-xl">verified</span>
+              </div>
+              <div>
+                <h3 class="font-bold text-primary font-display">Ride History</h3>
+                <p class="text-sm text-primary/60">Securely log your trips for easy expense reporting.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-[#FDFCFE]/95 backdrop-blur-md flex flex-col gap-3">
+          <button onclick="showTncStep(4)" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
+            Next Step
+            <span class="material-symbols-outlined">arrow_forward</span>
+          </button>
+          <button class="w-full py-2 text-primary/60 font-medium text-sm">
+            Learn more about data usage
+          </button>
+        </div>
+      </div>
+
+      <!-- TNC Step 4: Final Consent -->
+      <div id="tncStep4" class="flex flex-col h-full hidden bg-[#FDFCFE]">
+        <div class="flex items-center bg-transparent p-4 pb-2 justify-between">
+          <button onclick="showTncStep(3)" class="text-primary flex size-12 shrink-0 items-center justify-start">
+            <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+          </button>
+          <h2 class="text-primary text-lg font-bold leading-tight tracking-tight flex-1 text-center font-display">Final Consent</h2>
+          <div class="size-12"></div>
+        </div>
+
+        <div class="flex w-full flex-row items-center justify-center gap-3 py-4">
+          <div class="h-2 w-2 rounded-full bg-primary"></div>
+          <div class="h-2 w-2 rounded-full bg-primary"></div>
+          <div class="h-2 w-2 rounded-full bg-primary"></div>
+          <div class="h-2 w-10 rounded-full bg-primary transition-all duration-500"></div>
+        </div>
+
+        <div class="flex-1 overflow-y-auto pb-32">
+          <div class="flex justify-center pt-8 pb-4">
+            <div class="w-32 h-32 bg-primary/10 rounded-full flex items-center justify-center relative">
+              <span class="material-symbols-outlined text-primary text-[64px]">task_alt</span>
+              <div class="absolute -bottom-1 -right-1 bg-white p-1 rounded-full">
+                <span class="material-symbols-outlined text-primary text-3xl">verified</span>
+              </div>
+            </div>
+          </div>
+
+          <h1 class="text-primary tracking-tight text-[28px] font-bold leading-tight px-6 text-center pb-3 font-display">
+            All Set to Move Securely
+          </h1>
+
+          <p class="text-primary/80 text-base font-normal leading-normal pb-8 pt-1 px-8 text-center">
+            Review your selections. You're just one step away from joining the ecosystem.
+          </p>
+
+          <div class="px-6 space-y-3">
+            <!-- Essential Location Access -->
+            <div class="flex items-center gap-4 p-4 bg-white border border-primary/10 rounded-2xl">
+              <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-primary text-xl">location_on</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-primary font-semibold text-sm">Essential Location Access</p>
+                <p class="text-primary/60 text-xs">Used only during active rides</p>
+              </div>
+              <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+            </div>
+
+            <!-- Smart Notifications -->
+            <div class="flex items-center gap-4 p-4 bg-white border border-primary/10 rounded-2xl">
+              <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-primary text-xl">notifications</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-primary font-semibold text-sm">Smart Notifications</p>
+                <p class="text-primary/60 text-xs">Service updates and safety alerts</p>
+              </div>
+              <span class="material-symbols-outlined text-primary text-xl">check_circle</span>
+            </div>
+
+            <!-- Anonymous Analytics (Optional) -->
+            <div class="flex items-center gap-4 p-4 bg-white border border-primary/10 rounded-2xl opacity-70">
+              <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center shrink-0">
+                <span class="material-symbols-outlined text-primary text-xl">analytics</span>
+              </div>
+              <div class="flex-1">
+                <p class="text-primary font-semibold text-sm">Anonymous Analytics</p>
+                <p class="text-primary/60 text-xs">Help us improve the community</p>
+              </div>
+              <span class="material-symbols-outlined text-primary/30 text-xl">circle</span>
+            </div>
+          </div>
+
+          <div class="px-8 mt-10">
+            <p class="text-center text-xs text-primary/60 leading-relaxed">
+              By tapping 'Accept All & Finish', you agree to our <span class="text-primary font-bold underline">Terms of Service</span> and <span class="text-primary font-bold underline">Privacy Policy</span>. You can update these settings anytime in your profile.
+            </p>
+          </div>
+        </div>
+
+        <div class="absolute bottom-0 left-0 right-0 p-6 bg-[#FDFCFE]/95 backdrop-blur-md border-t border-primary/5">
+          <div class="flex flex-col gap-3">
+            <button onclick="completeTnc()" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-2xl transition-all shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98]">
+              Accept All & Finish
+              <span class="material-symbols-outlined">done_all</span>
+            </button>
+            <button class="w-full bg-transparent text-primary/70 font-medium py-3 text-sm hover:text-primary transition-colors">
+              Customize Settings
+            </button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       PLACEHOLDER SCREENS (Coming Soon)
+       ============================================ -->
+
+  <!-- Cycling Communities Screen -->
+  <div id="cyclingCommunities" class="fixed inset-0 z-30 bg-background-light flex flex-col hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] mx-auto flex-col bg-background-light overflow-x-hidden shadow-2xl pb-24">
+
+      <!-- Header -->
+      <header class="sticky top-0 z-50 bg-background-light/80 backdrop-blur-md px-6 pt-12 pb-4">
+        <div class="flex items-center justify-between mb-4">
+          <button onclick="showWelcomeHub()" class="flex items-center gap-1 text-primary font-medium">
+            <span class="material-symbols-outlined text-2xl">chevron_left</span>
+            <span>Back</span>
+          </button>
+          <button class="bg-gray-200/50 p-2 rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-[#706189]">search</span>
+          </button>
+        </div>
+        <h1 class="text-3xl font-bold font-display text-center text-[#131118] mb-6">Cycling Communities</h1>
+
+        <!-- List/Map Toggle -->
+        <div class="bg-gray-200/50 p-1 rounded-full flex items-center max-w-[320px] mx-auto">
+          <button id="listTabBtn" onclick="showCommunityView('list')" class="flex-1 bg-white py-2 rounded-full text-sm font-bold text-primary shadow-sm flex items-center justify-center gap-2 transition-all">
+            <span class="material-symbols-outlined text-lg">format_list_bulleted</span>
+            List
+          </button>
+          <button id="mapTabBtn" onclick="showCommunityView('map')" class="flex-1 py-2 rounded-full text-sm font-bold text-[#706189] flex items-center justify-center gap-2 transition-all">
+            <span class="material-symbols-outlined text-lg text-gray-400">map</span>
+            Map
+          </button>
+        </div>
+      </header>
+
+      <!-- MAP VIEW -->
+      <div id="communityMapView" class="flex-1 flex flex-col hidden">
+        <div class="flex-1 relative">
+          <!-- Google My Maps Embed -->
+          <iframe
+            src="https://www.google.com/maps/d/embed?mid=18LrGVELKm9obR7Xh_BH6_r7sAzc&ll=-33.93341871901306,151.18499007419956&z=12"
+            class="w-full h-full absolute inset-0"
+            style="border:0; min-height: 600px;"
+            allowfullscreen=""
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade">
+          </iframe>
+
+          <!-- Floating Community Card -->
+          <div class="absolute bottom-32 left-4 right-4 bg-white rounded-2xl shadow-xl border border-gray-100 p-4 z-10">
+            <div class="flex gap-4">
+              <div class="w-20 h-20 rounded-xl overflow-hidden flex-shrink-0">
+                <img alt="Easts Cycling Club" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGw7oCs3P-c9dLFvH4YNOZLWBaKMwLhbUXZXEYazxnv31ieb_bmxmtfOG-98ixSAF6gYBC0YENZdZBahxsLdRxYcdha9on99bNhrXl7JaO0OreBsU6Nwunt5VlAsBRVx4KOCE_1b2cdbb2ZjzLeRQx9W2aprw8Z2ag8cuzkLkf1T-vZizmlePR82NN2XI7cskgZTmfXJMvq3v7Mrxb27yvjOll2uSFgBFpeAi8SycM2xufzzgQVY2t74zEUgpx1qFHSad4NN_JKj7N"/>
+              </div>
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="bg-primary text-white text-[8px] font-bold px-2 py-0.5 rounded-full uppercase">Verified</span>
+                  <div class="flex items-center gap-0.5 text-primary">
+                    <span class="material-symbols-outlined text-sm">star</span>
+                    <span class="font-bold text-xs">4.9</span>
+                  </div>
+                </div>
+                <h3 class="text-base font-bold font-display text-[#131118] truncate">Easts Cycling Club</h3>
+                <div class="flex items-center gap-1 text-[#706189] text-xs mt-1">
+                  <span class="material-symbols-outlined text-sm">groups</span>
+                  <span>1,240 Members</span>
+                  <span class="mx-1">•</span>
+                  <span>2.3 km away</span>
+                </div>
+              </div>
+            </div>
+            <button class="w-full bg-primary text-white font-bold py-3 rounded-xl mt-3 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+              <span class="material-symbols-outlined text-lg">directions</span>
+              Get Directions
+            </button>
+          </div>
+
+          <!-- Map Controls -->
+          <div class="absolute top-4 right-4 flex flex-col gap-2 z-10">
+            <button class="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50">
+              <span class="material-symbols-outlined text-primary">my_location</span>
+            </button>
+            <button class="bg-white p-3 rounded-xl shadow-lg border border-gray-100 active:bg-gray-50">
+              <span class="material-symbols-outlined text-primary">layers</span>
+            </button>
+          </div>
+
+          <!-- Community Legend -->
+          <div class="absolute top-4 left-4 bg-white/95 backdrop-blur-sm rounded-xl shadow-lg border border-gray-100 p-3 z-10">
+            <p class="text-xs font-bold text-[#131118] mb-2">Sydney Communities</p>
+            <div class="flex flex-col gap-1.5">
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-primary"></div>
+                <span class="text-[10px] text-[#706189]">Cycling Clubs (5)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-accent-green"></div>
+                <span class="text-[10px] text-[#706189]">E-bike Hubs (3)</span>
+              </div>
+              <div class="flex items-center gap-2">
+                <div class="w-3 h-3 rounded-full bg-amber-500"></div>
+                <span class="text-[10px] text-[#706189]">Events Today (2)</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- LIST VIEW - Community Cards -->
+      <div id="communityListView" class="flex flex-col gap-5 px-6 pt-4 overflow-y-auto flex-1">
+
+        <!-- Easts Cycling Club -->
+        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-gray-100 group">
+          <div class="h-52 overflow-hidden relative">
+            <img alt="Easts Cycling Club" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGw7oCs3P-c9dLFvH4YNOZLWBaKMwLhbUXZXEYazxnv31ieb_bmxmtfOG-98ixSAF6gYBC0YENZdZBahxsLdRxYcdha9on99bNhrXl7JaO0OreBsU6Nwunt5VlAsBRVx4KOCE_1b2cdbb2ZjzLeRQx9W2aprw8Z2ag8cuzkLkf1T-vZizmlePR82NN2XI7cskgZTmfXJMvq3v7Mrxb27yvjOll2uSFgBFpeAi8SycM2xufzzgQVY2t74zEUgpx1qFHSad4NN_JKj7N"/>
+            <div class="absolute top-4 left-4 bg-primary text-white text-[10px] font-bold px-3 py-1 rounded-full uppercase tracking-wider">Verified Group</div>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-xl font-bold font-display text-[#131118]">Easts Cycling Club</h3>
+              <div class="flex items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-lg">star</span>
+                <span class="font-bold text-sm">4.9</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-[#706189] text-xs mb-3 font-medium">
+              <span class="material-symbols-outlined text-base">groups</span>
+              <span>1,240 Members</span>
+              <span class="mx-0.5">•</span>
+              <span class="material-symbols-outlined text-base">location_on</span>
+              <span>Eastern Suburbs</span>
+            </div>
+            <p class="text-[#706189] text-sm leading-relaxed mb-6">
+              The premier cycling club for Sydney's eastern suburbs. Join us for coastal rides, sunrise training sessions, and social weekend tours through the scenic east.
+            </p>
+            <button class="w-full bg-[#F3E8FF] text-primary font-bold py-4 rounded-2xl hover:bg-primary hover:text-white transition-colors duration-200">
+              Join Community
+            </button>
+          </div>
+        </div>
+
+        <!-- Parra-Bike Hub -->
+        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-gray-100 group mb-4">
+          <div class="h-52 overflow-hidden relative">
+            <img alt="Parra-Bike Hub" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDSu5sbPTJErkSjGOdSw7KGqbftqUbaiQz54aP5WFtsCQ94AATEYQMC-fFYzMfLV4d2K35juYMZ5ddmfXCgQq-0IhVtwG8-UprUdxQL1_A1D8bahVDWBLR4cMIIBpzmXAouCKKG9MR1QEti5t-Hh2lZOmJ8YHQ69aEoErhkxVvPPoLYZNHLcrfAglpsZQ4QnXSpUhU_c5n23NvJqlGkVmKCA6oQjlCRp9kY4wPzn_j26rpVFeusU84YFRTwQbdOsm4FnMHCmI5NWEzs"/>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-xl font-bold font-display text-[#131118]">Parra-Bike Hub</h3>
+              <div class="flex items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-lg">star</span>
+                <span class="font-bold text-sm">4.7</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-[#706189] text-xs mb-3 font-medium">
+              <span class="material-symbols-outlined text-base">groups</span>
+              <span>856 Members</span>
+              <span class="mx-0.5">•</span>
+              <span class="material-symbols-outlined text-base">location_on</span>
+              <span>Parramatta & West</span>
+            </div>
+            <p class="text-[#706189] text-sm leading-relaxed mb-6">
+              E-bike Education: Join us for workshops, safety courses, and community rides in the heart of Parramatta.
+            </p>
+            <button class="w-full bg-[#F3E8FF] text-primary font-bold py-4 rounded-2xl hover:bg-primary hover:text-white transition-colors duration-200">
+              Join Community
+            </button>
+          </div>
+        </div>
+
+        <!-- Northern Beaches Riders -->
+        <div class="bg-white rounded-[2.5rem] overflow-hidden shadow-sm border border-gray-100 group mb-4">
+          <div class="h-52 overflow-hidden relative bg-gradient-to-br from-primary/20 to-accent-green/20 flex items-center justify-center">
+            <span class="material-symbols-outlined text-6xl text-primary/40">directions_bike</span>
+          </div>
+          <div class="p-6">
+            <div class="flex justify-between items-center mb-2">
+              <h3 class="text-xl font-bold font-display text-[#131118]">Northern Beaches Riders</h3>
+              <div class="flex items-center gap-1 text-primary">
+                <span class="material-symbols-outlined text-lg">star</span>
+                <span class="font-bold text-sm">4.8</span>
+              </div>
+            </div>
+            <div class="flex items-center gap-2 text-[#706189] text-xs mb-3 font-medium">
+              <span class="material-symbols-outlined text-base">groups</span>
+              <span>678 Members</span>
+              <span class="mx-0.5">•</span>
+              <span class="material-symbols-outlined text-base">location_on</span>
+              <span>Northern Beaches</span>
+            </div>
+            <p class="text-[#706189] text-sm leading-relaxed mb-6">
+              Beach to bush rides along Sydney's stunning Northern Beaches. Perfect for weekend warriors and daily commuters alike.
+            </p>
+            <button class="w-full bg-[#F3E8FF] text-primary font-bold py-4 rounded-2xl hover:bg-primary hover:text-white transition-colors duration-200">
+              Join Community
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Bottom Tab Bar -->
+      <nav class="fixed bottom-0 w-full max-w-[430px] bg-white/95 backdrop-blur-lg border-t border-gray-100 px-8 pt-3 pb-8 flex justify-between items-center z-50" style="box-shadow: 0 -2px 10px rgba(0,0,0,0.05);">
+        <button onclick="showWelcomeHub()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl">home</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl font-bold">groups</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Community</span>
+        </button>
+        <div class="relative -top-8">
+          <button class="bg-primary p-4 rounded-full shadow-lg shadow-primary/40 text-white flex items-center justify-center transform active:scale-95 transition-transform border-4 border-white">
+            <span class="material-symbols-outlined text-3xl">add</span>
+          </button>
+        </div>
+        <button onclick="showScreen('findEbike')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl">electric_bike</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Rides</span>
+        </button>
+        <button onclick="showScreen('community')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl">person</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Profile</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- Find E-bike Placeholder -->
+  <!-- ============================================
+       SCREEN 1: E-BIKE DEMO STORE FINDER
+       ============================================ -->
+  <div id="findEbike" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white">
+      <header class="sticky top-0 z-50 flex items-center bg-white/80 backdrop-blur-md p-4 pb-2 justify-between border-b border-[#e5e5f0]">
+        <div onclick="showWelcomeHub()" class="flex size-12 shrink-0 items-center cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios_new</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center font-display">E-bike Demos Near You</h2>
+        <div class="flex w-12 items-center justify-end">
+          <button class="flex cursor-pointer items-center justify-center rounded-lg h-12 bg-transparent">
+            <span class="material-symbols-outlined">tune</span>
+          </button>
+        </div>
+      </header>
+
+      <main class="flex-1 pb-24 overflow-y-auto">
+        <!-- Location Bar -->
+        <div class="flex items-center gap-4 bg-white mx-4 mt-4 rounded-xl p-3 shadow-sm border border-[#e5e5f0]">
+          <div class="flex items-center gap-3 flex-1">
+            <div class="text-primary flex items-center justify-center rounded-lg bg-primary/10 shrink-0 size-10">
+              <span class="material-symbols-outlined">location_on</span>
+            </div>
+            <div>
+              <p class="text-[10px] text-[#828298] font-bold uppercase tracking-wider">Your Location</p>
+              <p class="text-base font-bold leading-none">Kingsford, NSW</p>
+            </div>
+          </div>
+          <div class="shrink-0">
+            <span class="material-symbols-outlined text-[#828298]">chevron_right</span>
+          </div>
+        </div>
+
+        <!-- Filter Chips -->
+        <div class="flex gap-2 p-4 overflow-x-auto hide-scrollbar">
+          <div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-primary text-white px-4 shadow-sm">
+            <span class="material-symbols-outlined text-sm">schedule</span>
+            <p class="text-sm font-medium">Open Now</p>
+          </div>
+          <div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white border border-[#e5e5f0] px-4">
+            <span class="material-symbols-outlined text-sm text-primary">safety_check</span>
+            <p class="text-sm font-medium">Free Helmets</p>
+          </div>
+          <div class="flex h-9 shrink-0 items-center justify-center gap-x-2 rounded-lg bg-white border border-[#e5e5f0] px-4">
+            <span class="material-symbols-outlined text-sm text-primary">battery_charging_full</span>
+            <p class="text-sm font-medium">Fast Charging</p>
+          </div>
+        </div>
+
+        <!-- Promo Banner -->
+        <div class="px-4 mb-6">
+          <div class="flex flex-col overflow-hidden rounded-2xl bg-gradient-to-br from-primary via-[#6D28D9] to-[#5B21B6] text-white shadow-xl relative">
+            <div class="absolute top-0 right-0 p-4 opacity-10">
+              <span class="material-symbols-outlined !text-8xl">electric_bike</span>
+            </div>
+            <div class="p-6 relative z-10">
+              <span class="bg-white/20 backdrop-blur-md px-2 py-1 rounded text-[10px] font-bold uppercase tracking-widest mb-2 inline-block">Limited Offer</span>
+              <h4 class="text-2xl font-bold leading-tight mb-1 font-display">First demo free</h4>
+              <p class="text-white/80 text-sm mb-4 max-w-[200px]">Start your journey with Micro2Move today at any partner store!</p>
+              <button class="bg-white text-primary px-6 py-2 rounded-lg text-sm font-bold shadow-lg active:scale-95 transition-transform">Claim Offer</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Store Partners Header -->
+        <div class="px-4 pb-2">
+          <h3 class="text-xl font-bold leading-tight tracking-[-0.015em] font-display">Store Partners</h3>
+          <p class="text-[#828298] text-sm">Find certified e-bike experts near you</p>
+        </div>
+
+        <!-- Store Cards -->
+        <div class="px-4 space-y-4 pt-2">
+          <!-- Store 1: Sydney E-bikes -->
+          <div onclick="showScreen('bookDemo')" class="bg-white rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(124,58,237,0.06)] border border-[#e5e5f0] cursor-pointer active:scale-[0.98] transition-transform">
+            <div class="flex p-4 gap-4">
+              <div class="w-20 h-20 rounded-lg bg-cover bg-center shrink-0 border border-[#e5e5f0]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBjxmwb2MpT5ETcR91e7SyVN_WZhPgx6yN5MdCpnxmpC1YA376fq1WHfrSzyzdTwv4B5m-ZZ_KYk_ariBlH9CMA17Md8FURmGE9AjFRm1rXxxnn_GU1euzWOh508-8Ybdr3pL6RpWhPuWBf2Aox3jlhvqH2RE8GhzaNRMoOhRo98cvKx6zAhYmeADDm4JoMKtW8bHsO4criyCp58YukIh-zBi6LTrPyJrY8H9MHzBBppvAQfGglUXGzxEn4M8gqOuyfJR0UkOhErYAT');"></div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-lg font-display">Sydney E-bikes</h4>
+                  <div class="flex items-center gap-1 bg-yellow-400/10 px-1.5 py-0.5 rounded">
+                    <span class="material-symbols-outlined !text-sm text-yellow-600" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-xs font-bold text-yellow-700">4.8</span>
+                  </div>
+                </div>
+                <p class="text-sm text-[#828298] mb-3">1.2 km &bull; Botany Rd, Rosebery</p>
+                <div class="flex items-center justify-between">
+                  <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-primary"><span class="material-symbols-outlined !text-[12px]">electric_bike</span></div>
+                    <div class="w-6 h-6 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-primary"><span class="material-symbols-outlined !text-[12px]">pedal_bike</span></div>
+                  </div>
+                  <button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-md shadow-primary/20">View Bikes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Store 2: Volt Cycles -->
+          <div onclick="showScreen('bookDemo')" class="bg-white rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(124,58,237,0.06)] border border-[#e5e5f0] cursor-pointer active:scale-[0.98] transition-transform">
+            <div class="flex p-4 gap-4">
+              <div class="w-20 h-20 rounded-lg bg-cover bg-center shrink-0 border border-[#e5e5f0]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuBbYVBeLeQAtGh-YkCwr_wcha8JYRVBvbRQLgxpLZNxk1vfpSpbc9TTnDZWM9H9jV7Y2hE6Xp_Ify2jrWvsK1H3UkgBJCA4a41TZOpgGjoyOfmE8FRGTMP69whK8Y5c2iSMlsBpW3p6uUF2K-3W0llHU25rekuFdZpCIFztRy4bJ6o0jsk3Z5nzbDZzX4R1OD2vXBtmrn4dV4LVjmOdrpmd6--h5fk0yD_JP7rTKlIfysQFkHAtfvzN2Ay1AgeSia-aQnuiw70KC0nF');"></div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-lg font-display">Volt Cycles</h4>
+                  <div class="flex items-center gap-1 bg-yellow-400/10 px-1.5 py-0.5 rounded">
+                    <span class="material-symbols-outlined !text-sm text-yellow-600" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-xs font-bold text-yellow-700">4.6</span>
+                  </div>
+                </div>
+                <p class="text-sm text-[#828298] mb-3">2.5 km &bull; Anzac Pde, Kingsford</p>
+                <div class="flex items-center justify-between">
+                  <div class="flex -space-x-2">
+                    <div class="w-6 h-6 rounded-full border-2 border-white bg-primary/10 flex items-center justify-center text-primary"><span class="material-symbols-outlined !text-[12px]">electric_bike</span></div>
+                  </div>
+                  <button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-md shadow-primary/20">View Bikes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Store 3: Urban Mobility -->
+          <div onclick="showScreen('bookDemo')" class="bg-white rounded-xl overflow-hidden shadow-[0_4px_16px_rgba(124,58,237,0.06)] border border-[#e5e5f0] opacity-80 cursor-pointer active:scale-[0.98] transition-transform">
+            <div class="flex p-4 gap-4">
+              <div class="w-20 h-20 rounded-lg bg-cover bg-center shrink-0 border border-[#e5e5f0]" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuB5vjDElwGxM9yDU1QbePDVWFIIoZ-HMJTgsO1iXyWp7Mgx59FGfNRk_1TohDwPOuBGqVaE_U_GCfINHxoxgiJiia8uCtoyY2yGlybpleWE8atz3vzv9LPqn-lNLw6GJNEWixeckUpz3nqmSYNC8Hdy_4Eu54DadskSAu_eUeoK9r0O71sppoxQTbyPIJ5hKIESkJvAVJr4gtNhAY1wZmEdb8maF810LdvInZJnBsQy7nKYqQI-FnDUTl76uEOu-RTtJ_zhrdesvTkj');"></div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold text-lg font-display">Urban Mobility</h4>
+                  <div class="flex items-center gap-1 bg-yellow-400/10 px-1.5 py-0.5 rounded">
+                    <span class="material-symbols-outlined !text-sm text-yellow-600" style="font-variation-settings: 'FILL' 1;">star</span>
+                    <span class="text-xs font-bold text-yellow-700">4.9</span>
+                  </div>
+                </div>
+                <p class="text-sm text-[#828298] mb-3">3.1 km &bull; High St, Randwick</p>
+                <div class="flex items-center justify-between">
+                  <p class="text-xs text-[#828298] font-medium italic">Closing in 15 mins</p>
+                  <button class="bg-primary text-white px-4 py-1.5 rounded-lg text-sm font-bold shadow-md shadow-primary/20">View Bikes</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+
+      <!-- Map FAB -->
+      <div class="fixed bottom-24 right-4 z-40">
+        <div class="w-14 h-14 rounded-full border-4 border-white shadow-2xl overflow-hidden bg-primary/20 flex items-center justify-center cursor-pointer hover:scale-105 transition-transform">
+          <span class="material-symbols-outlined text-primary font-bold" style="font-variation-settings: 'FILL' 1;">map</span>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <nav class="fixed bottom-0 left-0 right-0 mx-auto max-w-[430px] bg-white/95 backdrop-blur-md border-t border-[#e5e5f0] px-6 py-3 flex justify-between items-center z-50">
+        <div onclick="showWelcomeHub()" class="flex flex-col items-center gap-1 text-[#828298] cursor-pointer">
+          <span class="material-symbols-outlined">home</span>
+          <span class="text-[10px] font-bold uppercase tracking-tighter">Explore</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-primary">
+          <span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">pedal_bike</span>
+          <span class="text-[10px] font-bold uppercase tracking-tighter">Rentals</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-[#828298]">
+          <span class="material-symbols-outlined">bookmark</span>
+          <span class="text-[10px] font-bold uppercase tracking-tighter">Saved</span>
+        </div>
+        <div class="flex flex-col items-center gap-1 text-[#828298]">
+          <span class="material-symbols-outlined">person</span>
+          <span class="text-[10px] font-bold uppercase tracking-tighter">Profile</span>
+        </div>
+      </nav>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 2: BOOK A DEMO - SELECT BIKE & STORE
+       ============================================ -->
+  <div id="bookDemo" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100">
+        <div onclick="showScreen('findEbike')" class="text-primary flex size-12 shrink-0 items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-gray-900 text-lg font-bold leading-tight tracking-tight flex-1 text-center pr-12">Book a Demo</h2>
+      </div>
+
+      <!-- Progress Bar -->
+      <div class="flex flex-col gap-3 p-4 bg-white">
+        <div class="flex gap-6 justify-between items-end">
+          <div class="flex flex-col">
+            <span class="text-xs font-semibold uppercase tracking-wider text-primary mb-1">Step 1</span>
+            <p class="text-gray-900 text-base font-bold leading-normal">Select Bike &amp; Store</p>
+          </div>
+          <p class="text-gray-500 text-sm font-medium leading-normal">1 of 3</p>
+        </div>
+        <div class="rounded-full bg-gray-100 h-2 w-full">
+          <div class="h-2 rounded-full bg-primary" style="width: 33%;"></div>
+        </div>
+      </div>
+
+      <!-- Choose E-Bike Model -->
+      <div class="px-4 pt-6 pb-2">
+        <h3 class="text-gray-900 text-lg font-bold leading-tight tracking-tight">Choose E-Bike Model</h3>
+        <p class="text-gray-500 text-sm">Select the bike you want to test ride</p>
+      </div>
+
+      <!-- Bike Carousel -->
+      <div class="flex overflow-x-auto hide-scrollbar">
+        <div class="flex items-stretch p-4 gap-4">
+          <!-- Bike Card 1 -->
+          <div class="flex h-full flex-1 flex-col gap-3 rounded-xl min-w-[280px] bg-white border-2 border-primary shadow-sm p-3">
+            <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col relative" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA1lW6GCNvwVEYdMmtZs9tJ0OPyRsDzo9cQ8iAspT7VDzqkzHu5cNHsUrOyM0PDwCY9UmAJJQ7CDWevWLvlQMrSvggiF-jeaIBHLj-mmsJef3x7SU75PVmGztmQ8RRgZ3BX_aO0g2Qnw_YtHgQ5l4BDLSnqfddmyXsWwYpHGDGtkDMlkaz4e_U-LrjrgeODYQdPDjmgcPulOmsJ9-_KoeQmglUYOEAMemrL9f-dVfFpiW2HVuCL2_etfyS7vDmbZ0Z1rWnKnLXY8w_Y");'>
+              <div class="absolute top-2 right-2 bg-primary text-white text-[10px] font-bold px-2 py-1 rounded-full uppercase">Selected</div>
+            </div>
+            <div>
+              <p class="text-gray-900 text-base font-bold leading-normal">Tern GSD S10</p>
+              <p class="text-primary text-sm font-medium leading-normal">Compact Cargo</p>
+              <div class="flex gap-2 mt-2">
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded">Mid-Drive</span>
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded">60km Range</span>
+              </div>
+            </div>
+          </div>
+          <!-- Bike Card 2 -->
+          <div class="flex h-full flex-1 flex-col gap-3 rounded-xl min-w-[280px] bg-white border border-gray-100 shadow-sm p-3">
+            <div class="w-full bg-center bg-no-repeat aspect-video bg-cover rounded-lg flex flex-col" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuB0h8hegyTXi6NYJv1bJr6LutV0haKM9xRiUFbwd_SVfrsC-fAXd4yWWnJyauCsqbe9T_gU8tn_BnuOpXveIAfgwwe1MWWQFJYyc4d5tgHtgqL0KSo8pN1XRSt6ZrMxghI8ZvxMK8X3pXNusS-Fa1jsBcaodX0gnQivQQip3plJwLrSECUPO3TvsBvPVwIyvjh1NGuzwrLelshCxLNV-7TeMKevuTG2vttDEGq6ovDBw8Ww1GXNmLdfWolD832GHf8tuQaUw3ZC87en");'></div>
+            <div>
+              <p class="text-gray-900 text-base font-bold leading-normal">Riese &amp; M&uuml;ller Load 60</p>
+              <p class="text-gray-500 text-sm font-medium leading-normal">Full Suspension Cargo</p>
+              <div class="flex gap-2 mt-2">
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded">Bosch Motor</span>
+                <span class="text-[10px] bg-gray-100 text-gray-600 px-2 py-0.5 rounded">Family Ready</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Select Store -->
+      <div class="px-4 pt-4 pb-2">
+        <h3 class="text-gray-900 text-lg font-bold leading-tight tracking-tight">Select Participating Store</h3>
+        <p class="text-gray-500 text-sm">Available near your location</p>
+      </div>
+
+      <!-- Store List -->
+      <div class="flex flex-col p-4 gap-3">
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl border-2 border-primary shadow-sm">
+          <div class="size-12 rounded-lg bg-primary/10 flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">storefront</span>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-gray-900 font-bold text-base">PedL Redfern</h4>
+            <p class="text-gray-500 text-xs">123 Regent St, Redfern NSW</p>
+            <div class="flex items-center gap-1 mt-1 text-[10px] text-green-600 font-bold uppercase">
+              <span class="material-symbols-outlined text-[12px]">check_circle</span>
+              Available Today
+            </div>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="text-xs font-semibold text-gray-900">0.8 km</span>
+            <span class="text-[10px] text-gray-400">Walking</span>
+          </div>
+        </div>
+
+        <div class="flex items-center gap-4 p-4 bg-white rounded-xl border border-gray-100 shadow-sm opacity-80">
+          <div class="size-12 rounded-lg bg-gray-100 flex items-center justify-center text-gray-500">
+            <span class="material-symbols-outlined">storefront</span>
+          </div>
+          <div class="flex-1">
+            <h4 class="text-gray-900 font-bold text-base">99 Bikes Alexandria</h4>
+            <p class="text-gray-500 text-xs">45 O'Riordan St, Alexandria NSW</p>
+            <div class="flex items-center gap-1 mt-1 text-[10px] text-orange-500 font-bold uppercase">
+              <span class="material-symbols-outlined text-[12px]">schedule</span>
+              Limited Stock
+            </div>
+          </div>
+          <div class="flex flex-col items-end">
+            <span class="text-xs font-semibold text-gray-900">2.4 km</span>
+            <span class="text-[10px] text-gray-400">Cycling</span>
+          </div>
+        </div>
+
+        <!-- Map Preview -->
+        <div class="w-full h-32 rounded-xl mt-2 overflow-hidden relative">
+          <div class="absolute inset-0 bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuCj72TFkbxWQilwdtYHwVJIfMKkrMoRDzob768xyM-TzsEUefde1EAjFG76c7yb_ggCePgO14HilIjF856yRqNgoBATXE3_oyniRA1Z9QKief4LT1zJ0myUXK70KKxXcWrphkEiBdeNqQGEupVCHFLjPWufVNplPxeKbkDnFHuSSXkih-dflmeF1F_s1h5uejU3XXaq77n1VR1rVLnIg8S77-YVc_h5tyRgNHWImOud4z3ssNU9SMIlzh0P-6oDXgQn8wFRW7auoPzj');"></div>
+          <div class="absolute inset-0 bg-black/5"></div>
+          <button class="absolute bottom-3 right-3 bg-white px-4 py-2 rounded-full shadow-lg text-primary text-xs font-bold flex items-center gap-2">
+            <span class="material-symbols-outlined text-sm">map</span>
+            View Full Map
+          </button>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="mt-auto p-4 bg-white border-t border-gray-100 pb-10">
+        <button onclick="showScreen('demoSelection')" class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/30 flex items-center justify-center gap-2 active:scale-[0.98] transition-transform">
+          Continue to Date &amp; Time
+          <span class="material-symbols-outlined">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 3: 2-WEEK DEMO SELECTION
+       ============================================ -->
+  <div id="demoSelection" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100">
+        <div onclick="showScreen('bookDemo')" class="flex size-12 shrink-0 items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined">close</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">2-Week Demo Selection</h2>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-5 bg-white">
+        <div class="h-2 w-8 rounded-full bg-primary"></div>
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+      </div>
+
+      <!-- Bike Image -->
+      <div class="px-4 pt-2">
+        <div class="relative rounded-2xl overflow-hidden aspect-[4/3] bg-gray-100 mb-6">
+          <img alt="Hokus E-bike" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9iTUIwN-WTzSjosMYQNmAoigmb4p7wBfdIktOMsxOsfJFh4KCez3dUo0ni6A1DBPcnFu1cay43eBQLmIif5AX3y7BKPagTD2INGDPW4MP_PxSAQdATTeoTBXABNn5z-hxJjvt7eURs1NHpEzL_A8qbFvjwvtvsQCpH4YyZkR6Wec4196z_YlFckGZ75uWrjtomC3g4tKHYOXsXSVwXyMAWBzK3zHyeDvVZh9HXgNGSfJ2aF9rZ6e74sY7O5KEBpm7Dg50zhb8vndh"/>
+          <div class="absolute top-3 left-3 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">Most Popular</div>
+        </div>
+        <div class="mb-6">
+          <h1 class="text-2xl font-bold">Hokus E-bike</h1>
+          <p class="text-gray-500">Experience the city like never before.</p>
+        </div>
+      </div>
+
+      <!-- Demo Options -->
+      <div class="px-4 pb-6">
+        <!-- 2-Week Demo (Selected) -->
+        <div class="p-5 rounded-2xl border-2 border-primary bg-primary/5 mb-4">
+          <div class="flex justify-between items-start mb-4">
+            <div>
+              <h3 class="text-lg font-bold">2-Week Demo</h3>
+              <p class="text-sm text-gray-500">Full immersion experience</p>
+            </div>
+            <div class="text-right">
+              <p class="text-2xl font-bold text-primary">$150</p>
+              <p class="text-xs text-gray-400">Fixed rate</p>
+            </div>
+          </div>
+          <div class="h-px bg-primary/20 w-full my-4"></div>
+          <div class="space-y-3">
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">event_available</span>
+              <span class="text-sm font-medium">14-day rental period</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">ev_charger</span>
+              <span class="text-sm font-medium">Full charger kit included</span>
+            </div>
+            <div class="flex items-center gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">verified_user</span>
+              <span class="text-sm font-medium">Premium insurance coverage</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- 1-Hour Free Demo -->
+        <div onclick="showScreen('demoAgreement')" class="p-5 rounded-2xl border border-gray-100 flex justify-between items-center cursor-pointer hover:border-primary/30 transition-colors">
+          <div>
+            <h3 class="text-base font-bold text-left">1-Hour Store Demo</h3>
+            <p class="text-xs text-gray-400">Free trial at our location</p>
+          </div>
+          <span class="material-symbols-outlined text-gray-300">chevron_right</span>
+        </div>
+      </div>
+
+      <!-- Price Summary -->
+      <div class="px-4 py-6 bg-background-light border-t border-gray-100">
+        <h3 class="text-sm font-bold uppercase tracking-widest mb-4">Price Summary</h3>
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Rental Fee (14 days)</span>
+            <span class="font-medium">$150.00</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Insurance &amp; Protection</span>
+            <span class="text-green-500 font-medium">Included</span>
+          </div>
+          <div class="flex justify-between text-sm">
+            <span class="text-gray-500">Charger &amp; Kit</span>
+            <span class="text-green-500 font-medium">Included</span>
+          </div>
+          <div class="pt-2 mt-2 border-t border-gray-200 flex justify-between">
+            <span class="font-bold">Total Due Now</span>
+            <span class="font-bold text-primary text-lg">$150.00</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="sticky bottom-0 mt-auto p-4 bg-white border-t border-gray-100 pb-8">
+        <button onclick="showScreen('scheduleDemo')" class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+          Select &amp; Schedule
+        </button>
+        <p class="text-center text-[10px] text-gray-400 mt-4 px-6 uppercase tracking-tight">
+          Refundable deposit may be required at time of pickup
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 4: SCHEDULE DEMO TIME
+       ============================================ -->
+  <div id="scheduleDemo" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100">
+        <div onclick="showScreen('demoSelection')" class="flex size-12 shrink-0 items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Schedule Demo Time</h2>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-5 bg-white">
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+        <div class="h-2 w-8 rounded-full bg-primary"></div>
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+      </div>
+
+      <!-- Pick a Date -->
+      <div class="bg-white">
+        <h3 class="tracking-light text-2xl font-bold leading-tight px-4 text-left pb-2 pt-2">Pick a Date</h3>
+      </div>
+
+      <!-- Calendar -->
+      <div class="flex flex-wrap items-center justify-center gap-6 p-4 bg-white">
+        <div class="flex min-w-full flex-1 flex-col gap-0.5 border border-gray-100 rounded-xl p-2 bg-background-light/30">
+          <div class="flex items-center p-1 justify-between">
+            <button class="text-primary hover:bg-primary/10 rounded-full p-2 transition-colors">
+              <span class="material-symbols-outlined">chevron_left</span>
+            </button>
+            <p class="text-base font-bold leading-tight flex-1 text-center">February 2026</p>
+            <button class="text-primary hover:bg-primary/10 rounded-full p-2 transition-colors">
+              <span class="material-symbols-outlined">chevron_right</span>
+            </button>
+          </div>
+          <div class="grid grid-cols-7 text-center">
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">S</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">M</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">T</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">W</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">T</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">F</p>
+            <p class="text-black/50 text-[13px] font-bold h-10 flex items-center justify-center">S</p>
+            <div class="h-10 w-full"></div>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">2</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">3</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">4</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">5</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">6</div></button>
+            <button class="h-10 w-full text-white text-sm font-medium">
+              <div class="flex size-8 mx-auto items-center justify-center rounded-full bg-primary">7</div>
+            </button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">8</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">9</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">10</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">11</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">12</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">13</div></button>
+            <button class="h-10 w-full text-sm font-medium"><div class="flex size-full items-center justify-center rounded-full hover:bg-primary/10">14</div></button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Select Duration -->
+      <div class="bg-white">
+        <h3 class="text-xl font-bold leading-tight px-4 text-left pt-4 pb-2">Select Duration</h3>
+        <div class="flex gap-3 px-4 pb-4">
+          <button class="flex-1 py-3 rounded-xl border-2 border-primary bg-primary/10 text-primary font-bold">30 min</button>
+          <button class="flex-1 py-3 rounded-xl border-2 border-gray-100 text-gray-500 font-medium">60 min</button>
+        </div>
+      </div>
+
+      <!-- Available Times -->
+      <div class="bg-white px-4 pb-4">
+        <h3 class="text-lg font-bold leading-tight pb-3">Available Times</h3>
+        <div class="grid grid-cols-3 gap-2">
+          <button class="py-2.5 rounded-lg bg-gray-100 text-sm font-medium border border-transparent hover:border-primary">09:00 AM</button>
+          <button class="py-2.5 rounded-lg bg-primary text-white text-sm font-medium">09:30 AM</button>
+          <button class="py-2.5 rounded-lg bg-gray-100 text-sm font-medium border border-transparent hover:border-primary">10:00 AM</button>
+          <button class="py-2.5 rounded-lg bg-gray-100 text-sm font-medium border border-transparent hover:border-primary">10:30 AM</button>
+          <button class="py-2.5 rounded-lg bg-gray-100 text-sm font-medium border border-transparent hover:border-primary">11:00 AM</button>
+          <button class="py-2.5 rounded-lg bg-gray-100 text-sm font-medium border border-transparent hover:border-primary">11:30 AM</button>
+        </div>
+      </div>
+
+      <!-- What to Expect -->
+      <div class="px-4 py-6 bg-background-light mt-4">
+        <h3 class="text-lg font-bold mb-4">What to Expect</h3>
+        <div class="space-y-4">
+          <div class="flex gap-4">
+            <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary">pedal_bike</span>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Personalized Bike Setup</p>
+              <p class="text-black/70 text-xs">Our experts will adjust the seat and handle for your comfort.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary">route</span>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Guided Test Route</p>
+              <p class="text-black/70 text-xs">Explore local bike paths with a recommended 2-mile circuit.</p>
+            </div>
+          </div>
+          <div class="flex gap-4">
+            <div class="size-10 rounded-full bg-primary/20 flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-primary">security</span>
+            </div>
+            <div>
+              <p class="font-bold text-sm">Safety Gear Included</p>
+              <p class="text-black/70 text-xs">We provide sanitized helmets and safety vests for all demos.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="sticky bottom-0 mt-auto p-4 bg-white border-t border-gray-100 pb-8">
+        <button onclick="showScreen('paidCheckout')" class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform">
+          Confirm &amp; Continue
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 5: AGREEMENT & CONFIRMATION
+       ============================================ -->
+  <div id="demoAgreement" class="fixed inset-0 z-30 bg-background-light flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-background-light overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between border-b border-gray-100 sticky top-0 z-10">
+        <div onclick="showScreen('scheduleDemo')" class="text-primary flex size-12 shrink-0 items-center justify-start cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Step 3: Agreement</h2>
+      </div>
+
+      <!-- Progress -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-6 bg-white">
+        <div class="h-1.5 w-12 rounded-full bg-primary/20"></div>
+        <div class="h-1.5 w-12 rounded-full bg-primary/20"></div>
+        <div class="h-1.5 w-12 rounded-full bg-primary"></div>
+      </div>
+
+      <!-- Hero Image -->
+      <div class="px-4">
+        <div class="w-full bg-center bg-no-repeat bg-cover flex flex-col justify-end overflow-hidden bg-white rounded-xl min-h-[180px] border border-gray-100 shadow-sm" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA8AmRVQsRKd7HeYvaXTF6BcC5woWtNkjE9nikDq7BcGwBHVeTRVjtZ86wV99-AEGj4PoNRjgJWAEj0o_X9wNDkZhYPev-C_yznqV2OlErsxohCVHmisYs9uyaogsVXyhs05Mvl8zfcYBL5JfnR75KsSerckdQ1dmpUPr3CAqQtL54NQjWGUi-t8w0Scj1uOPXuZm5TYqNIF3tz8khf9sQURxcMBX0zeCZAOMnlgRKD5Hq3IkA2TLyTvqk87rtygnvCg5nyWw5vPHKY");'></div>
+      </div>
+
+      <div class="px-4">
+        <!-- Store Demo Waiver -->
+        <h2 class="text-[22px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-6">Store Demo Waiver</h2>
+        <div class="bg-white p-4 rounded-xl border border-gray-100">
+          <p class="text-sm font-normal leading-relaxed text-gray-700">
+            By confirming this booking, you agree to the <span class="text-primary font-semibold">Micro2Move</span> store demo terms. This includes a liability waiver, acknowledgement of risk, and adherence to safety protocols for e-bike handling. You are responsible for any damages beyond normal wear and tear during the demo period.
+          </p>
+        </div>
+
+        <!-- Safety Requirements -->
+        <h2 class="text-[18px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-6">Safety Requirements</h2>
+        <div class="space-y-3">
+          <div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+            <span class="material-symbols-outlined text-primary">skull</span>
+            <div>
+              <p class="font-semibold text-sm">Helmet Mandatory</p>
+              <p class="text-xs text-gray-500">Must wear a certified helmet at all times during the test ride.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-3 p-3 bg-white rounded-lg">
+            <span class="material-symbols-outlined text-primary">badge</span>
+            <div>
+              <p class="font-semibold text-sm">Valid ID Required</p>
+              <p class="text-xs text-gray-500">Bring a physical government-issued ID for verification at the store.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Contact Details -->
+        <h2 class="text-[18px] font-bold leading-tight tracking-[-0.015em] pb-3 pt-6">Contact Details</h2>
+        <div class="space-y-4">
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-semibold text-gray-500 uppercase px-1">Full Name</label>
+            <input class="w-full p-3 rounded-lg border border-gray-200 bg-white text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="John Doe" type="text"/>
+          </div>
+          <div class="flex flex-col gap-1">
+            <label class="text-xs font-semibold text-gray-500 uppercase px-1">Email Address</label>
+            <input class="w-full p-3 rounded-lg border border-gray-200 bg-white text-sm focus:ring-2 focus:ring-primary focus:border-transparent outline-none transition-all" placeholder="john@example.com" type="email"/>
+          </div>
+        </div>
+
+        <!-- Booking Summary -->
+        <div class="mt-8 mb-6 p-4 bg-primary/5 rounded-xl border border-primary/20">
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600">Demo Model</span>
+            <span class="text-sm font-bold">M2M Turbo Glide X</span>
+          </div>
+          <div class="flex justify-between items-center mb-2">
+            <span class="text-sm font-medium text-gray-600">Duration</span>
+            <span class="text-sm font-bold">45 Minutes</span>
+          </div>
+          <div class="flex justify-between items-center">
+            <span class="text-sm font-medium text-gray-600">Total Price</span>
+            <span class="text-lg font-bold text-primary">FREE</span>
+          </div>
+        </div>
+
+        <!-- Confirm Button -->
+        <div class="pb-10">
+          <button onclick="confirmDemoBooking()" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/25 transition-all active:scale-[0.98] flex items-center justify-center gap-2">
+            Confirm Booking
+            <span class="material-symbols-outlined text-sm">arrow_forward</span>
+          </button>
+          <p class="text-center text-[10px] text-gray-400 mt-4 px-8">
+            By clicking "Confirm Booking", you agree to receive SMS/Email reminders about your demo appointment.
+          </p>
+        </div>
+      </div>
+
+      <!-- Footer Logo -->
+      <div class="flex justify-center pb-8 opacity-40">
+        <div class="flex items-center gap-1">
+          <span class="material-symbols-outlined text-primary text-xl">bolt</span>
+          <span class="font-bold tracking-tight text-lg">Micro2Move</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 6: CHECKOUT & PAYMENT (PAID DEMO)
+       ============================================ -->
+  <div id="paidCheckout" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10 border-b border-gray-100">
+        <div onclick="showScreen('scheduleDemo')" class="flex size-12 shrink-0 items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Checkout &amp; Payment</h2>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-5 bg-white">
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+        <div class="h-2 w-2 rounded-full bg-[#e2dbe6]"></div>
+        <div class="h-2 w-8 rounded-full bg-primary"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto">
+        <!-- Rental Summary -->
+        <div class="p-4">
+          <div class="bg-background-light rounded-2xl p-5 border border-gray-100">
+            <h3 class="text-sm font-semibold uppercase tracking-wider mb-4">Rental Summary</h3>
+            <div class="space-y-3">
+              <div class="flex justify-between items-center">
+                <span class="text-black/60 text-sm">2-Week Demo Rental</span>
+                <span class="font-medium">$85.00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <span class="text-black/60 text-sm">Service Fee</span>
+                <span class="font-medium">$15.00</span>
+              </div>
+              <div class="flex justify-between items-center">
+                <div class="flex items-center gap-1">
+                  <span class="text-black/60 text-sm">Security Deposit</span>
+                  <span class="material-symbols-outlined text-xs text-primary cursor-help">info</span>
+                </div>
+                <span class="font-medium">$50.00</span>
+              </div>
+              <p class="text-[11px] text-primary/80 font-medium italic mt-1">* Security deposit is fully refundable upon return.</p>
+              <div class="pt-4 mt-1 border-t border-gray-200 flex justify-between items-center">
+                <span class="text-lg font-bold">Total Due</span>
+                <span class="text-primary text-2xl font-bold">$150.00</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Payment Method -->
+        <div class="px-4 py-2">
+          <h3 class="text-lg font-bold mb-4">Payment Method</h3>
+
+          <!-- Apple Pay -->
+          <div class="flex items-center justify-between p-4 bg-white border border-gray-100 rounded-xl mb-4 shadow-sm">
+            <div class="flex items-center gap-3">
+              <div class="bg-black p-1.5 rounded h-8 w-12 flex items-center justify-center">
+                <span class="text-white text-xs font-bold">Pay</span>
+              </div>
+              <span class="font-medium">Apple Pay</span>
+            </div>
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input class="sr-only peer" type="checkbox"/>
+              <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+            </label>
+          </div>
+
+          <!-- Card Details -->
+          <div class="bg-white border border-gray-100 rounded-xl shadow-sm overflow-hidden">
+            <div class="p-4 border-b border-gray-100 bg-gray-50/50">
+              <span class="text-xs font-bold text-black/60 uppercase tracking-wider">Credit or Debit Card</span>
+            </div>
+            <div class="p-4 space-y-4">
+              <div class="relative">
+                <input class="w-full bg-transparent border-none focus:ring-0 p-0 placeholder:text-gray-400" placeholder="Card number" type="text"/>
+                <div class="absolute right-0 top-0 flex gap-1">
+                  <span class="material-symbols-outlined text-gray-400">credit_card</span>
+                </div>
+              </div>
+              <div class="grid grid-cols-2 gap-4 pt-2 border-t border-gray-100">
+                <input class="bg-transparent border-none focus:ring-0 p-0 placeholder:text-gray-400" placeholder="MM / YY" type="text"/>
+                <div class="flex items-center gap-1 border-l border-gray-100 pl-4">
+                  <input class="bg-transparent border-none focus:ring-0 p-0 w-full placeholder:text-gray-400" placeholder="CVC" type="text"/>
+                  <span class="material-symbols-outlined text-gray-400 text-sm">lock</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Security Badge -->
+        <div class="flex items-center justify-center gap-2 mt-6 px-4">
+          <span class="material-symbols-outlined text-green-500 text-sm">verified_user</span>
+          <p class="text-[12px] text-gray-500">Secure 256-bit SSL encrypted payment</p>
+        </div>
+      </div>
+
+      <!-- Sticky Footer -->
+      <div class="sticky bottom-0 mt-auto p-4 bg-white border-t border-gray-100 pb-8">
+        <button onclick="confirmDemoBooking()" class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/20 active:scale-[0.98] transition-transform flex items-center justify-center gap-2">
+          <span class="material-symbols-outlined text-[20px]">lock</span>
+          Pay &amp; Confirm Booking
+        </button>
+        <p class="text-center text-[11px] text-gray-400 mt-3 px-6">
+          By clicking "Pay &amp; Confirm Booking", you agree to the Rental Terms of Service.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       COMMUNITY - PROFILE PERSONALIZATION FLOW (4 Steps)
+       ============================================ -->
+  <div id="community" class="fixed inset-0 z-30 bg-white flex flex-col hidden">
+
+    <!-- Step 1: About You -->
+    <div id="profileStep1" class="flex flex-col min-h-screen bg-white">
+      <!-- Header -->
+      <div class="sticky top-0 z-20 flex items-center bg-white/90 backdrop-blur-md p-4 pb-2 justify-between">
+        <button onclick="showWelcomeHub()" class="text-primary">
+          <span class="material-symbols-outlined text-2xl">arrow_back_ios</span>
+        </button>
+        <h2 class="text-[#1a1624] text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Step 1 of 4</h2>
+        <div class="flex w-12 items-center justify-end">
+          <p onclick="showProfileStep(4)" class="text-primary text-base font-bold leading-normal tracking-[0.015em] shrink-0 cursor-pointer">Skip</p>
+        </div>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-6">
+        <div class="h-1.5 w-10 rounded-full bg-primary"></div>
+        <div class="h-1.5 w-1.5 rounded-full bg-[#e5e1eb]"></div>
+        <div class="h-1.5 w-1.5 rounded-full bg-[#e5e1eb]"></div>
+        <div class="h-1.5 w-1.5 rounded-full bg-[#e5e1eb]"></div>
+      </div>
+
+      <!-- Profile Photo Section -->
+      <div class="flex p-4">
+        <div class="flex w-full flex-col gap-4 items-center">
+          <div class="flex gap-4 flex-col items-center">
+            <div class="relative">
+              <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-[140px] w-[140px] border-4 border-white shadow-xl bg-[#F0E6D8] flex items-center justify-center overflow-hidden">
+                <span class="material-symbols-outlined text-5xl text-white/60">person</span>
+              </div>
+              <div class="absolute bottom-1 right-1 bg-primary p-2.5 rounded-full border-4 border-white shadow-lg flex items-center justify-center cursor-pointer">
+                <span class="material-symbols-outlined text-white text-[20px]">photo_camera</span>
+              </div>
+            </div>
+            <div class="flex flex-col items-center justify-center">
+              <p class="text-[#1a1624] text-[28px] font-bold leading-tight tracking-[-0.025em] text-center font-display">About You</p>
+              <p class="text-[#6b6675] text-base font-normal leading-normal text-center">Upload a photo to personalize your profile</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Form Fields -->
+      <div class="px-6 space-y-6 pt-2 pb-44">
+        <div class="flex flex-col">
+          <p class="text-[#1a1624] text-[15px] font-bold leading-normal pb-2 px-1">First Name</p>
+          <input id="profileFirstName" class="flex w-full rounded-2xl text-[#1a1624] focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary border border-[#e5e1eb] bg-white h-14 px-4 text-base font-normal transition-all" placeholder="Enter first name"/>
+        </div>
+        <div class="flex flex-col">
+          <p class="text-[#1a1624] text-[15px] font-bold leading-normal pb-2 px-1">Last Name</p>
+          <input id="profileLastName" class="flex w-full rounded-2xl text-[#1a1624] focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary border border-[#e5e1eb] bg-white h-14 px-4 text-base font-normal transition-all" placeholder="Enter last name"/>
+        </div>
+        <div class="flex flex-col">
+          <p class="text-[#1a1624] text-[15px] font-bold leading-normal pb-2 px-1">Public Display Name</p>
+          <input id="profileDisplayName" class="flex w-full rounded-2xl text-[#1a1624] focus:outline-0 focus:ring-2 focus:ring-primary/20 focus:border-primary border border-[#e5e1eb] bg-white h-14 px-4 text-base font-normal transition-all" placeholder="How others see you"/>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="fixed bottom-0 left-0 right-0 bg-white/95 backdrop-blur-xl border-t border-[#f0f0f0] p-6 pb-10 flex flex-col gap-3">
+        <button onclick="showProfileStep(2)" class="w-full bg-primary hover:bg-purple-800 text-white font-bold py-4 rounded-2xl shadow-xl shadow-primary/25 flex items-center justify-center gap-2 transition-all active:scale-[0.98] h-14">
+          <span>Next</span>
+          <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
+        </button>
+        <button onclick="showWelcomeHub()" class="w-full bg-[#f3f0f7] text-[#1a1624] font-bold py-4 rounded-2xl active:bg-purple-100 transition-colors h-14">
+          Save & Continue Later
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 2: Cycling Experience -->
+    <div id="profileStep2" class="flex flex-col min-h-screen bg-[#F9FAFB] hidden">
+      <!-- Header -->
+      <div class="sticky top-0 z-30 flex items-center bg-[#F9FAFB]/80 backdrop-blur-md p-4 justify-between border-b border-gray-100">
+        <button onclick="showProfileStep(1)" class="p-2 -ml-2">
+          <span class="material-symbols-outlined text-gray-600">chevron_left</span>
+        </button>
+        <h2 class="text-lg font-bold flex-1 text-center pr-8 font-display">Personalize</h2>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-6">
+        <div class="h-2.5 w-2.5 rounded-full bg-primary/20"></div>
+        <div class="h-2.5 w-10 rounded-full bg-primary shadow-sm"></div>
+        <div class="h-2.5 w-2.5 rounded-full bg-primary/20"></div>
+        <div class="h-2.5 w-2.5 rounded-full bg-primary/20"></div>
+      </div>
+
+      <!-- Title -->
+      <div class="px-6 pt-2 pb-6">
+        <h1 class="text-3xl font-bold tracking-tight text-gray-900 font-display">Your cycling background</h1>
+        <p class="mt-2 text-gray-500">Select the experience level that best describes your current journey.</p>
+      </div>
+
+      <!-- Experience Options -->
+      <div class="px-6 space-y-4 pb-44">
+        <!-- New to Cycling -->
+        <label class="relative flex items-center p-5 bg-white border border-gray-200 rounded-xl cursor-pointer shadow-sm transition-all has-[:checked]:border-2 has-[:checked]:border-primary">
+          <input class="sr-only peer" name="experience" type="radio" value="new"/>
+          <div class="flex items-center w-full gap-4 relative z-10">
+            <div class="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center peer-checked:bg-primary/10">
+              <span class="material-symbols-outlined text-gray-500 peer-checked:text-primary">child_care</span>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold text-lg leading-tight">New to Cycling</p>
+              <p class="text-sm text-gray-500">Starting from scratch</p>
+            </div>
+            <div class="h-6 w-6 border-2 border-gray-300 rounded-full flex items-center justify-center peer-checked:border-primary peer-checked:bg-primary transition-colors">
+              <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0 peer-checked:opacity-100"></div>
+            </div>
+          </div>
+        </label>
+
+        <!-- Casual Rider (Default Selected) -->
+        <label class="relative flex items-center p-5 bg-white border-2 border-primary rounded-xl cursor-pointer shadow-sm transition-all">
+          <input checked class="sr-only peer" name="experience" type="radio" value="casual"/>
+          <div class="flex items-center w-full gap-4 relative z-10">
+            <div class="h-12 w-12 bg-primary/10 rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-primary">pedal_bike</span>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold text-lg leading-tight">Casual Rider</p>
+              <p class="text-sm text-gray-500">Weekends and park trails</p>
+            </div>
+            <div class="h-6 w-6 border-2 border-primary bg-primary rounded-full flex items-center justify-center">
+              <div class="w-2.5 h-2.5 bg-white rounded-full"></div>
+            </div>
+          </div>
+        </label>
+
+        <!-- Regular Cyclist -->
+        <label class="relative flex items-center p-5 bg-white border border-gray-200 rounded-xl cursor-pointer shadow-sm transition-all has-[:checked]:border-2 has-[:checked]:border-primary">
+          <input class="sr-only peer" name="experience" type="radio" value="regular"/>
+          <div class="flex items-center w-full gap-4 relative z-10">
+            <div class="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-gray-500">directions_bike</span>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold text-lg leading-tight">Regular Cyclist</p>
+              <p class="text-sm text-gray-500">Weekly commutes or exercise</p>
+            </div>
+            <div class="h-6 w-6 border-2 border-gray-300 rounded-full flex items-center justify-center">
+              <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0"></div>
+            </div>
+          </div>
+        </label>
+
+        <!-- Experienced Rider -->
+        <label class="relative flex items-center p-5 bg-white border border-gray-200 rounded-xl cursor-pointer shadow-sm transition-all has-[:checked]:border-2 has-[:checked]:border-primary">
+          <input class="sr-only peer" name="experience" type="radio" value="experienced"/>
+          <div class="flex items-center w-full gap-4 relative z-10">
+            <div class="h-12 w-12 bg-gray-100 rounded-full flex items-center justify-center">
+              <span class="material-symbols-outlined text-gray-500">electric_bolt</span>
+            </div>
+            <div class="flex-1">
+              <p class="font-bold text-lg leading-tight">Experienced Rider</p>
+              <p class="text-sm text-gray-500">Long distance or daily Pro</p>
+            </div>
+            <div class="h-6 w-6 border-2 border-gray-300 rounded-full flex items-center justify-center">
+              <div class="w-2.5 h-2.5 bg-white rounded-full opacity-0"></div>
+            </div>
+          </div>
+        </label>
+
+        <!-- Matching Info -->
+        <div class="mt-8">
+          <div class="bg-primary/5 border border-primary/20 p-4 rounded-xl flex items-center gap-4">
+            <div class="h-10 w-10 bg-primary rounded-lg flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-white text-xl">auto_awesome</span>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-primary">12 e-bikes match this experience</p>
+              <p class="text-[11px] text-primary/70">Refining your recommendations...</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-100 p-6 pb-10">
+        <div class="flex gap-4">
+          <button onclick="showProfileStep(1)" class="flex-1 py-4 border-2 border-primary/20 text-primary font-bold rounded-xl active:bg-primary/5 transition-colors">
+            Back
+          </button>
+          <button onclick="showProfileStep(3)" class="flex-[2] py-4 bg-primary text-white font-bold rounded-xl shadow-lg shadow-primary/20 flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+            <span>Next Step</span>
+            <span class="material-symbols-outlined text-base">arrow_forward</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Step 3: Interests -->
+    <div id="profileStep3" class="flex flex-col min-h-screen bg-[#FDFCFE] hidden">
+      <!-- Header -->
+      <div class="sticky top-0 z-20 flex items-center bg-[#FDFCFE]/90 backdrop-blur-md px-4 py-4 justify-between">
+        <button onclick="showProfileStep(2)" class="flex items-center text-primary font-medium">
+          <span class="material-symbols-outlined text-2xl">chevron_left</span>
+          <span>Back</span>
+        </button>
+        <h2 class="text-base font-bold absolute left-1/2 -translate-x-1/2 font-display">Step 3 of 4</h2>
+        <div class="flex items-center">
+          <p onclick="showProfileStep(4)" class="text-primary text-base font-medium cursor-pointer">Skip</p>
+        </div>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-6">
+        <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+        <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+        <div class="h-2 w-8 rounded-full bg-primary shadow-[0_0_8px_rgba(107,33,168,0.4)]"></div>
+        <div class="h-2 w-2 rounded-full bg-primary/20"></div>
+      </div>
+
+      <!-- Title -->
+      <div class="px-6 pt-2 pb-6 text-center">
+        <h1 class="text-2xl font-bold tracking-tight mb-2 font-display">What interests you?</h1>
+        <p class="text-gray-500 text-sm">Select one or more to personalize your feed and discover relevant rides.</p>
+      </div>
+
+      <!-- Interest Grid -->
+      <div class="px-6 grid grid-cols-2 gap-4 pb-52">
+        <!-- Demo E-bikes (Selected) -->
+        <div onclick="toggleInterest(this)" class="interest-card selected relative group cursor-pointer bg-primary/5 border-2 border-primary p-5 rounded-xl flex flex-col items-center text-center gap-4 transition-all duration-200">
+          <div class="check-mark absolute top-2 right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-4xl">electric_rickshaw</span>
+          </div>
+          <p class="text-sm font-bold text-primary">Demo E-bikes</p>
+        </div>
+
+        <!-- Join Group Rides (Selected) -->
+        <div onclick="toggleInterest(this)" class="interest-card selected relative group cursor-pointer bg-primary/5 border-2 border-primary p-5 rounded-xl flex flex-col items-center text-center gap-4 transition-all duration-200">
+          <div class="check-mark absolute top-2 right-2 h-5 w-5 bg-primary rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-primary/10 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-4xl">groups</span>
+          </div>
+          <p class="text-sm font-bold text-primary">Join Group Rides</p>
+        </div>
+
+        <!-- New Routes -->
+        <div onclick="toggleInterest(this)" class="interest-card cursor-pointer bg-white border border-gray-200 p-5 rounded-xl flex flex-col items-center text-center gap-4 hover:border-primary/50 transition-all duration-200">
+          <div class="check-mark hidden absolute top-2 right-2 h-5 w-5 bg-primary rounded-full items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400 text-4xl">explore</span>
+          </div>
+          <p class="text-sm font-bold text-gray-700">New Routes</p>
+        </div>
+
+        <!-- Daily Commute -->
+        <div onclick="toggleInterest(this)" class="interest-card cursor-pointer bg-white border border-gray-200 p-5 rounded-xl flex flex-col items-center text-center gap-4 hover:border-primary/50 transition-all duration-200">
+          <div class="check-mark hidden absolute top-2 right-2 h-5 w-5 bg-primary rounded-full items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400 text-4xl">commute</span>
+          </div>
+          <p class="text-sm font-bold text-gray-700">Daily Commute</p>
+        </div>
+
+        <!-- Tech & Gear -->
+        <div onclick="toggleInterest(this)" class="interest-card cursor-pointer bg-white border border-gray-200 p-5 rounded-xl flex flex-col items-center text-center gap-4 hover:border-primary/50 transition-all duration-200">
+          <div class="check-mark hidden absolute top-2 right-2 h-5 w-5 bg-primary rounded-full items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400 text-4xl">electric_bolt</span>
+          </div>
+          <p class="text-sm font-bold text-gray-700">Tech & Gear</p>
+        </div>
+
+        <!-- Perks & Deals -->
+        <div onclick="toggleInterest(this)" class="interest-card cursor-pointer bg-white border border-gray-200 p-5 rounded-xl flex flex-col items-center text-center gap-4 hover:border-primary/50 transition-all duration-200">
+          <div class="check-mark hidden absolute top-2 right-2 h-5 w-5 bg-primary rounded-full items-center justify-center">
+            <span class="material-symbols-outlined text-white text-[14px] font-bold">check</span>
+          </div>
+          <div class="h-16 w-16 bg-gray-50 rounded-2xl flex items-center justify-center">
+            <span class="material-symbols-outlined text-gray-400 text-4xl">savings</span>
+          </div>
+          <p class="text-sm font-bold text-gray-700">Perks & Deals</p>
+        </div>
+      </div>
+
+      <!-- Floating Info Pill -->
+      <div class="fixed bottom-36 inset-x-0 flex justify-center px-6 z-10 pointer-events-none">
+        <div class="bg-white/90 backdrop-blur-md p-3 px-4 rounded-full shadow-xl border border-primary/20 flex gap-3 items-center pointer-events-auto">
+          <div class="bg-primary p-1.5 rounded-full flex items-center justify-center">
+            <span class="material-symbols-outlined text-white text-xs">auto_awesome</span>
+          </div>
+          <p class="text-[12px] font-bold text-primary whitespace-nowrap">24 local events found for your interests</p>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="fixed bottom-0 left-0 right-0 bg-white/80 backdrop-blur-xl border-t border-gray-200 px-6 py-6 pb-10 flex gap-4">
+        <button onclick="showProfileStep(2)" class="flex-1 bg-gray-100 text-gray-900 font-bold py-4 rounded-xl shadow-sm">
+          Back
+        </button>
+        <button onclick="showProfileStep(4)" class="flex-[2] bg-primary text-white font-bold py-4 rounded-xl shadow-[0_4px_14px_0_rgba(107,33,168,0.39)] flex items-center justify-center gap-2">
+          <span>Next Step</span>
+          <span class="material-symbols-outlined text-lg">arrow_forward</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Step 4: Final Setup -->
+    <div id="profileStep4" class="flex flex-col min-h-screen bg-[#FDFCFE] hidden">
+      <!-- Header -->
+      <div class="sticky top-0 z-20 flex items-center bg-[#FDFCFE]/90 backdrop-blur-md px-4 py-4 justify-between">
+        <button onclick="showProfileStep(3)" class="flex items-center text-primary font-medium">
+          <span class="material-symbols-outlined text-2xl">chevron_left</span>
+          <span>Back</span>
+        </button>
+        <h2 class="text-base font-bold absolute left-1/2 -translate-x-1/2 font-display">Step 4 of 4</h2>
+        <div class="w-16"></div>
+      </div>
+
+      <!-- Progress Dots -->
+      <div class="flex w-full flex-row items-center justify-center gap-3 py-4">
+        <div class="h-2 w-2 rounded-full bg-primary"></div>
+        <div class="h-2 w-2 rounded-full bg-primary"></div>
+        <div class="h-2 w-2 rounded-full bg-primary"></div>
+        <div class="h-2 w-8 rounded-full bg-primary shadow-[0_0_8px_rgba(107,33,168,0.4)]"></div>
+      </div>
+
+      <div class="flex-1 overflow-y-auto pb-48">
+        <!-- Title -->
+        <div class="px-6 pt-2 pb-6 text-center">
+          <h1 class="text-2xl font-bold tracking-tight mb-2 font-display">Final Setup</h1>
+          <p class="text-gray-500 text-sm">Configure your preferences and community settings to complete your profile.</p>
+        </div>
+
+        <!-- Riding Frequency Section -->
+        <div class="px-6 mb-6">
+          <h3 class="text-base font-bold text-gray-900 mb-3">Riding Frequency</h3>
+          <div class="flex gap-3">
+            <button onclick="selectFrequency(this, 'daily')" class="freq-btn flex-1 py-4 rounded-xl font-bold transition-all border-2 border-primary bg-primary text-white shadow-lg shadow-primary/20">
+              Daily
+            </button>
+            <button onclick="selectFrequency(this, 'weekly')" class="freq-btn flex-1 py-4 rounded-xl font-bold transition-all border-2 border-gray-200 bg-white text-gray-700 hover:border-primary/50">
+              Weekly
+            </button>
+          </div>
+        </div>
+
+        <!-- Preferred Areas Section -->
+        <div class="px-6 mb-6">
+          <h3 class="text-base font-bold text-gray-900 mb-3">Preferred Areas</h3>
+          <div class="flex flex-wrap gap-3">
+            <button onclick="toggleAreaTag(this)" class="area-tag selected px-5 py-2.5 rounded-full font-medium text-sm transition-all bg-primary text-white">
+              🌊 Ocean
+            </button>
+            <button onclick="toggleAreaTag(this)" class="area-tag selected px-5 py-2.5 rounded-full font-medium text-sm transition-all bg-primary text-white">
+              🌳 Park
+            </button>
+            <button onclick="toggleAreaTag(this)" class="area-tag px-5 py-2.5 rounded-full font-medium text-sm transition-all bg-gray-100 text-gray-700 hover:bg-primary/10">
+              🏙️ City
+            </button>
+            <button onclick="toggleAreaTag(this)" class="area-tag px-5 py-2.5 rounded-full font-medium text-sm transition-all bg-gray-100 text-gray-700 hover:bg-primary/10">
+              📚 Education
+            </button>
+            <button onclick="toggleAreaTag(this)" class="area-tag px-5 py-2.5 rounded-full font-medium text-sm transition-all bg-gray-100 text-gray-700 hover:bg-primary/10">
+              🛠️ Workshop
+            </button>
+          </div>
+        </div>
+
+        <!-- Privacy & Visibility Section -->
+        <div class="px-6 mb-6">
+          <h3 class="text-base font-bold text-gray-900 mb-3">Privacy & Visibility</h3>
+          <div class="space-y-3">
+            <!-- Public Profile Toggle -->
+            <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary text-xl">person</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-900">Public Profile</p>
+                  <p class="text-xs text-gray-500">Allow others to see your profile</p>
+                </div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" checked class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+
+            <!-- Share Ride Stats Toggle -->
+            <div class="flex items-center justify-between p-4 bg-white rounded-xl border border-gray-200 shadow-sm">
+              <div class="flex items-center gap-3">
+                <div class="size-10 bg-primary/10 rounded-full flex items-center justify-center">
+                  <span class="material-symbols-outlined text-primary text-xl">bar_chart</span>
+                </div>
+                <div>
+                  <p class="font-semibold text-gray-900">Share Ride Stats</p>
+                  <p class="text-xs text-gray-500">Show your cycling achievements</p>
+                </div>
+              </div>
+              <label class="relative inline-flex items-center cursor-pointer">
+                <input type="checkbox" class="sr-only peer">
+                <div class="w-11 h-6 bg-gray-200 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </label>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ready Banner -->
+        <div class="px-6 mt-4">
+          <div class="bg-accent-green/10 border border-accent-green/20 p-4 rounded-xl flex items-center gap-4">
+            <div class="h-10 w-10 bg-accent-green rounded-lg flex items-center justify-center shrink-0">
+              <span class="material-symbols-outlined text-white text-xl">check_circle</span>
+            </div>
+            <div>
+              <p class="text-sm font-bold text-accent-green">You're all set!</p>
+              <p class="text-[11px] text-accent-green/70">Complete your profile to join the community</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Buttons -->
+      <div class="fixed bottom-0 left-0 right-0 bg-white/90 backdrop-blur-xl border-t border-gray-100 px-6 py-6 pb-10">
+        <div class="flex flex-col gap-3">
+          <button onclick="completeProfile()" class="w-full bg-primary text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/25 flex items-center justify-center gap-2 active:scale-[0.98] transition-all">
+            <span class="material-symbols-outlined text-lg">check_circle</span>
+            <span>Complete Profile</span>
+          </button>
+          <button onclick="showWelcomeHub()" class="w-full bg-gray-100 text-gray-700 font-bold py-4 rounded-xl active:bg-gray-200 transition-colors">
+            Save & Finish Later
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ============================================
+       COMMUNITY HUB - WAZE-LIKE FEATURES
+       ============================================ -->
+  <div id="communityHub" class="fixed inset-0 z-30 bg-background-light flex flex-col hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] mx-auto flex-col bg-background-light overflow-hidden shadow-2xl">
+
+      <!-- Header -->
+      <header class="sticky top-0 z-50 bg-background-light/95 backdrop-blur-md px-6 pt-12 pb-4 border-b border-gray-100">
+        <div class="flex items-center justify-between mb-3">
+          <button onclick="showWelcomeHub()" class="flex items-center gap-1 text-primary font-medium">
+            <span class="material-symbols-outlined text-2xl">chevron_left</span>
+          </button>
+          <h1 class="text-xl font-bold font-display text-[#131118]">Community Hub</h1>
+          <button onclick="openReportModal()" class="bg-red-500 p-2 rounded-full flex items-center justify-center shadow-lg shadow-red-500/30">
+            <span class="material-symbols-outlined text-white text-xl">warning</span>
+          </button>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="flex gap-2 overflow-x-auto hide-scrollbar pb-1">
+          <button onclick="showHubTab('feed')" class="hub-tab active px-4 py-2 rounded-full text-sm font-bold bg-primary text-white whitespace-nowrap transition-all">
+            Feed
+          </button>
+          <button onclick="showHubTab('reports')" class="hub-tab px-4 py-2 rounded-full text-sm font-bold bg-gray-100 text-gray-600 whitespace-nowrap transition-all">
+            ⚠️ Reports
+          </button>
+          <button onclick="showHubTab('infrastructure')" class="hub-tab px-4 py-2 rounded-full text-sm font-bold bg-gray-100 text-gray-600 whitespace-nowrap transition-all">
+            🚴 Infrastructure
+          </button>
+          <button onclick="showHubTab('charging')" class="hub-tab px-4 py-2 rounded-full text-sm font-bold bg-gray-100 text-gray-600 whitespace-nowrap transition-all">
+            ⚡ Charging
+          </button>
+        </div>
+      </header>
+
+      <!-- Tab Content -->
+      <div class="flex-1 overflow-y-auto pb-28">
+
+        <!-- FEED TAB -->
+        <div id="hubFeed" class="hub-content px-4 py-4 space-y-4">
+          <!-- Pinned Alert -->
+          <div class="bg-gradient-to-r from-red-500 to-orange-500 p-4 rounded-2xl text-white">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="material-symbols-outlined">campaign</span>
+              <span class="font-bold text-sm">LIVE ALERT</span>
+            </div>
+            <p class="text-sm opacity-90">Glass debris reported on Bourke Street bike lane near Oxford St. Use caution!</p>
+            <div class="flex items-center justify-between mt-3">
+              <span class="text-xs opacity-70">12 mins ago • 23 confirmations</span>
+              <button class="bg-white/20 px-3 py-1 rounded-full text-xs font-bold">Confirm</button>
+            </div>
+          </div>
+
+          <!-- Feed Items -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-purple-500 to-pink-500 flex items-center justify-center">
+                <span class="text-white text-sm font-bold">AM</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-1">
+                  <span class="font-bold text-[#131118]">Alex M.</span>
+                  <span class="material-symbols-outlined text-primary text-sm">verified</span>
+                </div>
+                <span class="text-xs text-gray-500">Eastern Suburbs • 2h ago</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">Great protected lane on Bourke St, perfect for morning commutes! The new infrastructure is really making a difference. 🚴‍♂️</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-gray-500 hover:text-green-500 transition-colors">
+                  <span class="material-symbols-outlined text-xl">thumb_up</span>
+                  <span class="text-sm font-bold">45</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors">
+                  <span class="material-symbols-outlined text-xl">thumb_down</span>
+                  <span class="text-sm font-bold">2</span>
+                </button>
+                <button class="flex items-center gap-1 text-gray-500">
+                  <span class="material-symbols-outlined text-xl">chat_bubble</span>
+                  <span class="text-sm font-bold">8</span>
+                </button>
+              </div>
+              <button class="text-primary text-sm font-bold">Reply</button>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-green-500 to-teal-500 flex items-center justify-center">
+                <span class="text-white text-sm font-bold">SK</span>
+              </div>
+              <div class="flex-1">
+                <span class="font-bold text-[#131118]">Sam K.</span>
+                <span class="text-xs text-gray-500 block">Parramatta • 4h ago</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">Just joined the Parra-Bike Hub group ride yesterday. Amazing community! Really welcoming for new riders. 💪</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-gray-500 hover:text-green-500 transition-colors">
+                  <span class="material-symbols-outlined text-xl">thumb_up</span>
+                  <span class="text-sm font-bold">32</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors">
+                  <span class="material-symbols-outlined text-xl">thumb_down</span>
+                  <span class="text-sm font-bold">0</span>
+                </button>
+                <button class="flex items-center gap-1 text-gray-500">
+                  <span class="material-symbols-outlined text-xl">chat_bubble</span>
+                  <span class="text-sm font-bold">5</span>
+                </button>
+              </div>
+              <button class="text-primary text-sm font-bold">Reply</button>
+            </div>
+          </div>
+
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-3 mb-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-blue-500 to-indigo-500 flex items-center justify-center">
+                <span class="text-white text-sm font-bold">JT</span>
+              </div>
+              <div class="flex-1">
+                <span class="font-bold text-[#131118]">Jamie T.</span>
+                <span class="text-xs text-gray-500 block">Northern Beaches • 6h ago</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-700 mb-3">PSA: The new veloway section from Dee Why is now open! Smooth ride all the way to Narrabeen. Game changer for beach commuters 🏖️</p>
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-green-500">
+                  <span class="material-symbols-outlined text-xl">thumb_up</span>
+                  <span class="text-sm font-bold">89</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500 transition-colors">
+                  <span class="material-symbols-outlined text-xl">thumb_down</span>
+                  <span class="text-sm font-bold">1</span>
+                </button>
+                <button class="flex items-center gap-1 text-gray-500">
+                  <span class="material-symbols-outlined text-xl">chat_bubble</span>
+                  <span class="text-sm font-bold">14</span>
+                </button>
+              </div>
+              <button class="text-primary text-sm font-bold">Reply</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- REPORTS TAB -->
+        <div id="hubReports" class="hub-content px-4 py-4 space-y-3 hidden">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="font-bold text-lg">Active Reports Near You</h2>
+            <span class="text-xs text-gray-500">Last updated: 3 mins ago</span>
+          </div>
+
+          <!-- Near Miss Report -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-red-500">
+            <div class="flex items-start gap-3">
+              <div class="bg-red-100 p-2 rounded-xl">
+                <span class="text-2xl">⚠️</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-[#131118]">Near Miss</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-red-100 text-red-700 font-bold">HIGH</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">Close pass by delivery truck near King St intersection. Driver didn't check bike lane.</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span>📍 King St & George St</span>
+                  <span>🕐 25 mins ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-3">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-gray-500 hover:text-green-500">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span class="font-bold">14</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500">
+                  <span class="material-symbols-outlined">thumb_down</span>
+                  <span class="font-bold">1</span>
+                </button>
+              </div>
+              <span class="text-xs text-green-600 font-bold">✓ 12 confirmations</span>
+            </div>
+          </div>
+
+          <!-- Glass Report -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-orange-500">
+            <div class="flex items-start gap-3">
+              <div class="bg-orange-100 p-2 rounded-xl">
+                <span class="text-2xl">🔶</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-[#131118]">Glass on Road</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-orange-100 text-orange-700 font-bold">MEDIUM</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">Broken glass covering bike lane for about 20m. Council notified.</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span>📍 Bourke St near Oxford</span>
+                  <span>🕐 1 hour ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-3">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-green-500">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span class="font-bold">23</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500">
+                  <span class="material-symbols-outlined">thumb_down</span>
+                  <span class="font-bold">0</span>
+                </button>
+              </div>
+              <span class="text-xs text-blue-600 font-bold">🔄 Under review</span>
+            </div>
+          </div>
+
+          <!-- Construction Report -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-yellow-500">
+            <div class="flex items-start gap-3">
+              <div class="bg-yellow-100 p-2 rounded-xl">
+                <span class="text-2xl">🚧</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-[#131118]">Roadworks</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-blue-100 text-blue-700 font-bold">VERIFIED</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">Bike lane blocked near Town Hall. Use alternate route via Pitt St.</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span>📍 George St, Town Hall</span>
+                  <span>🕐 3 hours ago</span>
+                </div>
+              </div>
+            </div>
+            <div class="flex items-center justify-between mt-3 pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-3">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-green-500">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span class="font-bold">31</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500">
+                  <span class="material-symbols-outlined">thumb_down</span>
+                  <span class="font-bold">1</span>
+                </button>
+              </div>
+              <span class="text-xs text-green-600 font-bold">✓ Official report</span>
+            </div>
+          </div>
+
+          <!-- Pothole Report -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border-l-4 border-gray-400">
+            <div class="flex items-start gap-3">
+              <div class="bg-gray-100 p-2 rounded-xl">
+                <span class="text-2xl">🕳️</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="font-bold text-[#131118]">Pothole</span>
+                  <span class="text-xs px-2 py-0.5 rounded-full bg-green-100 text-green-700 font-bold">RESOLVED</span>
+                </div>
+                <p class="text-sm text-gray-600 mb-2">Large pothole patched by council. Safe to ride now!</p>
+                <div class="flex items-center gap-4 text-xs text-gray-500">
+                  <span>📍 Cleveland St</span>
+                  <span>🕐 Fixed yesterday</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFRASTRUCTURE TAB -->
+        <div id="hubInfrastructure" class="hub-content px-4 py-4 space-y-3 hidden">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="font-bold text-lg">Rate Infrastructure</h2>
+            <span class="text-xs text-primary font-bold">Your votes matter!</span>
+          </div>
+
+          <!-- Good Infrastructure -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-2xl">✨</span>
+              <div class="flex-1">
+                <h3 class="font-bold text-[#131118]">Bourke Street Cycleway</h3>
+                <p class="text-xs text-gray-500">Protected bike lane • Eastern Suburbs</p>
+              </div>
+              <div class="flex items-center gap-1 bg-green-100 px-2 py-1 rounded-full">
+                <span class="material-symbols-outlined text-green-600 text-sm">thumb_up</span>
+                <span class="text-xs font-bold text-green-700">92%</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-3">Fully separated bike lane with barriers. Well maintained and clearly marked.</p>
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">Protected</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">Well-lit</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-primary/10 text-primary">Smooth surface</span>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-green-50 text-green-600 font-bold text-sm hover:bg-green-100 transition-colors">
+                  <span class="material-symbols-outlined text-lg">thumb_up</span>
+                  <span>Works Great</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 text-gray-500 font-bold text-sm hover:bg-red-50 hover:text-red-500 transition-colors">
+                  <span class="material-symbols-outlined text-lg">thumb_down</span>
+                  <span>Needs Work</span>
+                </button>
+              </div>
+              <button class="text-primary font-bold text-sm">Details</button>
+            </div>
+          </div>
+
+          <!-- Mixed Infrastructure -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-2xl">🛤️</span>
+              <div class="flex-1">
+                <h3 class="font-bold text-[#131118]">King Street Bike Lane</h3>
+                <p class="text-xs text-gray-500">Painted lane • Newtown</p>
+              </div>
+              <div class="flex items-center gap-1 bg-yellow-100 px-2 py-1 rounded-full">
+                <span class="material-symbols-outlined text-yellow-600 text-sm">balance</span>
+                <span class="text-xs font-bold text-yellow-700">68%</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-3">Paint-only lane, often blocked by parked cars and delivery vehicles. Door zone risk.</p>
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <span class="text-xs px-2 py-1 rounded-full bg-yellow-100 text-yellow-700">Painted only</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">Door zone</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-orange-100 text-orange-700">Often blocked</span>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 text-gray-500 font-bold text-sm hover:bg-green-50 hover:text-green-600 transition-colors">
+                  <span class="material-symbols-outlined text-lg">thumb_up</span>
+                  <span>Works Great</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 text-red-500 font-bold text-sm hover:bg-red-100 transition-colors">
+                  <span class="material-symbols-outlined text-lg">thumb_down</span>
+                  <span>Needs Work</span>
+                </button>
+              </div>
+              <button class="text-primary font-bold text-sm">Details</button>
+            </div>
+          </div>
+
+          <!-- Poor Infrastructure -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex items-center gap-2 mb-3">
+              <span class="text-2xl">⚠️</span>
+              <div class="flex-1">
+                <h3 class="font-bold text-[#131118]">Broadway Corridor</h3>
+                <p class="text-xs text-gray-500">Shared lane • Glebe</p>
+              </div>
+              <div class="flex items-center gap-1 bg-red-100 px-2 py-1 rounded-full">
+                <span class="material-symbols-outlined text-red-600 text-sm">thumb_down</span>
+                <span class="text-xs font-bold text-red-700">34%</span>
+              </div>
+            </div>
+            <p class="text-sm text-gray-600 mb-3">No dedicated infrastructure. Sharrow only. High traffic volume makes cycling stressful.</p>
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">No protection</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">High traffic</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-red-100 text-red-700">Stressful</span>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-4">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-gray-100 text-gray-500 font-bold text-sm hover:bg-green-50 hover:text-green-600 transition-colors">
+                  <span class="material-symbols-outlined text-lg">thumb_up</span>
+                  <span>Works Great</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-red-50 text-red-500 font-bold text-sm">
+                  <span class="material-symbols-outlined text-lg">thumb_down</span>
+                  <span>Needs Work</span>
+                </button>
+              </div>
+              <button class="text-primary font-bold text-sm">Details</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- CHARGING TAB -->
+        <div id="hubCharging" class="hub-content px-4 py-4 space-y-3 hidden">
+          <div class="flex items-center justify-between mb-2">
+            <h2 class="font-bold text-lg">E-Bike Charging Stations</h2>
+            <span class="text-xs text-gray-500">Live availability</span>
+          </div>
+
+          <!-- Charging Station 1 -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-center gap-3">
+                <span class="text-3xl">⚡</span>
+                <div>
+                  <h3 class="font-bold text-[#131118]">Circular Quay Hub</h3>
+                  <p class="text-xs text-gray-500">Alfred St, Circular Quay</p>
+                </div>
+              </div>
+              <span class="text-sm px-3 py-1 rounded-full bg-green-100 text-green-700 font-bold">8/12 free</span>
+            </div>
+            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+              <div class="h-full bg-green-500 rounded-full" style="width: 66%"></div>
+            </div>
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100">☕ Cafe</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100">🚿 Showers</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100">🔒 Secure</span>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-yellow-500">star</span>
+                <span class="font-bold">4.7</span>
+                <span class="text-xs text-gray-500">(89 reviews)</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-gray-500 hover:text-green-500">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span class="font-bold text-sm">156</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500">
+                  <span class="material-symbols-outlined">thumb_down</span>
+                  <span class="font-bold text-sm">12</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Charging Station 2 -->
+          <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+            <div class="flex justify-between items-start mb-3">
+              <div class="flex items-center gap-3">
+                <span class="text-3xl">⚡</span>
+                <div>
+                  <h3 class="font-bold text-[#131118]">Central Station Plaza</h3>
+                  <p class="text-xs text-gray-500">Eddy Ave, Haymarket</p>
+                </div>
+              </div>
+              <span class="text-sm px-3 py-1 rounded-full bg-orange-100 text-orange-700 font-bold">2/8 free</span>
+            </div>
+            <div class="w-full h-2 bg-gray-200 rounded-full overflow-hidden mb-3">
+              <div class="h-full bg-orange-500 rounded-full" style="width: 25%"></div>
+            </div>
+            <div class="flex items-center gap-2 mb-3 flex-wrap">
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100">🔧 Repair</span>
+              <span class="text-xs px-2 py-1 rounded-full bg-gray-100">🔒 Secure</span>
+            </div>
+            <div class="flex items-center justify-between pt-3 border-t border-gray-100">
+              <div class="flex items-center gap-1">
+                <span class="material-symbols-outlined text-yellow-500">star</span>
+                <span class="font-bold">4.3</span>
+                <span class="text-xs text-gray-500">(62 reviews)</span>
+              </div>
+              <div class="flex items-center gap-3">
+                <button onclick="voteItem(this, 'up')" class="flex items-center gap-1 text-gray-500 hover:text-green-500">
+                  <span class="material-symbols-outlined">thumb_up</span>
+                  <span class="font-bold text-sm">98</span>
+                </button>
+                <button onclick="voteItem(this, 'down')" class="flex items-center gap-1 text-gray-500 hover:text-red-500">
+                  <span class="material-symbols-outlined">thumb_down</span>
+                  <span class="font-bold text-sm">8</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Floating Add Post Button -->
+      <button onclick="showAddPostModal()" class="fixed bottom-28 right-6 bg-primary p-4 rounded-full shadow-xl shadow-primary/40 text-white flex items-center justify-center z-40 active:scale-95 transition-transform max-w-[430px]">
+        <span class="material-symbols-outlined text-2xl">add</span>
+      </button>
+
+      <!-- Bottom Tab Bar -->
+      <nav class="fixed bottom-0 w-full max-w-[430px] bg-white/95 backdrop-blur-lg border-t border-gray-100 px-8 pt-3 pb-8 flex justify-between items-center z-50" style="box-shadow: 0 -2px 10px rgba(0,0,0,0.05);">
+        <button onclick="showWelcomeHub()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl">home</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Home</span>
+        </button>
+        <button class="flex flex-col items-center gap-1 text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl font-bold">groups</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Community</span>
+        </button>
+        <button onclick="openReportModal()" class="flex flex-col items-center gap-1 text-gray-400 hover:text-red-500 transition-colors">
+          <span class="material-symbols-outlined text-2xl">warning</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Report</span>
+        </button>
+        <button onclick="showScreen('findEbike')" class="flex flex-col items-center gap-1 text-gray-400 hover:text-primary transition-colors">
+          <span class="material-symbols-outlined text-2xl">electric_bike</span>
+          <span class="text-[10px] font-bold uppercase tracking-wider">Rides</span>
+        </button>
+      </nav>
+
+    </div>
+  </div>
+
+  <!-- ============================================
+       REPORT ISSUE MODAL
+       ============================================ -->
+  <div id="reportModal" class="fixed inset-0 z-[60] flex items-center justify-center p-4 hidden">
+    <div class="absolute inset-0 bg-black/50" onclick="closeReportModal()"></div>
+    <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md p-6 relative z-10">
+      <button onclick="closeReportModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center">
+        <span class="material-symbols-outlined text-gray-500">close</span>
+      </button>
+
+      <h2 class="text-xl font-bold mb-4">Report an Issue</h2>
+
+      <div class="grid grid-cols-4 gap-2 mb-6">
+        <button onclick="selectReportType(this, 'glass')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-orange-50 hover:border-orange-300 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">🔶</span>
+          <span class="text-[10px] font-medium">Glass</span>
+        </button>
+        <button onclick="selectReportType(this, 'pothole')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-gray-100 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">🕳️</span>
+          <span class="text-[10px] font-medium">Pothole</span>
+        </button>
+        <button onclick="selectReportType(this, 'construction')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-yellow-50 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">🚧</span>
+          <span class="text-[10px] font-medium">Works</span>
+        </button>
+        <button onclick="selectReportType(this, 'hazard')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-red-50 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">⚠️</span>
+          <span class="text-[10px] font-medium">Hazard</span>
+        </button>
+      </div>
+
+      <div class="grid grid-cols-4 gap-2 mb-6">
+        <button onclick="selectReportType(this, 'nearmiss')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-red-50 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">🚗</span>
+          <span class="text-[10px] font-medium">Near Miss</span>
+        </button>
+        <button onclick="selectReportType(this, 'blocked')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-orange-50 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">🚫</span>
+          <span class="text-[10px] font-medium">Blocked</span>
+        </button>
+        <button onclick="selectReportType(this, 'lighting')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-gray-100 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">💡</span>
+          <span class="text-[10px] font-medium">Lighting</span>
+        </button>
+        <button onclick="selectReportType(this, 'good')" class="report-type-btn flex flex-col items-center p-3 rounded-xl bg-gray-50 hover:bg-green-50 border-2 border-transparent transition-all">
+          <span class="text-2xl mb-1">✨</span>
+          <span class="text-[10px] font-medium">Good Infra</span>
+        </button>
+      </div>
+
+      <textarea id="reportDescription" class="w-full p-3 rounded-xl bg-gray-50 border-2 border-gray-200 focus:border-primary focus:ring-0 text-sm placeholder-gray-400 resize-none transition-colors" rows="3" placeholder="Describe the issue (optional)..."></textarea>
+
+      <button onclick="submitReport()" class="w-full mt-4 bg-primary text-white font-bold py-4 rounded-2xl shadow-lg shadow-primary/30 hover:bg-primary/90 transition-colors flex items-center justify-center gap-2">
+        <span class="material-symbols-outlined">send</span>
+        Submit Report
+      </button>
+    </div>
+  </div>
+
+  <!-- ============================================
+       JAVASCRIPT
+       ============================================ -->
+  <script>
+    // Track if TNC has been completed
+    var tncCompleted = false;
+    var profileCompleted = localStorage.getItem('profileCompleted') === 'true';
+
+    // Hide all screens
+    function hideAllScreens() {
+      document.getElementById('splashScreen').classList.add('hidden');
+      document.getElementById('signInScreen').classList.add('hidden');
+      document.getElementById('signUpScreen').classList.add('hidden');
+      document.getElementById('welcomeHub').classList.add('hidden');
+      document.getElementById('cyclingCommunities').classList.add('hidden');
+      document.getElementById('findEbike').classList.add('hidden');
+      document.getElementById('bookDemo').classList.add('hidden');
+      document.getElementById('demoSelection').classList.add('hidden');
+      document.getElementById('scheduleDemo').classList.add('hidden');
+      document.getElementById('demoAgreement').classList.add('hidden');
+      document.getElementById('paidCheckout').classList.add('hidden');
+      document.getElementById('community').classList.add('hidden');
+      document.getElementById('communityHub').classList.add('hidden');
+    }
+
+    // Screen navigation
+    function showSignIn() {
+      hideAllScreens();
+      document.getElementById('signInScreen').classList.remove('hidden');
+    }
+
+    function showSignUp() {
+      hideAllScreens();
+      document.getElementById('signUpScreen').classList.remove('hidden');
+    }
+
+    function showWelcomeHub() {
+      hideAllScreens();
+      document.getElementById('welcomeHub').classList.remove('hidden');
+
+      // Show TNC modal if not completed yet
+      if (!tncCompleted) {
+        showTncModal();
+      }
+    }
+
+    function showScreen(screenId) {
+      hideAllScreens();
+      document.getElementById(screenId).classList.remove('hidden');
+    }
+
+    // ============================================
+    // TNC MODAL FUNCTIONS
+    // ============================================
+    function showTncModal() {
+      document.getElementById('tncModal').classList.remove('hidden');
+      showTncStep(1);
+    }
+
+    function closeTncModal() {
+      document.getElementById('tncModal').classList.add('hidden');
+    }
+
+    function showTncStep(step) {
+      // Hide all steps
+      document.getElementById('tncStep1').classList.add('hidden');
+      document.getElementById('tncStep2').classList.add('hidden');
+      document.getElementById('tncStep3').classList.add('hidden');
+      document.getElementById('tncStep4').classList.add('hidden');
+
+      // Show requested step
+      document.getElementById('tncStep' + step).classList.remove('hidden');
+    }
+
+    function completeTnc() {
+      tncCompleted = true;
+      closeTncModal();
+    }
+
+    // ============================================
+    // PROFILE PERSONALIZATION STEPS
+    // ============================================
+    function showProfileStep(step) {
+      document.getElementById('profileStep1').classList.add('hidden');
+      document.getElementById('profileStep2').classList.add('hidden');
+      document.getElementById('profileStep3').classList.add('hidden');
+      document.getElementById('profileStep4').classList.add('hidden');
+      document.getElementById('profileStep' + step).classList.remove('hidden');
+    }
+
+    // Toggle interest card selection (Step 3)
+    function toggleInterest(element) {
+      element.classList.toggle('selected');
+      element.classList.toggle('bg-primary/5');
+      element.classList.toggle('border-primary');
+      element.classList.toggle('bg-white');
+      element.classList.toggle('border-gray-200');
+
+      var checkMark = element.querySelector('.check-mark');
+      if (checkMark) {
+        checkMark.classList.toggle('hidden');
+      }
+
+      // Toggle icon colors
+      var icon = element.querySelector('.material-symbols-outlined');
+      if (icon) {
+        icon.classList.toggle('text-primary');
+        icon.classList.toggle('text-gray-400');
+      }
+
+      // Toggle text color
+      var label = element.querySelector('p');
+      if (label) {
+        label.classList.toggle('text-primary');
+        label.classList.toggle('text-gray-700');
+      }
+    }
+
+    // Select riding frequency (Step 4)
+    function selectFrequency(element, value) {
+      // Reset all frequency buttons
+      var buttons = document.querySelectorAll('.freq-btn');
+      buttons.forEach(function(btn) {
+        btn.classList.remove('border-primary', 'bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20');
+        btn.classList.add('border-gray-200', 'bg-white', 'text-gray-700');
+      });
+
+      // Activate selected button
+      element.classList.remove('border-gray-200', 'bg-white', 'text-gray-700');
+      element.classList.add('border-primary', 'bg-primary', 'text-white', 'shadow-lg', 'shadow-primary/20');
+    }
+
+    // Toggle area tag selection (Step 4)
+    function toggleAreaTag(element) {
+      element.classList.toggle('selected');
+
+      if (element.classList.contains('selected')) {
+        element.classList.remove('bg-gray-100', 'text-gray-700');
+        element.classList.add('bg-primary', 'text-white');
+      } else {
+        element.classList.remove('bg-primary', 'text-white');
+        element.classList.add('bg-gray-100', 'text-gray-700');
+      }
+    }
+
+    // Confirm demo booking and return to welcome
+    function confirmDemoBooking() {
+      showWelcomeHub();
+      showToast('Demo booked successfully!');
+    }
+
+    // Complete profile and go to Community Hub
+    function completeProfile() {
+      localStorage.setItem('profileCompleted', 'true');
+      profileCompleted = true;
+      showCommunityHub();
+    }
+
+    // Show Community Hub (Waze-like features)
+    function showCommunityHub() {
+      hideAllScreens();
+      document.getElementById('communityHub').classList.remove('hidden');
+    }
+
+    // Handle Community button click - check if profile is completed
+    function handleCommunityClick() {
+      if (profileCompleted || localStorage.getItem('profileCompleted') === 'true') {
+        showCommunityHub();
+      } else {
+        showScreen('community'); // Show profile personalization
+      }
+    }
+
+    // ============================================
+    // COMMUNITY HUB TAB FUNCTIONS
+    // ============================================
+    function showHubTab(tab) {
+      // Hide all tab content
+      document.querySelectorAll('.hub-content').forEach(function(el) {
+        el.classList.add('hidden');
+      });
+
+      // Reset all tab buttons
+      document.querySelectorAll('.hub-tab').forEach(function(btn) {
+        btn.classList.remove('bg-primary', 'text-white');
+        btn.classList.add('bg-gray-100', 'text-gray-600');
+      });
+
+      // Show selected tab content
+      document.getElementById('hub' + tab.charAt(0).toUpperCase() + tab.slice(1)).classList.remove('hidden');
+
+      // Activate selected tab button
+      event.target.classList.remove('bg-gray-100', 'text-gray-600');
+      event.target.classList.add('bg-primary', 'text-white');
+    }
+
+    // Vote on items (upvote/downvote)
+    function voteItem(button, direction) {
+      var countSpan = button.querySelector('span:last-child');
+      if (countSpan && !isNaN(parseInt(countSpan.textContent))) {
+        var count = parseInt(countSpan.textContent);
+        if (direction === 'up') {
+          countSpan.textContent = count + 1;
+          button.classList.add('text-green-500');
+          button.classList.remove('text-gray-500');
+        } else {
+          countSpan.textContent = count + 1;
+          button.classList.add('text-red-500');
+          button.classList.remove('text-gray-500');
+        }
+      }
+      showToast(direction === 'up' ? 'Upvoted! 👍' : 'Reported 👎');
+    }
+
+    // Report Modal functions
+    var selectedReportType = null;
+
+    function openReportModal() {
+      document.getElementById('reportModal').classList.remove('hidden');
+    }
+
+    function closeReportModal() {
+      document.getElementById('reportModal').classList.add('hidden');
+      selectedReportType = null;
+      // Reset selections
+      document.querySelectorAll('.report-type-btn').forEach(function(btn) {
+        btn.classList.remove('border-primary', 'bg-primary/10');
+        btn.classList.add('border-transparent');
+      });
+      document.getElementById('reportDescription').value = '';
+    }
+
+    function selectReportType(button, type) {
+      selectedReportType = type;
+      // Reset all buttons
+      document.querySelectorAll('.report-type-btn').forEach(function(btn) {
+        btn.classList.remove('border-primary', 'bg-primary/10');
+        btn.classList.add('border-transparent');
+      });
+      // Highlight selected
+      button.classList.remove('border-transparent');
+      button.classList.add('border-primary', 'bg-primary/10');
+    }
+
+    function submitReport() {
+      if (!selectedReportType) {
+        showToast('Please select a report type');
+        return;
+      }
+      showToast('Report submitted! Thanks for helping the community 🙏');
+      closeReportModal();
+    }
+
+    function showAddPostModal() {
+      showToast('Create post coming soon!');
+    }
+
+    // Toast notification
+    function showToast(message) {
+      var toast = document.createElement('div');
+      toast.className = 'fixed bottom-32 left-1/2 -translate-x-1/2 bg-gray-900 text-white px-6 py-3 rounded-full shadow-xl z-[100] text-sm font-medium animate-pulse';
+      toast.textContent = message;
+      document.body.appendChild(toast);
+      setTimeout(function() {
+        toast.remove();
+      }, 2000);
+    }
+
+    // Toggle between List and Map views in Cycling Communities
+    function showCommunityView(view) {
+      var listView = document.getElementById('communityListView');
+      var mapView = document.getElementById('communityMapView');
+      var listBtn = document.getElementById('listTabBtn');
+      var mapBtn = document.getElementById('mapTabBtn');
+
+      if (view === 'map') {
+        // Show Map, hide List
+        listView.classList.add('hidden');
+        mapView.classList.remove('hidden');
+
+        // Update tab styling
+        listBtn.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+        listBtn.classList.add('text-[#706189]');
+        listBtn.querySelector('.material-symbols-outlined').classList.add('text-gray-400');
+
+        mapBtn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+        mapBtn.classList.remove('text-[#706189]');
+        mapBtn.querySelector('.material-symbols-outlined').classList.remove('text-gray-400');
+      } else {
+        // Show List, hide Map
+        mapView.classList.add('hidden');
+        listView.classList.remove('hidden');
+
+        // Update tab styling
+        mapBtn.classList.remove('bg-white', 'text-primary', 'shadow-sm');
+        mapBtn.classList.add('text-[#706189]');
+        mapBtn.querySelector('.material-symbols-outlined').classList.add('text-gray-400');
+
+        listBtn.classList.add('bg-white', 'text-primary', 'shadow-sm');
+        listBtn.classList.remove('text-[#706189]');
+        listBtn.querySelector('.material-symbols-outlined').classList.remove('text-gray-400');
+      }
+    }
+
+    // ============================================
+    // AUTH HANDLERS
+    // ============================================
+    function handleSignIn(e) {
+      e.preventDefault();
+      var email = document.getElementById('signInEmail').value;
+      var password = document.getElementById('signInPassword').value;
+
+      // Clear previous errors
+      document.getElementById('emailError').classList.add('hidden');
+      document.getElementById('passwordError').classList.add('hidden');
+
+      if (!email) {
+        document.getElementById('emailError').classList.remove('hidden');
+        return;
+      }
+
+      if (!password || password.length < 6) {
+        document.getElementById('passwordError').classList.remove('hidden');
+        return;
+      }
+
+      // Success - go to Welcome Hub (TNC will show automatically)
+      showWelcomeHub();
+    }
+
+    function handleSignUp(e) {
+      e.preventDefault();
+      // Success - go to Welcome Hub (TNC will show automatically)
+      showWelcomeHub();
+    }
+
+    function resetOnboarding() {
+      // Reset TNC state
+      tncCompleted = false;
+
+      hideAllScreens();
+      closeTncModal();
+      document.getElementById('splashScreen').classList.remove('hidden');
+
+      // Restart auto-advance timer
+      setTimeout(function() {
+        if (!document.getElementById('splashScreen').classList.contains('hidden')) {
+          showSignIn();
+        }
+      }, 3000);
+    }
+
+    // Auto-advance splash after 3 seconds
+    setTimeout(function() {
+      if (!document.getElementById('splashScreen').classList.contains('hidden')) {
+        showSignIn();
+      }
+    }, 3000);
+  </script>
+
+</body>
+</html>

@@ -2,8 +2,17 @@
 <html class="light" lang="en">
 <head>
   <meta charset="utf-8"/>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>Sydney Bike Network - Future Vision</title>
+  <meta content="width=device-width, initial-scale=1.0, viewport-fit=cover" name="viewport"/>
+  <meta name="theme-color" content="#7C3AED"/>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <meta name="apple-mobile-web-app-title" content="Micro2Move"/>
+  <meta name="description" content="Sydney's community-powered cycling app - routes, charging, education & rewards"/>
+  <title>Micro2Move Sydney - Bike Network</title>
+
+  <!-- PWA Manifest -->
+  <link rel="manifest" href="manifest.json"/>
+  <link rel="apple-touch-icon" href="assets/icons/icon-192.png"/>
 
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com?plugins=forms,typography"></script>
@@ -137,6 +146,343 @@
 
 <body class="font-display antialiased bg-background-light dark:bg-background-dark overflow-hidden select-none">
 
+  <!-- Immediate onboarding control - runs before any other scripts -->
+  <script>
+    (function() {
+      // Check if user has completed onboarding
+      var completed = localStorage.getItem('micro2move_onboarding_complete');
+      if (!completed) {
+        // First time user - keep splash visible, ensure mainApp stays hidden
+        document.addEventListener('DOMContentLoaded', function() {
+          var mainApp = document.getElementById('mainApp');
+          var splash = document.getElementById('splashScreen');
+          if (mainApp) mainApp.classList.add('hidden');
+          if (splash) splash.classList.remove('hidden');
+        });
+      }
+    })();
+  </script>
+
+  <!-- ============================================
+       ONBOARDING SCREENS
+       ============================================ -->
+
+  <!-- Splash Screen -->
+  <div id="splashScreen" class="fixed inset-0 z-[200] flex flex-col items-center justify-center" style="background-color: #1a1a4e;">
+    <div class="flex flex-col items-center justify-center flex-1 px-8">
+      <!-- Tagline Top -->
+      <p class="text-white text-xl mb-12 tracking-wide">Making Sydney E-bike Friendly</p>
+
+      <!-- Logo -->
+      <div class="relative mb-16">
+        <!-- Lightning bolt -->
+        <svg class="absolute -left-4 -top-2 w-8 h-12" viewBox="0 0 24 36" fill="none">
+          <path d="M14 2L4 18h8l-2 16 12-20h-9l5-12h-4z" fill="#9333EA"/>
+        </svg>
+        <!-- Bike icon -->
+        <svg class="w-32 h-20" viewBox="0 0 120 80" fill="none">
+          <!-- Back wheel -->
+          <circle cx="25" cy="55" r="18" stroke="#22C55E" stroke-width="4" fill="none"/>
+          <!-- Front wheel -->
+          <circle cx="95" cy="55" r="18" stroke="#22C55E" stroke-width="4" fill="none"/>
+          <!-- Frame -->
+          <path d="M25 55 L50 30 L75 55 L95 55" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50 30 L50 20 L55 20" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M50 30 L75 30 L75 55" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <!-- Seat -->
+          <path d="M45 20 L55 20" stroke="#22C55E" stroke-width="4" stroke-linecap="round"/>
+          <!-- Handlebars -->
+          <path d="M85 25 L95 25 L95 35" stroke="#22C55E" stroke-width="4" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M75 30 L95 25" stroke="#22C55E" stroke-width="4" stroke-linecap="round"/>
+        </svg>
+        <!-- Brand name -->
+        <p class="text-center mt-2">
+          <span class="text-primary text-xl font-bold">micro</span><span class="text-acc-green text-xl font-bold">2</span><span class="text-primary text-xl font-bold">move</span>
+        </p>
+      </div>
+
+      <!-- Bottom Tagline -->
+      <div class="flex gap-2 text-xl font-semibold">
+        <span class="text-acc-green">Affordable</span>
+        <span class="text-primary">Reliable</span>
+        <span class="text-white">Safe</span>
+      </div>
+    </div>
+
+    <!-- Tap to continue (auto-advances after 3s) -->
+    <button onclick="showSignInScreen()" class="mb-12 text-white/60 text-sm animate-pulse">
+      Tap to continue
+    </button>
+  </div>
+
+  <!-- Sign In Screen -->
+  <div id="signInScreen" class="fixed inset-0 z-[200] bg-white flex flex-col hidden">
+    <div class="flex-1 px-6 pt-12 pb-6 overflow-y-auto">
+      <!-- Logo Header -->
+      <div class="flex items-center gap-2 mb-8">
+        <svg class="w-16 h-12" viewBox="0 0 60 45" fill="none">
+          <!-- Lightning -->
+          <path d="M8 2L2 14h6l-1.5 12 9-15H9l4-9H8z" fill="#9333EA"/>
+          <!-- Bike -->
+          <circle cx="22" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <circle cx="52" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <path d="M22 32 L34 18 L46 32 L52 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 18 L34 12 L38 12" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M34 18 L46 18 L46 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M30 12 L38 12" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M48 14 L52 14 L52 20" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M46 18 L52 14" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="text-primary text-2xl font-bold">micro2move</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-3xl font-light text-gray-900 mb-8">Sign in to continue</h1>
+
+      <!-- Form -->
+      <form id="signInForm" onsubmit="handleSignIn(event)" class="space-y-4">
+        <!-- Email Field -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Email</label>
+            <span id="emailError" class="text-red-500 text-sm hidden"></span>
+          </div>
+          <input
+            type="email"
+            id="signInEmail"
+            placeholder="johndoe@email.com"
+            class="w-full px-4 py-4 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Password</label>
+            <span id="passwordError" class="text-red-500 text-sm hidden"></span>
+          </div>
+          <input
+            type="password"
+            id="signInPassword"
+            placeholder="********"
+            class="w-full px-4 py-4 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Sign In Button -->
+        <button
+          type="submit"
+          class="w-full py-4 rounded-xl text-white font-semibold text-lg mt-6 transition-colors hover:opacity-90"
+          style="background-color: #A855F7;"
+        >
+          Sign In
+        </button>
+      </form>
+
+      <!-- Sign Up Link -->
+      <p class="text-center mt-6 text-gray-600">
+        Don't have an account?
+        <button onclick="showSignUpScreen()" class="text-primary font-semibold hover:underline">Sign Up</button>
+      </p>
+
+      <!-- Divider -->
+      <div class="flex items-center gap-4 my-6">
+        <div class="flex-1 h-px bg-gray-200"></div>
+        <span class="text-sm text-gray-400">or</span>
+        <div class="flex-1 h-px bg-gray-200"></div>
+      </div>
+
+      <!-- Social Sign In -->
+      <div class="space-y-3">
+        <button onclick="signInWithGoogle()" class="w-full bg-white border border-gray-200 text-gray-700 font-medium py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-50 transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+          Continue with Google
+        </button>
+
+        <button onclick="signInWithApple()" class="w-full bg-black text-white font-medium py-3 rounded-xl flex items-center justify-center gap-3 hover:bg-gray-900 transition-colors">
+          <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>
+          Continue with Apple
+        </button>
+      </div>
+
+      <!-- Skip -->
+      <button onclick="continueAsGuest()" class="w-full text-gray-400 font-medium py-3 mt-4 hover:text-gray-600 transition-colors">
+        Skip for now
+      </button>
+    </div>
+  </div>
+
+  <!-- Sign Up Screen -->
+  <div id="signUpScreen" class="fixed inset-0 z-[200] bg-white flex flex-col hidden">
+    <div class="flex-1 px-6 pt-12 pb-6 overflow-y-auto">
+      <!-- Logo Header -->
+      <div class="flex items-center gap-2 mb-6">
+        <svg class="w-16 h-12" viewBox="0 0 60 45" fill="none">
+          <path d="M8 2L2 14h6l-1.5 12 9-15H9l4-9H8z" fill="#9333EA"/>
+          <circle cx="22" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <circle cx="52" cy="32" r="10" stroke="#22C55E" stroke-width="2.5" fill="none"/>
+          <path d="M22 32 L34 18 L46 32 L52 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M34 18 L34 12 L38 12" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M34 18 L46 18 L46 32" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M30 12 L38 12" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"/>
+          <path d="M48 14 L52 14 L52 20" stroke="#22C55E" stroke-width="2.5" fill="none" stroke-linecap="round"/>
+          <path d="M46 18 L52 14" stroke="#22C55E" stroke-width="2.5" stroke-linecap="round"/>
+        </svg>
+        <span class="text-primary text-2xl font-bold">micro2move</span>
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-2xl font-bold text-gray-900 mb-6">Sign up</h1>
+
+      <!-- Form -->
+      <form id="signUpForm" onsubmit="handleSignUp(event)" class="space-y-3">
+        <!-- Full Name -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Full Name (as displayed on government ID)</label>
+            <span id="nameError" class="text-red-500 text-xs hidden"></span>
+          </div>
+          <input
+            type="text"
+            id="signUpName"
+            placeholder="John Doe"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Date of Birth -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Date of Birth</label>
+            <span id="dobError" class="text-red-500 text-xs hidden"></span>
+          </div>
+          <input
+            type="text"
+            id="signUpDob"
+            placeholder="DD/MM/YYYY"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Email -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Email (for receipts and rides)</label>
+            <span id="signUpEmailError" class="text-red-500 text-xs hidden"></span>
+          </div>
+          <input
+            type="email"
+            id="signUpEmail"
+            placeholder="john@micro2move.com"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Password -->
+        <div>
+          <div class="flex justify-between items-center mb-1">
+            <label class="text-gray-600 text-sm">Create Password</label>
+            <span id="signUpPasswordError" class="text-red-500 text-xs hidden"></span>
+          </div>
+          <input
+            type="password"
+            id="signUpPassword"
+            placeholder="******"
+            class="w-full px-4 py-3 rounded-xl text-gray-600 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+            style="background-color: #EDE9FE;"
+          />
+        </div>
+
+        <!-- Terms & Conditions -->
+        <div class="flex items-start gap-2 pt-2">
+          <input type="checkbox" id="acceptTerms" class="mt-1 w-5 h-5 rounded border-gray-300 text-primary focus:ring-primary"/>
+          <label class="text-gray-600 text-sm">
+            I accept the <button type="button" onclick="showTermsModal()" class="text-primary font-semibold hover:underline">Terms & Conditions</button>
+            <span id="termsError" class="text-red-500 text-xs block hidden"></span>
+          </label>
+        </div>
+
+        <!-- ID Upload Section -->
+        <div class="grid grid-cols-2 gap-3 pt-2">
+          <button type="button" onclick="uploadGovernmentId()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-dashed border-gray-300 hover:border-primary transition-colors" style="background-color: #EDE9FE;">
+            <span class="text-gray-500 text-xs text-center mb-2">Upload Government ID</span>
+            <div id="govIdIcon" class="w-10 h-10 rounded-full bg-white/50 flex items-center justify-center">
+              <span class="text-2xl text-gray-400">+</span>
+            </div>
+            <span id="govIdStatus" class="text-xs text-gray-400 mt-1"></span>
+          </button>
+
+          <button type="button" onclick="takeSelfieWithId()" class="flex flex-col items-center justify-center p-4 rounded-xl border-2 border-dashed border-gray-300 hover:border-primary transition-colors" style="background-color: #EDE9FE;">
+            <span class="text-gray-500 text-xs text-center mb-2">Take Selfie Holding same Government ID</span>
+            <div id="selfieIcon" class="w-10 h-10 rounded-full bg-white/50 flex items-center justify-center">
+              <span class="material-icons-round text-gray-400">photo_camera</span>
+            </div>
+            <span id="selfieStatus" class="text-xs text-gray-400 mt-1"></span>
+          </button>
+        </div>
+        <span id="idVerificationError" class="text-red-500 text-xs hidden"></span>
+
+        <!-- Continue Button -->
+        <button
+          type="submit"
+          class="w-full py-4 rounded-xl text-white font-semibold text-lg mt-4 transition-colors hover:opacity-90"
+          style="background-color: #A855F7;"
+        >
+          Continue
+        </button>
+      </form>
+
+      <!-- Sign In Link -->
+      <p class="text-center mt-4 text-gray-600">
+        Already an user?
+        <button onclick="showSignInScreen()" class="text-primary font-semibold hover:underline">Sign in</button>
+      </p>
+    </div>
+  </div>
+
+  <!-- Terms & Conditions Modal -->
+  <div id="termsModal" class="fixed inset-0 z-[250] bg-black/50 flex items-center justify-center p-4 hidden">
+    <div class="bg-white rounded-2xl max-w-md w-full max-h-[80vh] flex flex-col">
+      <div class="p-6 border-b">
+        <h2 class="text-xl font-bold text-gray-900">Terms & Conditions</h2>
+      </div>
+      <div class="flex-1 overflow-y-auto p-6 text-gray-600 text-sm space-y-4">
+        <p><strong>1. Acceptance of Terms</strong></p>
+        <p>By accessing and using the Micro2Move application, you agree to be bound by these Terms and Conditions. If you do not agree with any part of these terms, you may not use our service.</p>
+
+        <p><strong>2. User Eligibility</strong></p>
+        <p>You must be at least 16 years of age to use this service. Users under 18 must have parental consent. A valid government-issued ID is required for verification.</p>
+
+        <p><strong>3. E-Bike Rental Terms</strong></p>
+        <p>Users are responsible for the safe operation of rented e-bikes. Any damage caused by negligence or misuse will be charged to the user's account. E-bikes must be returned to designated stations.</p>
+
+        <p><strong>4. Safety Requirements</strong></p>
+        <p>Helmets must be worn at all times while operating an e-bike. Users must follow all local traffic laws and regulations. Riding under the influence of alcohol or drugs is strictly prohibited.</p>
+
+        <p><strong>5. Privacy & Data</strong></p>
+        <p>We collect location data to provide our services. Your personal information is protected according to our Privacy Policy. ID verification data is securely stored and used only for identity confirmation.</p>
+
+        <p><strong>6. Liability</strong></p>
+        <p>Micro2Move is not liable for injuries sustained during the use of our e-bikes beyond what is covered by our insurance policy. Users assume responsibility for their safety.</p>
+
+        <button onclick="showFullTerms()" class="text-primary font-semibold hover:underline">Read more...</button>
+      </div>
+      <div class="p-6 border-t">
+        <button onclick="acceptTermsAndClose()" class="w-full py-3 rounded-xl text-white font-semibold transition-colors hover:opacity-90" style="background-color: #A855F7;">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main App Container -->
+  <div id="mainApp" class="hidden">
+
   <!-- Main Container - Full Screen -->
   <div class="relative w-full h-screen overflow-hidden">
 
@@ -192,6 +538,9 @@
         <div class="h-px bg-gray-200 dark:bg-gray-700 mx-1"></div>
         <button id="layersBtn" class="w-10 h-10 rounded-xl glass bg-white/50 dark:bg-slate-800/50 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:scale-105 transition-transform" title="Layers">
           <span class="material-icons-round">layers</span>
+        </button>
+        <button id="profileBtn" onclick="openProfileModal()" class="w-10 h-10 rounded-xl glass bg-white/50 dark:bg-slate-800/50 text-gray-600 dark:text-gray-300 flex items-center justify-center hover:scale-105 transition-transform" title="Profile & Settings">
+          <span class="material-icons-round">person</span>
         </button>
       </div>
     </div>
@@ -831,6 +1180,146 @@
             Next
           </button>
         </div>
+      </div>
+    </div>
+
+    <!-- Profile & Settings Modal -->
+    <div id="profileModal" class="modal-overlay fixed inset-0 z-50 flex items-center justify-center p-4">
+      <div class="absolute inset-0 bg-black/50" onclick="closeProfileModal()"></div>
+      <div class="modal-content glass bg-white/95 dark:bg-slate-900/95 rounded-3xl border border-white/40 shadow-2xl w-full max-w-md p-6 relative max-h-[90vh] overflow-y-auto">
+        <button onclick="closeProfileModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-gray-100 dark:bg-slate-800 flex items-center justify-center">
+          <span class="material-icons-round text-gray-500">close</span>
+        </button>
+
+        <!-- Profile Header -->
+        <div class="text-center mb-6">
+          <div class="w-20 h-20 rounded-full bg-gradient-to-tr from-primary to-pink-500 flex items-center justify-center mx-auto mb-3" id="profileAvatar">
+            <span class="material-icons-round text-white text-3xl" id="profileAvatarIcon">person</span>
+            <img id="profileAvatarImg" class="w-full h-full rounded-full object-cover hidden" alt="Profile"/>
+          </div>
+          <h2 class="text-xl font-bold dark:text-white" id="profileName">Cyclist</h2>
+          <p class="text-sm text-gray-500" id="profileEmail">Sign in to save progress</p>
+        </div>
+
+        <!-- Points & Level -->
+        <div class="bg-gradient-to-r from-primary to-pink-500 rounded-2xl p-4 mb-6 text-white">
+          <div class="flex items-center justify-between mb-2">
+            <div>
+              <p class="text-xs text-white/70">Your Points</p>
+              <p class="text-2xl font-bold" id="profilePoints" data-points-display>0</p>
+            </div>
+            <div class="text-right">
+              <p class="text-xs text-white/70">Level</p>
+              <p class="text-lg font-bold" id="profileLevel">Learner</p>
+            </div>
+          </div>
+          <div class="h-2 bg-white/20 rounded-full overflow-hidden">
+            <div class="h-full bg-white progress-bar" id="profileLevelBar" style="width: 20%"></div>
+          </div>
+          <p class="text-xs text-white/70 mt-1" id="profileLevelProgress">200 / 1000 points to next level</p>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-3 gap-3 mb-6">
+          <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 text-center">
+            <p class="text-xl font-bold text-acc-green" id="profileRides">0</p>
+            <p class="text-xs text-gray-500">Rides</p>
+          </div>
+          <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 text-center">
+            <p class="text-xl font-bold text-acc-blue" id="profileKm">0</p>
+            <p class="text-xs text-gray-500">km</p>
+          </div>
+          <div class="bg-gray-50 dark:bg-slate-800 rounded-xl p-3 text-center">
+            <p class="text-xl font-bold text-acc-yellow" id="profileCO2">0</p>
+            <p class="text-xs text-gray-500">kg CO₂</p>
+          </div>
+        </div>
+
+        <!-- Badges -->
+        <div class="mb-6">
+          <h3 class="font-bold dark:text-white mb-3 flex items-center gap-2">
+            <span class="material-icons-round text-acc-yellow">military_tech</span>
+            Badges Earned
+          </h3>
+          <div class="flex flex-wrap gap-2" id="profileBadges">
+            <span class="text-2xl" title="First Ride">🚴</span>
+          </div>
+        </div>
+
+        <!-- Preferences -->
+        <div class="mb-6">
+          <h3 class="font-bold dark:text-white mb-3 flex items-center gap-2">
+            <span class="material-icons-round text-primary">settings</span>
+            Route Preferences
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Prefer shaded routes</span>
+              <input type="checkbox" id="prefShade" class="w-5 h-5 rounded text-primary focus:ring-primary" onchange="updatePreference('preferShade', this.checked)"/>
+            </label>
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Prefer scenic routes</span>
+              <input type="checkbox" id="prefScenic" class="w-5 h-5 rounded text-primary focus:ring-primary" onchange="updatePreference('preferScenic', this.checked)"/>
+            </label>
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Prefer safer routes</span>
+              <input type="checkbox" id="prefSafe" class="w-5 h-5 rounded text-primary focus:ring-primary" checked onchange="updatePreference('preferSafe', this.checked)"/>
+            </label>
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Prefer flat routes</span>
+              <input type="checkbox" id="prefFlat" class="w-5 h-5 rounded text-primary focus:ring-primary" onchange="updatePreference('preferFlat', this.checked)"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- App Settings -->
+        <div class="mb-6">
+          <h3 class="font-bold dark:text-white mb-3 flex items-center gap-2">
+            <span class="material-icons-round text-acc-blue">tune</span>
+            App Settings
+          </h3>
+          <div class="space-y-3">
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Dark mode</span>
+              <input type="checkbox" id="settingDarkMode" class="w-5 h-5 rounded text-primary focus:ring-primary" onchange="toggleDarkMode(this.checked)"/>
+            </label>
+            <label class="flex items-center justify-between">
+              <span class="text-sm dark:text-gray-300">Push notifications</span>
+              <input type="checkbox" id="settingNotifications" class="w-5 h-5 rounded text-primary focus:ring-primary" onchange="toggleNotifications(this.checked)"/>
+            </label>
+          </div>
+        </div>
+
+        <!-- Premium Section -->
+        <div id="premiumSection" class="mb-6 hidden">
+          <div class="bg-gradient-to-r from-yellow-400 to-orange-500 rounded-2xl p-4 text-white">
+            <div class="flex items-center gap-2 mb-2">
+              <span class="material-icons-round">workspace_premium</span>
+              <span class="font-bold">Premium Member</span>
+            </div>
+            <p class="text-sm text-white/80" id="premiumUntil">Valid until: --</p>
+          </div>
+        </div>
+
+        <div id="upgradePremiumSection" class="mb-6">
+          <button onclick="showPremiumOptions()" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 rounded-2xl flex items-center justify-center gap-2 shadow-lg hover:shadow-xl transition-shadow">
+            <span class="material-icons-round">workspace_premium</span>
+            Upgrade to Premium
+          </button>
+        </div>
+
+        <!-- Actions -->
+        <div class="space-y-3">
+          <button id="profileSignInBtn" onclick="showOnboardingForSignIn()" class="w-full bg-primary text-white font-bold py-3 rounded-2xl shadow-lg hover:bg-primary/90 transition-colors">
+            Sign In
+          </button>
+          <button id="profileSignOutBtn" onclick="handleSignOut()" class="hidden w-full bg-red-500/10 text-red-500 font-bold py-3 rounded-2xl hover:bg-red-500/20 transition-colors">
+            Sign Out
+          </button>
+        </div>
+
+        <!-- Version -->
+        <p class="text-center text-xs text-gray-400 mt-6">Micro2Move Sydney v1.0.0</p>
       </div>
     </div>
 
@@ -2755,6 +3244,250 @@ Include real Sydney locations, coffee shops, cycleways, and points of interest. 
         }
       });
     });
+
+    // ============================================
+    // ONBOARDING
+    // ============================================
+    // All onboarding logic (Splash, Sign In, Sign Up) is handled in app-core.js
+    // Functions: showOnboarding, showSignInScreen, showSignUpScreen, handleSignIn, handleSignUp
+    // DO NOT add any onboarding logic here - it will conflict with app-core.js
+
+    // ============================================
+    // PROFILE MODAL FUNCTIONS
+    // ============================================
+    function openProfileModal() {
+      updateProfileDisplay();
+      document.getElementById('profileModal').classList.add('visible');
+    }
+
+    function closeProfileModal() {
+      document.getElementById('profileModal').classList.remove('visible');
+    }
+
+    function updateProfileDisplay() {
+      // Check if AppState exists (from app-core.js)
+      const user = window.AppState?.user;
+      const profile = window.AppState?.userProfile;
+      const isSignedIn = user && !user.isGuest;
+
+      // Update avatar
+      const avatarIcon = document.getElementById('profileAvatarIcon');
+      const avatarImg = document.getElementById('profileAvatarImg');
+
+      if (profile?.photoURL) {
+        avatarIcon.classList.add('hidden');
+        avatarImg.src = profile.photoURL;
+        avatarImg.classList.remove('hidden');
+      } else {
+        avatarIcon.classList.remove('hidden');
+        avatarImg.classList.add('hidden');
+      }
+
+      // Update name & email
+      document.getElementById('profileName').textContent = profile?.displayName || user?.displayName || 'Cyclist';
+      document.getElementById('profileEmail').textContent = profile?.email || user?.email || (user?.isGuest ? 'Guest mode' : 'Sign in to save progress');
+
+      // Update points & level
+      const points = window.AppState?.totalPoints || (typeof USER_PROGRESS !== 'undefined' ? USER_PROGRESS.total_points : 0);
+      document.getElementById('profilePoints').textContent = points.toLocaleString();
+
+      // Calculate level
+      const level = calculateLevel(points);
+      document.getElementById('profileLevel').textContent = level.name;
+      document.getElementById('profileLevelBar').style.width = `${level.progress}%`;
+      document.getElementById('profileLevelProgress').textContent = `${points.toLocaleString()} / ${level.nextThreshold.toLocaleString()} points to next level`;
+
+      // Update stats
+      const stats = profile?.stats || {};
+      document.getElementById('profileRides').textContent = stats.totalRides || 0;
+      document.getElementById('profileKm').textContent = stats.totalKm || 0;
+      document.getElementById('profileCO2').textContent = (stats.co2Saved || 0).toFixed(1);
+
+      // Update badges
+      const badges = window.AppState?.earnedBadges || (typeof USER_PROGRESS !== 'undefined' ? USER_PROGRESS.badges : ['first_ride']);
+      const badgesContainer = document.getElementById('profileBadges');
+      badgesContainer.innerHTML = badges.map(badgeId => {
+        const badge = typeof BADGES !== 'undefined' ? BADGES.find(b => b.id === badgeId) : null;
+        return `<span class="text-2xl" title="${badge?.name || badgeId}">${badge?.icon || '🏆'}</span>`;
+      }).join('');
+
+      // Update preferences
+      const prefs = profile?.preferences || {};
+      document.getElementById('prefShade').checked = prefs.preferShade || false;
+      document.getElementById('prefScenic').checked = prefs.preferScenic || false;
+      document.getElementById('prefSafe').checked = prefs.preferSafe !== false;
+      document.getElementById('prefFlat').checked = prefs.preferFlat || false;
+
+      // Update dark mode toggle
+      document.getElementById('settingDarkMode').checked = document.documentElement.classList.contains('dark');
+
+      // Update premium status
+      const isPremium = window.AppState?.isPremium || false;
+      document.getElementById('premiumSection').classList.toggle('hidden', !isPremium);
+      document.getElementById('upgradePremiumSection').classList.toggle('hidden', isPremium);
+
+      if (isPremium && profile?.premiumUntil) {
+        document.getElementById('premiumUntil').textContent = `Valid until: ${new Date(profile.premiumUntil).toLocaleDateString()}`;
+      }
+
+      // Update sign in/out buttons
+      document.getElementById('profileSignInBtn').classList.toggle('hidden', isSignedIn);
+      document.getElementById('profileSignOutBtn').classList.toggle('hidden', !isSignedIn);
+    }
+
+    function calculateLevel(points) {
+      const levels = typeof LEVELS !== 'undefined' ? LEVELS : [
+        { name: 'Learner', threshold: 0 },
+        { name: 'Pedal Pusher', threshold: 1000 },
+        { name: 'Urban Cruiser', threshold: 2500 },
+        { name: 'Path Pioneer', threshold: 5000 },
+        { name: 'Safety Expert', threshold: 10000 },
+        { name: 'Community Leader', threshold: 20000 },
+        { name: 'Sydney Cycling Legend', threshold: 50000 }
+      ];
+
+      let currentLevel = levels[0];
+      let nextLevel = levels[1] || levels[0];
+
+      for (let i = 0; i < levels.length; i++) {
+        if (points >= levels[i].threshold) {
+          currentLevel = levels[i];
+          nextLevel = levels[i + 1] || levels[i];
+        }
+      }
+
+      const progressRange = nextLevel.threshold - currentLevel.threshold;
+      const pointsInLevel = points - currentLevel.threshold;
+      const progress = progressRange > 0 ? Math.min(100, (pointsInLevel / progressRange) * 100) : 100;
+
+      return {
+        name: currentLevel.name,
+        progress: progress,
+        nextThreshold: nextLevel.threshold
+      };
+    }
+
+    function updatePreference(key, value) {
+      if (typeof updateUserProfile === 'function' && window.AppState?.userProfile) {
+        const prefs = window.AppState.userProfile.preferences || {};
+        prefs[key] = value;
+        updateUserProfile({ preferences: prefs });
+        showToast('Preference saved');
+      } else {
+        // Save locally for guest users
+        const localPrefs = JSON.parse(localStorage.getItem('micro2move_prefs') || '{}');
+        localPrefs[key] = value;
+        localStorage.setItem('micro2move_prefs', JSON.stringify(localPrefs));
+      }
+    }
+
+    function toggleDarkMode(enabled) {
+      document.documentElement.classList.toggle('dark', enabled);
+      localStorage.setItem('micro2move_darkMode', enabled);
+    }
+
+    function toggleNotifications(enabled) {
+      if (enabled && 'Notification' in window) {
+        Notification.requestPermission().then(permission => {
+          if (permission !== 'granted') {
+            document.getElementById('settingNotifications').checked = false;
+            showToast('Notifications blocked by browser');
+          } else {
+            localStorage.setItem('micro2move_notifications', 'true');
+            showToast('Notifications enabled');
+          }
+        });
+      } else {
+        localStorage.setItem('micro2move_notifications', 'false');
+      }
+    }
+
+    function showOnboardingForSignIn() {
+      closeProfileModal();
+      // Show the sign-in screen directly (skip splash)
+      if (typeof showSignInScreen === 'function') {
+        showSignInScreen();
+      }
+    }
+
+    function handleSignOut() {
+      if (typeof signOut === 'function') {
+        signOut().then(() => {
+          closeProfileModal();
+          showToast('Signed out successfully');
+          updateProfileDisplay();
+        });
+      } else {
+        // Clear local storage for guest
+        localStorage.removeItem('micro2move_user');
+        localStorage.removeItem('micro2move_guest');
+        window.AppState = window.AppState || {};
+        window.AppState.user = null;
+        window.AppState.userProfile = null;
+        closeProfileModal();
+        showToast('Signed out');
+      }
+    }
+
+    function showPremiumOptions() {
+      closeProfileModal();
+      // Show a premium upgrade modal or redirect
+      const premiumInfo = `
+        <div class="text-center p-4">
+          <div class="w-16 h-16 rounded-full bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center mx-auto mb-4">
+            <span class="material-icons-round text-white text-3xl">workspace_premium</span>
+          </div>
+          <h3 class="text-xl font-bold mb-2">Micro2Move Premium</h3>
+          <p class="text-gray-600 mb-4">Unlock advanced features:</p>
+          <ul class="text-left text-sm space-y-2 mb-6">
+            <li class="flex items-center gap-2"><span class="material-icons-round text-acc-green text-lg">check_circle</span> Unlimited AI route planning</li>
+            <li class="flex items-center gap-2"><span class="material-icons-round text-acc-green text-lg">check_circle</span> Offline maps download</li>
+            <li class="flex items-center gap-2"><span class="material-icons-round text-acc-green text-lg">check_circle</span> 2x points on all activities</li>
+            <li class="flex items-center gap-2"><span class="material-icons-round text-acc-green text-lg">check_circle</span> Exclusive partner discounts</li>
+          </ul>
+          <button onclick="handlePremiumPurchase('monthly')" class="w-full bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-bold py-3 rounded-2xl mb-2">
+            $4.99/month
+          </button>
+          <button onclick="handlePremiumPurchase('yearly')" class="w-full bg-primary text-white font-bold py-3 rounded-2xl">
+            $39.99/year (Save 33%)
+          </button>
+        </div>
+      `;
+
+      // Use existing modal or show toast
+      showToast('Premium coming soon!');
+    }
+
+    function handlePremiumPurchase(plan) {
+      if (typeof purchasePremium === 'function') {
+        const priceId = plan === 'yearly' ? 'price_yearly_id' : 'price_monthly_id';
+        purchasePremium(priceId);
+      } else {
+        showToast('Please sign in to purchase');
+      }
+    }
+
+    // Initialize dark mode from localStorage
+    if (localStorage.getItem('micro2move_darkMode') === 'true') {
+      document.documentElement.classList.add('dark');
+    }
   </script>
+
+  </div><!-- End mainApp -->
+
+  <!-- Firebase SDK (v9 compat for easy migration) -->
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-analytics-compat.js"></script>
+
+  <!-- Stripe SDK -->
+  <script src="https://js.stripe.com/v3/"></script>
+
+  <!-- Firebase Config (gitignored) -->
+  <script src="js/firebase-config.js" onerror="console.log('Firebase config not found - running in demo mode')"></script>
+
+  <!-- App Core (Auth, Firestore, Payments) -->
+  <script src="js/app-core.js"></script>
 </body>
 </html>

@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(git add:*)",
+      "Bash(git commit -m \"$\\(cat <<''EOF''\nAdd gamified Education & Rewards system with e-bike discounts\n\nEducation Modules:\n- Sydney Road Rules for Cyclists\n- Hand Signals & Communication\n- E-Bike Essentials\n- Safe Commuting in Sydney\n- Bike Security & Theft Prevention\n\nQuiz System:\n- Multiple choice questions with explanations\n- 10 points per correct answer\n- 50 point bonus for perfect scores\n- Track completed modules and quizzes\n\nRewards & Discounts:\n- $100-$500 off e-bike purchases \\(1500-5000 points\\)\n- Free coffee at partner cafes \\(150 points\\)\n- Bike service discounts \\(400 points\\)\n- Gear and accessory discounts\n\nGamification:\n- 7 levels from Learner to Sydney Cycling Legend\n- 8 achievement badges \\(Quiz Master, Community Champion, etc.\\)\n- Points for modules, quizzes, community rides\n- Level progress bar and point tracking\n\nUI:\n- Blue school icon in sidebar\n- Tabbed modal \\(Modules/Rewards/Badges\\)\n- Module reader with section navigation\n- Quiz modal with progress tracking\n- Reward redemption system\n\nCo-Authored-By: Claude Opus 4.5 <noreply@anthropic.com>\nEOF\n\\)\")"
+    ]
+  }
+}

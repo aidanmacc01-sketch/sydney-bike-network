@@ -104,6 +104,8 @@ See `scripts/README.md` for manual download instructions if APIs are unavailable
 
 ## Screens Included
 
+### Main App (`index.html`)
+
 | Screen | Description | Entry Point |
 |--------|-------------|-------------|
 | **Map Browse** | Main map with segment overlays | Default view |
@@ -113,6 +115,26 @@ See `scripts/README.md` for manual download instructions if APIs are unavailable
 | **Profile** | User stats and settings | Nav: Profile tab |
 | **Report Modal** | Submit hazard/infra reports | FAB or "Report" button |
 | **Rating Modal** | Rate segments with stars + tags | "Rate This Segment" button |
+
+### Onboarding & E-bike Demo Booking (`test-onboarding.html`)
+
+Run with: `python -m http.server 9876` then visit `http://localhost:9876/test-onboarding.html`
+
+| Screen | Description | Flow |
+|--------|-------------|------|
+| **Splash** | Branding splash screen | Entry point → tap to continue |
+| **Sign In / Sign Up** | Auth screens with ID verification | Splash → Sign In |
+| **Welcome Hub** | Main menu with 3 actions | After sign in / skip |
+| **T&C Flow (4 steps)** | Privacy, data, location, notifications | Auto-shown on first Welcome Hub visit |
+| **Store Finder** | Browse nearby e-bike demo stores | Welcome Hub → "Find an E-bike" |
+| **Select Bike & Store** | Choose bike model + store | Store Finder → "View Bikes" |
+| **Demo Selection** | 2-week ($150) or free 1-hour demo | Select Bike → "Continue" |
+| **Schedule Demo** | Calendar + time picker | Demo Selection → "Select & Schedule" |
+| **Checkout & Payment** | Card payment for paid demo | Schedule → "Confirm & Continue" |
+| **Free Demo Agreement** | Waiver + contact for free demo | Demo Selection → "1-Hour Store Demo" |
+| **Community Profile (4 steps)** | About you, experience, interests, area | Welcome Hub → "Community" |
+| **Community Hub** | Waze-style feed, events, groups | After profile setup |
+| **Cycling Communities** | Regional cycling groups list/map | Welcome Hub → "View Cycling Communities" |
 
 ---
 
