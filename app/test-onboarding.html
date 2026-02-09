@@ -1264,6 +1264,20 @@
         </div>
       </div>
 
+      <!-- Earn Credits Banner -->
+      <div class="px-4 mb-4">
+        <div onclick="showScreen('educationHub')" class="p-4 rounded-2xl bg-gradient-to-r from-primary/10 to-green-500/10 border border-primary/20 flex items-center gap-4 cursor-pointer active:scale-[0.98] transition-transform">
+          <div class="size-12 bg-primary/20 rounded-full flex items-center justify-center shrink-0">
+            <span class="material-symbols-outlined text-primary text-2xl">school</span>
+          </div>
+          <div class="flex-1">
+            <h4 class="font-bold text-sm">Earn credits to discount your ride</h4>
+            <p class="text-xs text-gray-500">Complete quizzes & workshops for up to $45 off</p>
+          </div>
+          <span class="material-symbols-outlined text-primary">chevron_right</span>
+        </div>
+      </div>
+
       <!-- Demo Options -->
       <div class="px-4 pb-6">
         <!-- 2-Week Demo (Selected) -->
@@ -1303,6 +1317,7 @@
           </div>
           <span class="material-symbols-outlined text-gray-300">chevron_right</span>
         </div>
+
       </div>
 
       <!-- Price Summary -->
@@ -1682,6 +1697,486 @@
           By clicking "Pay &amp; Confirm Booking", you agree to the Rental Terms of Service.
         </p>
       </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 7: EDUCATION HUB
+       ============================================ -->
+  <div id="educationHub" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-10">
+        <div onclick="showScreen('demoSelection')" class="flex size-12 shrink-0 items-center justify-start cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12 font-display">Education Hub</h2>
+      </div>
+
+      <div class="h-2"></div>
+
+      <!-- Profile Header -->
+      <div class="flex p-4">
+        <div class="flex w-full flex-col gap-4 items-center">
+          <div class="flex gap-4 flex-col items-center">
+            <div class="bg-center bg-no-repeat aspect-square bg-cover rounded-full min-h-[128px] w-32 border-4 border-primary/20 shadow-lg" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAsYpgvw-66jsFTr7e5WF9kEtwgGJc_Vs2RDhJH3l5RKc-R2MoyVXsap09ooBx6pJdh9XaGIOE2iqRtvItwTV7n2F0Yas21-nIcTqG75bOD4yqurKfEoqW2cMDZSFgsxAmYBv0MdJi5thLj015d0KkJ9ULLtbEc3JHG-LyOtEajM0d8KT2_INYQgZo5HTaxRgqycZTYq86bcnWcRCzKrcGxLgramiRpV5aE5SDZ8qPcaLDw5S33EXTor-LszGNPmJbKbk8Xg2wVsSuR");'></div>
+            <div class="flex flex-col items-center justify-center">
+              <p class="text-[22px] font-bold leading-tight tracking-[-0.015em] text-center font-display">Alex Rivera</p>
+              <p class="text-primary font-semibold text-base leading-normal text-center">Safe Commuter</p>
+              <p onclick="showScreen('rewardsCredits')" class="text-[#706189] text-sm font-normal leading-normal text-center cursor-pointer hover:text-primary transition-colors underline underline-offset-2">1,250 Points Earned &bull; $45 Credits</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Level Progress -->
+      <div class="flex flex-col gap-3 p-4 mx-4 mb-4 rounded-xl bg-primary/5 border border-primary/10">
+        <div class="flex gap-6 justify-between items-center">
+          <p class="text-base font-medium leading-normal">Level Progress</p>
+          <p class="text-primary text-sm font-bold leading-normal">650/1000 pts</p>
+        </div>
+        <div class="rounded-full bg-gray-200 h-2.5 overflow-hidden">
+          <div class="h-full rounded-full bg-primary" style="width: 65%;"></div>
+        </div>
+        <p class="text-[#706189] text-xs font-normal leading-normal">Earn 350 more points to reach 'Expert Navigator'</p>
+      </div>
+
+      <!-- Learning Paths Header -->
+      <div class="px-4">
+        <h3 class="text-xl font-bold leading-tight tracking-[-0.015em] pt-4">Learning Paths</h3>
+        <p class="text-[#706189] text-sm mb-2">Enhance your skills and unlock rewards</p>
+      </div>
+
+      <!-- Learning Path Cards -->
+      <div class="flex flex-col gap-1 pb-8">
+        <!-- Card 1: Online Essentials -->
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white p-4 shadow-sm border border-gray-100">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-bold text-green-500 uppercase tracking-wider">75% Complete</span>
+                  <div class="h-1 w-12 bg-gray-200 rounded-full"><div class="h-1 bg-green-500 rounded-full" style="width: 75%"></div></div>
+                </div>
+                <p class="text-lg font-bold leading-tight font-display">Online Essentials</p>
+                <p class="text-[#706189] text-sm font-normal leading-snug">Master the basics of urban transit with quick quizzes.</p>
+              </div>
+              <button onclick="showScreen('quizScreen')" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 flex-row-reverse bg-primary text-white gap-2 text-sm font-bold leading-normal w-fit active:scale-95 shadow-md">
+                <span class="material-symbols-outlined text-[20px]">play_arrow</span>
+                <span class="truncate">Continue</span>
+              </button>
+            </div>
+            <div class="w-32 bg-center bg-no-repeat aspect-square bg-cover rounded-xl shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuA7ItPzS6kUb8fra6EAr0nxXyM75Dz8g7clYQgrePSP9zXIziecxxeKMoHHRlWwGnL6whXdv7F_1_H2TfDDp2Tzke_2yVAOSNC-FOvOyTpq8Wo94-UHw8vXqIXBmWztzfyX0dynX4S_pWhKX2DJeZxCDOrVW0HV29cXcGfDDLlhOEbZwLUsNzV5aotCkXgbWXNzAQwoU_QaKQv37HOP5PcS4vJfJZ3Y4pWmMDH-byn1fOh6M8cNNBjbdSlXt6XyLUdJwwrh_VgsBEjX");'></div>
+          </div>
+        </div>
+
+        <!-- Card 2: In-Person Workshops -->
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white p-4 shadow-sm border border-gray-100">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-bold text-primary uppercase tracking-wider">20% Complete</span>
+                  <div class="h-1 w-12 bg-gray-200 rounded-full"><div class="h-1 bg-primary rounded-full" style="width: 20%"></div></div>
+                </div>
+                <p class="text-lg font-bold leading-tight font-display">In-Person Workshops</p>
+                <p class="text-[#706189] text-sm font-normal leading-snug">Hands-on safety training with certified instructors.</p>
+              </div>
+              <button class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 flex-row-reverse bg-primary text-white gap-2 text-sm font-bold leading-normal w-fit active:scale-95 shadow-md">
+                <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+                <span class="truncate">Book Spot</span>
+              </button>
+            </div>
+            <div class="w-32 bg-center bg-no-repeat aspect-square bg-cover rounded-xl shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDVo-I8ih7rlTZZ-ndjEf9rgumZdk7KVDlR4HgAgcgOvp1QlAIS2aY64NM5xwDO5yYX75N_TMShu39OLh5lyjGQjOUxD39Ius61WQ16ot4iB6zsE3JmfsszDyjfl23wAOXY05V1WmGhkB_MzE-vniCqLQmxJ3zu7Z98FLmnopeGA-XfEzNGsaHXXB6bMJrjrNohRR252R5663AAWOaqpOn9ItVcrJo9vA_EcAubRwuGkys3Oa_TABNqRUQHL3rhl5FGOMFJeiHTx56W");'></div>
+          </div>
+        </div>
+
+        <!-- Card 3: Community Mentor -->
+        <div class="p-4">
+          <div class="flex items-stretch justify-between gap-4 rounded-xl bg-white p-4 shadow-sm border border-gray-100">
+            <div class="flex flex-[2_2_0px] flex-col gap-4">
+              <div class="flex flex-col gap-1">
+                <div class="flex items-center gap-2 mb-1">
+                  <span class="text-xs font-bold text-gray-400 uppercase tracking-wider">Not Started</span>
+                  <div class="h-1 w-12 bg-gray-200 rounded-full"></div>
+                </div>
+                <p class="text-lg font-bold leading-tight font-display">Community Mentor</p>
+                <p class="text-[#706189] text-sm font-normal leading-snug">Support new riders by joining group commuter trips.</p>
+              </div>
+              <button onclick="showScreen('rideSupportTraining')" class="flex min-w-[84px] max-w-[480px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 flex-row-reverse bg-primary text-white gap-2 text-sm font-bold leading-normal w-fit active:scale-95 shadow-md">
+                <span class="material-symbols-outlined text-[20px]">group</span>
+                <span class="truncate">Learn More</span>
+              </button>
+            </div>
+            <div class="w-32 bg-center bg-no-repeat aspect-square bg-cover rounded-xl shrink-0" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuC_teftH1A-YR5KqPt_38JShaNwKMNmwcql9GLFjW1UYaGvjQLDVwqrPaXqC4govZDOeffBnRA1AZrjYjSP-etjxcNK0pZH3X6zIShYmtimj8v-3t5Pf3BKYEJVLjCVmxmW7VIXfBhrwZt5yv8J-HqJwHOLbL_6QyDu_KyiotmTUtOqHd-I1NQzphs3NPqzCe8Qo7SkL1g2nfPxJ6ZdEHb7HDcHrZGH1R2vk-X4LgpcHuhQYpf75iKtlH286J4GMHR6PBavfdFWMWr1");'></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom Nav -->
+      <div class="mt-auto border-t border-gray-100 bg-white px-8 py-4 flex justify-between items-center">
+        <div onclick="showScreen('demoSelection')" class="flex flex-col items-center text-gray-400 cursor-pointer">
+          <span class="material-symbols-outlined">home</span>
+          <span class="text-[10px] mt-1">Home</span>
+        </div>
+        <div class="flex flex-col items-center text-primary">
+          <span class="material-symbols-outlined">school</span>
+          <span class="text-[10px] mt-1 font-bold">Learn</span>
+        </div>
+        <div onclick="showScreen('rewardsCredits')" class="flex flex-col items-center text-gray-400 cursor-pointer">
+          <span class="material-symbols-outlined">redeem</span>
+          <span class="text-[10px] mt-1">Rewards</span>
+        </div>
+        <div class="flex flex-col items-center text-gray-400">
+          <span class="material-symbols-outlined">person</span>
+          <span class="text-[10px] mt-1">Profile</span>
+        </div>
+      </div>
+      <div class="h-8 bg-white flex justify-center items-end pb-2">
+        <div class="w-32 h-1 bg-gray-300 rounded-full"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 8: REWARDS & CREDITS
+       ============================================ -->
+  <div id="rewardsCredits" class="fixed inset-0 z-30 bg-background-light flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-background-light overflow-y-auto">
+      <!-- Header -->
+      <header class="sticky top-0 z-20 bg-white/80 backdrop-blur-md border-b border-gray-100">
+        <div class="flex items-center p-4 justify-between">
+          <button onclick="showScreen('educationHub')" class="text-primary flex size-10 items-center justify-center rounded-full hover:bg-primary/10 transition-colors">
+            <span class="material-symbols-outlined">arrow_back_ios_new</span>
+          </button>
+          <h2 class="text-lg font-bold leading-tight tracking-tight flex-1 text-center">Rewards &amp; Credits</h2>
+          <div class="size-10"></div>
+        </div>
+      </header>
+
+      <main class="flex-1 pb-32">
+        <!-- Balance -->
+        <section class="bg-white px-4 pt-8 pb-6 text-center shadow-sm">
+          <h1 class="tracking-tight text-[44px] font-extrabold leading-tight">$45.00</h1>
+          <p class="text-[#756189] text-sm font-medium mt-1">Total Rental Credits</p>
+          <a onclick="showScreen('educationHub')" class="inline-flex items-center gap-1 text-primary text-sm font-semibold mt-4 cursor-pointer hover:opacity-80 transition-opacity">
+            <span class="material-symbols-outlined text-[18px]">info</span>
+            <span class="underline underline-offset-4">How to earn more</span>
+          </a>
+        </section>
+
+        <!-- Ways to Earn -->
+        <section class="px-4 pt-8">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-lg font-bold">Ways to Earn</h3>
+            <span class="text-xs font-bold text-primary uppercase tracking-wider">New</span>
+          </div>
+          <div class="grid grid-cols-1 gap-4">
+            <!-- Attend Workshop -->
+            <div class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 active:scale-[0.98] transition-transform cursor-pointer">
+              <div class="size-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[28px]">school</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold">Attend a Workshop</h4>
+                  <span class="text-primary font-bold">+$10</span>
+                </div>
+                <div class="mt-2 w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-primary h-full w-0"></div>
+                </div>
+                <p class="text-[11px] text-gray-500 mt-1 font-medium">0/1 Complete</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-300">chevron_right</span>
+            </div>
+
+            <!-- Safety Quiz -->
+            <div onclick="showScreen('quizScreen')" class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 active:scale-[0.98] transition-transform cursor-pointer">
+              <div class="size-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[28px]">quiz</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold">Complete Safety Quiz</h4>
+                  <span class="text-primary font-bold">+$5</span>
+                </div>
+                <div class="mt-2 w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-primary h-full" style="width: 40%"></div>
+                </div>
+                <p class="text-[11px] text-gray-500 mt-1 font-medium">In progress</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-300">chevron_right</span>
+            </div>
+
+            <!-- Group Ride -->
+            <div onclick="showScreen('rideSupportTraining')" class="bg-white p-4 rounded-xl border border-gray-100 shadow-sm flex items-center gap-4 active:scale-[0.98] transition-transform cursor-pointer">
+              <div class="size-12 bg-primary/10 rounded-full flex items-center justify-center text-primary">
+                <span class="material-symbols-outlined text-[28px]">group</span>
+              </div>
+              <div class="flex-1">
+                <div class="flex justify-between items-start">
+                  <h4 class="font-bold">Support a Group Ride</h4>
+                  <span class="text-primary font-bold">+$15</span>
+                </div>
+                <div class="mt-2 w-full bg-gray-100 h-1.5 rounded-full overflow-hidden">
+                  <div class="bg-primary h-full w-0"></div>
+                </div>
+                <p class="text-[11px] text-gray-500 mt-1 font-medium">Available next Sat</p>
+              </div>
+              <span class="material-symbols-outlined text-gray-300">chevron_right</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- Recent Earnings -->
+        <section class="px-4 pt-10">
+          <h3 class="text-lg font-bold mb-4">Recent Earnings</h3>
+          <div class="bg-white rounded-xl overflow-hidden border border-gray-100">
+            <div class="flex items-center justify-between p-4 border-b border-gray-50">
+              <div class="flex items-center gap-3">
+                <div class="size-10 bg-green-50 rounded-lg flex items-center justify-center text-green-600">
+                  <span class="material-symbols-outlined text-[20px]">check_circle</span>
+                </div>
+                <div>
+                  <p class="text-sm font-bold">Safety Quiz Completed</p>
+                  <p class="text-xs text-gray-400">Oct 24, 2023</p>
+                </div>
+              </div>
+              <span class="text-green-600 font-bold">+$5.00</span>
+            </div>
+            <div class="flex items-center justify-between p-4 border-b border-gray-50">
+              <div class="flex items-center gap-3">
+                <div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined text-[20px]">person_add</span>
+                </div>
+                <div>
+                  <p class="text-sm font-bold">Referral Bonus</p>
+                  <p class="text-xs text-gray-400">Oct 20, 2023</p>
+                </div>
+              </div>
+              <span class="text-primary font-bold">+$10.00</span>
+            </div>
+            <div class="flex items-center justify-between p-4">
+              <div class="flex items-center gap-3">
+                <div class="size-10 bg-primary/10 rounded-lg flex items-center justify-center text-primary">
+                  <span class="material-symbols-outlined text-[20px]">pedal_bike</span>
+                </div>
+                <div>
+                  <p class="text-sm font-bold">Ride Streak Reward</p>
+                  <p class="text-xs text-gray-400">Oct 15, 2023</p>
+                </div>
+              </div>
+              <span class="text-primary font-bold">+$30.00</span>
+            </div>
+          </div>
+          <button class="w-full text-center text-primary text-sm font-bold mt-4 py-2">View All Activity</button>
+        </section>
+      </main>
+
+      <!-- Fixed Bottom Action -->
+      <div class="fixed bottom-0 left-0 right-0 p-4 bg-white/90 backdrop-blur-lg border-t border-gray-100 z-30">
+        <div class="max-w-[430px] mx-auto">
+          <button onclick="showScreen('paidCheckout')" class="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl shadow-lg shadow-primary/25 active:scale-[0.97] transition-all flex items-center justify-center gap-2">
+            <span class="material-symbols-outlined text-[20px]">shopping_cart_checkout</span>
+            Redeem on Next Rental
+          </button>
+          <div class="h-4"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 9: QUIZ (ONLINE ESSENTIALS)
+       ============================================ -->
+  <div id="quizScreen" class="fixed inset-0 z-30 bg-white flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-white">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between border-b border-gray-100/30">
+        <div onclick="showScreen('educationHub')" class="flex size-12 shrink-0 items-center justify-center cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back_ios</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center pr-12">Online Essentials</h2>
+      </div>
+
+      <!-- Progress -->
+      <div class="flex flex-col gap-3 p-6">
+        <div class="flex gap-6 justify-between">
+          <p class="text-base font-medium leading-normal">Question 3 of 10</p>
+          <p class="text-[#706189] text-sm font-normal leading-normal">30% Complete</p>
+        </div>
+        <div class="rounded-full bg-gray-200 h-2.5 overflow-hidden">
+          <div class="h-full rounded-full bg-primary" style="width: 30%;"></div>
+        </div>
+      </div>
+
+      <!-- Question -->
+      <div class="px-6 py-2">
+        <h3 class="tracking-light text-2xl font-bold leading-tight text-left">
+          What is the correct hand signal for a right turn while cycling in Sydney?
+        </h3>
+        <p class="text-[#706189] text-sm mt-2">Select the most appropriate road safety signal according to NSW regulations.</p>
+      </div>
+
+      <!-- Answer Options -->
+      <div class="flex flex-col gap-4 p-6 grow" style="--radio-dot-svg: url('data:image/svg+xml,%3csvg viewBox=%270 0 16 16%27 fill=%27rgb(124,59,237)%27 xmlns=%27http://www.w3.org/2000/svg%27%3e%3ccircle cx=%278%27 cy=%278%27 r=%274%27/%3e%3c/svg%3e');">
+        <label class="flex items-center gap-4 rounded-xl border-2 border-solid border-primary bg-primary/5 p-4 flex-row-reverse cursor-pointer">
+          <input checked name="quiz-option" type="radio" class="h-6 w-6 border-2 border-gray-200 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary"/>
+          <div class="flex size-10 items-center justify-center rounded-lg bg-primary text-white shrink-0">
+            <span class="material-symbols-outlined">back_hand</span>
+          </div>
+          <div class="flex grow flex-col">
+            <p class="text-sm font-semibold leading-normal">Extend right arm horizontally</p>
+            <p class="text-[#706189] text-xs font-normal leading-normal">Standard legal signal for right turns</p>
+          </div>
+        </label>
+
+        <label class="flex items-center gap-4 rounded-xl border border-solid border-gray-200 p-4 flex-row-reverse cursor-pointer hover:bg-gray-50 transition-colors">
+          <input name="quiz-option" type="radio" class="h-6 w-6 border-2 border-gray-200 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary"/>
+          <div class="flex size-10 items-center justify-center rounded-lg bg-gray-200 text-[#706189] shrink-0">
+            <span class="material-symbols-outlined">front_hand</span>
+          </div>
+          <div class="flex grow flex-col">
+            <p class="text-sm font-medium leading-normal">Raise left arm with elbow bent</p>
+            <p class="text-[#706189] text-xs font-normal leading-normal">Used primarily for stopping</p>
+          </div>
+        </label>
+
+        <label class="flex items-center gap-4 rounded-xl border border-solid border-gray-200 p-4 flex-row-reverse cursor-pointer hover:bg-gray-50 transition-colors">
+          <input name="quiz-option" type="radio" class="h-6 w-6 border-2 border-gray-200 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary"/>
+          <div class="flex size-10 items-center justify-center rounded-lg bg-gray-200 text-[#706189] shrink-0">
+            <span class="material-symbols-outlined">south</span>
+          </div>
+          <div class="flex grow flex-col">
+            <p class="text-sm font-medium leading-normal">Point towards the ground</p>
+            <p class="text-[#706189] text-xs font-normal leading-normal">Indicates hazards on the road</p>
+          </div>
+        </label>
+
+        <label class="flex items-center gap-4 rounded-xl border border-solid border-gray-200 p-4 flex-row-reverse cursor-pointer hover:bg-gray-50 transition-colors">
+          <input name="quiz-option" type="radio" class="h-6 w-6 border-2 border-gray-200 bg-transparent text-transparent checked:border-primary checked:bg-[image:--radio-dot-svg] focus:outline-none focus:ring-0 focus:ring-offset-0 checked:focus:border-primary"/>
+          <div class="flex size-10 items-center justify-center rounded-lg bg-gray-200 text-[#706189] shrink-0">
+            <span class="material-symbols-outlined">pan_tool</span>
+          </div>
+          <div class="flex grow flex-col">
+            <p class="text-sm font-medium leading-normal">Wave both hands above head</p>
+            <p class="text-[#706189] text-xs font-normal leading-normal">Emergency signal for help</p>
+          </div>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <div class="flex flex-col px-6 py-6 border-t border-gray-100/30 bg-white">
+        <button onclick="showScreen('rewardsCredits'); showToast('+$5 credits earned!')" class="flex w-full cursor-pointer items-center justify-center overflow-hidden rounded-xl h-14 px-5 bg-primary text-white text-base font-bold leading-normal shadow-lg shadow-primary/30 active:scale-[0.98] transition-transform">
+          <span class="truncate">Submit Answer</span>
+        </button>
+        <p class="text-center text-[#706189] text-xs mt-4">Micro2Move &bull; Cycling Safety Course</p>
+      </div>
+      <div class="h-8 bg-white"></div>
+    </div>
+  </div>
+
+  <!-- ============================================
+       SCREEN 10: RIDE SUPPORT TRAINING
+       ============================================ -->
+  <div id="rideSupportTraining" class="fixed inset-0 z-30 bg-background-light flex justify-center hidden">
+    <div class="relative flex h-full min-h-screen w-full max-w-[430px] flex-col overflow-x-hidden shadow-2xl bg-background-light overflow-y-auto">
+      <!-- Header -->
+      <div class="flex items-center bg-white p-4 pb-2 justify-between sticky top-0 z-50 border-b border-gray-100">
+        <div onclick="showScreen('educationHub')" class="flex size-12 shrink-0 items-center justify-start cursor-pointer">
+          <span class="material-symbols-outlined">arrow_back</span>
+        </div>
+        <h2 class="text-lg font-bold leading-tight tracking-[-0.015em] flex-1 text-center">Ride Support Training</h2>
+        <div class="size-12"></div>
+      </div>
+
+      <!-- Title -->
+      <div class="px-4 pt-5 pb-2">
+        <h3 class="tracking-light text-2xl font-bold leading-tight">Support a Community Ride</h3>
+      </div>
+      <div class="px-4 pt-1 pb-3">
+        <p class="text-[#706189] text-base font-normal leading-normal">Volunteer for beginner-friendly rides to gain experience and earn mentor points. Help grow our community by guiding new riders.</p>
+      </div>
+
+      <!-- Upcoming Rides -->
+      <div class="px-4 pt-4 pb-2">
+        <h3 class="text-lg font-bold leading-tight tracking-[-0.015em]">Upcoming Beginner Rides</h3>
+      </div>
+
+      <div class="p-4 flex flex-col gap-4">
+        <!-- Ride 1 -->
+        <div class="flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-white overflow-hidden border border-gray-100">
+          <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuDbVyweifT8CTChazcgL37USJiYjAWKtO4jSvRUTubFuI1qsX_qpiwerMaCFaQNSUPn8ugy22bkoLdScVPobz-6YezgYm0ebXwCP5vhXG42OpBC-I34d_HWZE2BYU72zm9o-bQfftNBX-ol1zEVbLkH2luZv5qwPfG8CWHT4t4MXYAZ97MCr-Kx2RCWiWIkUbJhRPGBMXKbAyPp8Rgx_unqFVGf09mY8CnSyLOSzgobnrsqfEvUV2E6Xbq3h01IhL3tKmdak7CvKH0z");'></div>
+          <div class="flex w-full grow flex-col items-stretch justify-center gap-1 py-4 px-4">
+            <div class="flex justify-between items-start">
+              <p class="text-lg font-bold leading-tight tracking-[-0.015em]">Riverside Morning Loop</p>
+              <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">+100 pts</span>
+            </div>
+            <div class="flex items-end gap-3 justify-between mt-2">
+              <div class="flex flex-col gap-1">
+                <p class="text-primary text-sm font-semibold leading-normal uppercase tracking-wider">Level: Beginner</p>
+                <p class="text-[#706189] text-sm font-normal leading-tight">Join us to support first-time riders on this flat 5km route.</p>
+              </div>
+              <button onclick="showToast('Volunteered! +100 pts')" class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal hover:bg-primary/90 transition-colors">
+                <span class="truncate">Volunteer</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Ride 2 -->
+        <div class="flex flex-col items-stretch justify-start rounded-xl shadow-sm bg-white overflow-hidden border border-gray-100">
+          <div class="w-full bg-center bg-no-repeat aspect-video bg-cover" style='background-image: url("https://lh3.googleusercontent.com/aida-public/AB6AXuAmTzdYUwm8WgpLDiUepsaTA05Z30w9Jfmog88qlAqnKJduhJYpVNKOyLLfMDrpcS4gqiXw56vI0HJlYW0CWb8cpdpDED1oUk-SGLO23r__2vGEbSU9tUPSkkZsGfAeW0yzX8hZucaJaKuqFHdj7dFH9IMkfo1vc5rR50rpoMhGo9SnYj51LmQbZ4y5Hfp8E4dEdJkE0Sw-NR5b-NBHQ5BgK9GQmUR3Sryo5C5n_2b2-Ja7QElGx7rYwhTToEvf2Rhh3LgG_7VVFP5g");'></div>
+          <div class="flex w-full grow flex-col items-stretch justify-center gap-1 py-4 px-4">
+            <div class="flex justify-between items-start">
+              <p class="text-lg font-bold leading-tight tracking-[-0.015em]">Urban Explorer Intro</p>
+              <span class="bg-primary/10 text-primary text-xs font-bold px-2 py-1 rounded-full">+150 pts</span>
+            </div>
+            <div class="flex items-end gap-3 justify-between mt-2">
+              <div class="flex flex-col gap-1">
+                <p class="text-primary text-sm font-semibold leading-normal uppercase tracking-wider">Level: Beginner</p>
+                <p class="text-[#706189] text-sm font-normal leading-tight">Help navigate bike lanes and traffic signals in the downtown core.</p>
+              </div>
+              <button onclick="showToast('Volunteered! +150 pts')" class="flex min-w-[100px] cursor-pointer items-center justify-center overflow-hidden rounded-lg h-10 px-4 bg-primary text-white text-sm font-semibold leading-normal hover:bg-primary/90 transition-colors">
+                <span class="truncate">Volunteer</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Mentor Guidelines -->
+      <div class="px-4 pt-6 pb-2">
+        <h3 class="text-lg font-bold leading-tight tracking-[-0.015em]">Mentor Guidelines</h3>
+      </div>
+      <div class="px-4 pb-8">
+        <div class="bg-primary/5 rounded-xl p-4 border border-primary/20">
+          <ul class="space-y-4">
+            <li class="flex gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">verified_user</span>
+              <div>
+                <p class="font-bold text-sm">Safety First</p>
+                <p class="text-sm text-[#706189]">Always wear high-visibility gear and ensure all trainees have helmets.</p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">forum</span>
+              <div>
+                <p class="font-bold text-sm">Patience &amp; Communication</p>
+                <p class="text-sm text-[#706189]">Use clear hand signals and voice commands. Encourage struggling riders.</p>
+              </div>
+            </li>
+            <li class="flex gap-3">
+              <span class="material-symbols-outlined text-primary text-xl">map</span>
+              <div>
+                <p class="font-bold text-sm">Know the Route</p>
+                <p class="text-sm text-[#706189]">Arrive 15 minutes early to review the route and identify potential hazards.</p>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="h-10"></div>
     </div>
   </div>
 
@@ -2712,6 +3207,10 @@
       document.getElementById('scheduleDemo').classList.add('hidden');
       document.getElementById('demoAgreement').classList.add('hidden');
       document.getElementById('paidCheckout').classList.add('hidden');
+      document.getElementById('educationHub').classList.add('hidden');
+      document.getElementById('rewardsCredits').classList.add('hidden');
+      document.getElementById('quizScreen').classList.add('hidden');
+      document.getElementById('rideSupportTraining').classList.add('hidden');
       document.getElementById('community').classList.add('hidden');
       document.getElementById('communityHub').classList.add('hidden');
     }
