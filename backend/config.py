@@ -16,7 +16,7 @@ class Settings(BaseSettings):
 
     # Server
     HOST: str = "0.0.0.0"
-    PORT: int = 8000
+    PORT: int = 8001
 
     # Database
     DATABASE_URL: str = "postgresql+asyncpg://postgres:password@localhost:5432/micro2move"
@@ -40,6 +40,11 @@ class Settings(BaseSettings):
     # Google APIs
     GOOGLE_MAPS_API_KEY: Optional[str] = None
     GEMINI_API_KEY: Optional[str] = None
+
+    # Vertex AI
+    GOOGLE_CLOUD_PROJECT: Optional[str] = None
+    GOOGLE_CLOUD_LOCATION: str = "australia-southeast1"
+    VERTEX_AI_MODEL: str = "gemini-2.0-flash-001"
 
     # Stripe
     STRIPE_SECRET_KEY: Optional[str] = None
