@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html class="light" lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>Safety Training &amp; Rewards — Micro2Move</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary":           "#0df259",
+            "secondary":         "#7c3aed",
+            "background-light":  "#f5f8f6",
+            "background-dark":   "#102216",
+          },
+          fontFamily: { "display": ["Space Grotesk"] },
+          borderRadius: {
+            "DEFAULT": "0.25rem", "lg": "0.5rem",
+            "xl": "0.75rem", "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body { font-family: 'Space Grotesk', sans-serif; min-height: max(884px, 100dvh); }
+    .ios-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+
+    /* Cooldown progress ring */
+    .cooldown-ring { transform: rotate(-90deg); }
+    .cooldown-ring circle { transition: stroke-dashoffset 1s linear; }
+  </style>
+</head>
+
+<!--
+  ============================================================
+  DATA CONTRACT (from quiz_spec.json + quiz_engine.ts)
+  ============================================================
+  Module IDs         : safety_basics | nsw_rules | ebike_tech_battery
+  Credits on pass    : 150 | 200 | 200
+  Cooldown (fail)    : 300 s (5 min) per module
+  Credit → AUD rate  : 0.10  (100 credits = $10.00)
+
+  Card states shown  :
+    ① Passed        — Safety Basics (150 credits awarded)
+    ② Cooldown      — NSW Rules & Infrastructure (failed, timer running)
+    ③ Not Started   — E-Bike Tech & Safe Ownership (200 credits available)
+  ============================================================
+-->
+
+<body class="bg-background-light dark:bg-background-dark text-slate-900 dark:text-slate-100 min-h-screen pb-24">
+
+  <!-- ── iOS Status Bar ─────────────────────────────────────────────────── -->
+  <div class="h-12 w-full flex items-center justify-between px-6 sticky top-0 z-50
+              bg-background-light/80 dark:bg-background-dark/80 ios-blur">
+    <span class="text-sm font-bold">9:41</span>
+    <div class="flex gap-1.5">
+      <span class="material-symbols-outlined text-sm">signal_cellular_4_bar</span>
+      <span class="material-symbols-outlined text-sm">wifi</span>
+      <span class="material-symbols-outlined text-sm">battery_full</span>
+    </div>
+  </div>
+
+  <!-- ── Page Header ────────────────────────────────────────────────────── -->
+  <header class="px-6 pt-4 pb-6">
+    <div class="flex items-center justify-between mb-6">
+      <button class="w-10 h-10 flex items-center justify-center rounded-full
+                     bg-white dark:bg-slate-800 shadow-sm">
+        <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">arrow_back_ios_new</span>
+      </button>
+      <h1 class="text-xl font-bold tracking-tight">Safety Training</h1>
+      <button class="w-10 h-10 flex items-center justify-center rounded-full
+                     bg-white dark:bg-slate-800 shadow-sm">
+        <span class="material-symbols-outlined text-slate-600 dark:text-slate-300">info</span>
+      </button>
+    </div>
+
+    <!-- Credit Balance Widget
+         Balance = 150 credits (Safety Basics passed).
+         AUD value = credits × 0.10  →  150 × 0.10 = $15.00             -->
+    <div class="bg-gradient-to-br from-primary/20 via-primary/10 to-secondary/10
+                dark:from-primary/10 dark:to-secondary/5
+                border border-primary/20 rounded-xl p-6 relative overflow-hidden">
+      <div class="relative z-10">
+        <p class="text-sm font-medium text-slate-600 dark:text-slate-400 mb-1
+                  uppercase tracking-wider">Total Balance</p>
+
+        <!-- Earned credits counter -->
+        <div class="flex items-baseline gap-2">
+          <span class="text-3xl font-bold text-slate-900 dark:text-white"
+                id="credit-balance">150</span>
+          <span class="text-lg font-semibold text-primary">credits</span>
+        </div>
+
+        <!-- AUD conversion pill (rate = 0.10) -->
+        <div class="mt-3 flex items-center gap-2
+                    bg-white/60 dark:bg-slate-900/40 backdrop-blur-sm
+                    rounded-lg px-3 py-2 w-fit border border-white/40">
+          <span class="material-symbols-outlined text-secondary text-sm">payments</span>
+          <p class="text-sm font-semibold text-slate-700 dark:text-slate-200"
+             id="aud-value">$15.00 off your next ride</p>
+        </div>
+
+        <!-- Progress summary -->
+        <p class="mt-3 text-xs text-slate-500 dark:text-slate-400">
+          Earn up to <span class="font-bold text-slate-700 dark:text-slate-200">550 credits ($55.00)</span>
+          by completing all 3 modules.
+        </p>
+      </div>
+      <!-- Decorative blobs -->
+      <div class="absolute -right-4 -bottom-4 w-24 h-24 bg-primary/20 rounded-full blur-2xl"></div>
+      <div class="absolute -right-10 top-0 w-32 h-32 bg-secondary/10 rounded-full blur-3xl"></div>
+    </div>
+  </header>
+
+  <!-- ── Main Content ───────────────────────────────────────────────────── -->
+  <main class="px-6">
+    <div class="flex items-center justify-between mb-4">
+      <h3 class="text-lg font-bold">Training Modules</h3>
+      <!-- "passed" count comes from UserProgress records -->
+      <span class="text-sm font-medium text-slate-500">1 / 3 Completed</span>
+    </div>
+
+    <div class="space-y-4">
+
+      <!-- ══════════════════════════════════════════════════════════════
+           CARD STATE ①  —  PASSED
+           module_id : safety_basics
+           credits   : 150  (awarded on first pass; 0 if repeated)
+           score     : 10/10 (required_score = 1.0 → 100%)
+      ══════════════════════════════════════════════════════════════ -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm
+                  border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+        <div class="flex justify-between items-start">
+          <div class="flex flex-col gap-1">
+            <!-- Status badge -->
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-2 py-0.5 rounded-full bg-primary/10 text-primary
+                           text-[10px] font-bold uppercase tracking-widest
+                           border border-primary/20 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs" style="font-variation-settings:'FILL' 1">check_circle</span>
+                Passed
+              </span>
+            </div>
+            <h4 class="text-lg font-bold leading-tight">Safety Basics</h4>
+            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+              Core riding skills for safe, predictable e-bike use in urban environments.
+            </p>
+          </div>
+          <!-- Thumbnail -->
+          <div class="w-20 h-20 rounded-lg bg-primary/10 overflow-hidden shrink-0
+                      flex items-center justify-center">
+            <span class="material-symbols-outlined text-primary text-4xl"
+                  style="font-variation-settings:'FILL' 1">directions_bike</span>
+          </div>
+        </div>
+
+        <!-- Footer row -->
+        <div class="flex items-center justify-between
+                    border-t border-slate-50 dark:border-slate-800 pt-3">
+          <div class="flex gap-4">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-slate-400 text-lg">quiz</span>
+              <span class="text-xs font-medium text-slate-500">10 questions</span>
+            </div>
+            <!-- Credits already earned — shown in muted style -->
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-lg">monetization_on</span>
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300">
+                +150 earned
+              </span>
+            </div>
+          </div>
+          <!-- Re-attempt allowed after passing; no additional credits awarded -->
+          <button class="px-4 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800
+                         text-slate-600 dark:text-slate-300 text-xs font-bold">
+            Review
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           CARD STATE ②  —  COOLDOWN (failed attempt, timer active)
+           module_id          : nsw_rules
+           credits_on_pass    : 200
+           cooldown_seconds   : 300 (5 min)
+           nextAllowedAttemptAt shown as countdown
+      ══════════════════════════════════════════════════════════════ -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm
+                  border border-orange-200 dark:border-orange-900/50 flex flex-col gap-4
+                  relative overflow-hidden">
+
+        <!-- Subtle warning tint overlay -->
+        <div class="absolute inset-0 bg-orange-50/60 dark:bg-orange-950/20 pointer-events-none rounded-xl"></div>
+
+        <div class="relative flex justify-between items-start">
+          <div class="flex flex-col gap-1">
+            <!-- Status badge — Cooldown -->
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-2 py-0.5 rounded-full bg-orange-100 text-orange-600
+                           text-[10px] font-bold uppercase tracking-widest
+                           border border-orange-200 flex items-center gap-1">
+                <span class="material-symbols-outlined text-xs">timer</span>
+                Cooldown
+              </span>
+            </div>
+            <h4 class="text-lg font-bold leading-tight">NSW Rules &amp; Infrastructure</h4>
+            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+              Local NSW rules for where and how you can ride an e-bike legally.
+            </p>
+
+            <!-- Last attempt score -->
+            <div class="mt-1 flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-orange-400 text-base">cancel</span>
+              <span class="text-xs font-semibold text-orange-600 dark:text-orange-400">
+                Last attempt: 8/10 — need 10/10 to pass
+              </span>
+            </div>
+          </div>
+
+          <!-- Countdown ring -->
+          <div class="shrink-0 w-20 h-20 flex flex-col items-center justify-center
+                      relative">
+            <svg class="cooldown-ring absolute inset-0 w-20 h-20" viewBox="0 0 80 80">
+              <circle cx="40" cy="40" r="34" fill="none"
+                      stroke="#fed7aa" stroke-width="5"/>
+              <!-- stroke-dasharray = 2πr ≈ 213.6; dashoffset = 213.6 * (1 - elapsed/300) -->
+              <circle cx="40" cy="40" r="34" fill="none"
+                      stroke="#f97316" stroke-width="5"
+                      stroke-linecap="round"
+                      stroke-dasharray="213.6"
+                      stroke-dashoffset="64"/><!-- ~70% through cooldown -->
+            </svg>
+            <div class="relative text-center">
+              <span class="text-sm font-bold text-orange-500" id="cooldown-timer">1:32</span>
+              <p class="text-[9px] text-slate-400 leading-tight">retry in</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer row -->
+        <div class="relative flex items-center justify-between
+                    border-t border-orange-100 dark:border-orange-900/40 pt-3">
+          <div class="flex gap-4">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-slate-400 text-lg">quiz</span>
+              <span class="text-xs font-medium text-slate-500">10 questions</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-lg">monetization_on</span>
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300">+200</span>
+            </div>
+          </div>
+          <!-- Disabled retry button during cooldown -->
+          <button disabled
+                  class="px-4 py-1.5 rounded-lg bg-slate-100 dark:bg-slate-800
+                         text-slate-400 dark:text-slate-500 text-xs font-bold
+                         cursor-not-allowed opacity-60 flex items-center gap-1">
+            <span class="material-symbols-outlined text-xs">lock_clock</span>
+            Retry in 1:32
+          </button>
+        </div>
+      </div>
+
+      <!-- ══════════════════════════════════════════════════════════════
+           CARD STATE ③  —  NOT STARTED
+           module_id       : ebike_tech_battery
+           credits_on_pass : 200
+      ══════════════════════════════════════════════════════════════ -->
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-4 shadow-sm
+                  border border-slate-100 dark:border-slate-800 flex flex-col gap-4">
+        <div class="flex justify-between items-start">
+          <div class="flex flex-col gap-1">
+            <!-- Status badge -->
+            <div class="flex items-center gap-2 mb-1">
+              <span class="px-2 py-0.5 rounded-full bg-secondary/10 text-secondary
+                           text-[10px] font-bold uppercase tracking-widest
+                           border border-secondary/20">
+                Not Started
+              </span>
+            </div>
+            <h4 class="text-lg font-bold leading-tight">E-Bike Tech &amp; Safe Ownership</h4>
+            <p class="text-sm text-slate-500 dark:text-slate-400 line-clamp-2">
+              How e-bike systems and batteries work, plus safe charging to reduce fire risk.
+            </p>
+          </div>
+          <!-- Thumbnail -->
+          <div class="w-20 h-20 rounded-lg bg-secondary/10 overflow-hidden shrink-0
+                      flex items-center justify-center">
+            <span class="material-symbols-outlined text-secondary text-4xl"
+                  style="font-variation-settings:'FILL' 1">bolt</span>
+          </div>
+        </div>
+
+        <!-- Footer row -->
+        <div class="flex items-center justify-between
+                    border-t border-slate-50 dark:border-slate-800 pt-3">
+          <div class="flex gap-4">
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-slate-400 text-lg">quiz</span>
+              <span class="text-xs font-medium text-slate-500">10 questions</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <span class="material-symbols-outlined text-primary text-lg">monetization_on</span>
+              <span class="text-xs font-bold text-slate-700 dark:text-slate-300">+200</span>
+            </div>
+          </div>
+          <button class="px-4 py-1.5 rounded-lg bg-primary text-slate-900
+                         text-xs font-bold shadow-sm">
+            Start Quiz
+          </button>
+        </div>
+      </div>
+
+    </div><!-- /space-y-4 -->
+
+    <!-- ── How credits work ──────────────────────────────────────────────── -->
+    <div class="mt-6 rounded-xl bg-white dark:bg-slate-900
+                border border-slate-100 dark:border-slate-800 p-4 shadow-sm">
+      <h4 class="text-sm font-bold mb-3 flex items-center gap-2">
+        <span class="material-symbols-outlined text-primary text-lg"
+              style="font-variation-settings:'FILL' 1">info</span>
+        How credits work
+      </h4>
+      <ul class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+        <li class="flex items-start gap-2">
+          <span class="material-symbols-outlined text-primary text-sm mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <span>You must score <strong class="text-slate-800 dark:text-slate-200">100%</strong>
+                to pass — every question must be correct.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="material-symbols-outlined text-orange-400 text-sm mt-0.5"
+                style="font-variation-settings:'FILL' 1">timer</span>
+          <span>A <strong class="text-slate-800 dark:text-slate-200">5-minute cooldown</strong>
+                applies after each failed attempt.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="material-symbols-outlined text-primary text-sm mt-0.5"
+                style="font-variation-settings:'FILL' 1">monetization_on</span>
+          <span>Credits are awarded <strong class="text-slate-800 dark:text-slate-200">once per module</strong>
+                on your first pass. Replaying earns no additional credits.</span>
+        </li>
+        <li class="flex items-start gap-2">
+          <span class="material-symbols-outlined text-secondary text-sm mt-0.5"
+                style="font-variation-settings:'FILL' 1">payments</span>
+          <span>100 credits = <strong class="text-slate-800 dark:text-slate-200">$10.00</strong>
+                off your next Micro2Move ride.</span>
+        </li>
+      </ul>
+    </div>
+
+  </main>
+
+  <!-- ── Bottom Nav ─────────────────────────────────────────────────────── -->
+  <nav class="fixed bottom-0 left-0 right-0
+              bg-white/90 dark:bg-slate-900/90
+              border-t border-slate-100 dark:border-slate-800
+              px-6 pb-8 pt-3 ios-blur">
+    <div class="flex justify-between items-center max-w-md mx-auto">
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+        <span class="material-symbols-outlined">home</span>
+        <span class="text-[10px] font-bold uppercase tracking-tight">Home</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+        <span class="material-symbols-outlined">map</span>
+        <span class="text-[10px] font-bold uppercase tracking-tight">Map</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-primary" href="#">
+        <span class="material-symbols-outlined" style="font-variation-settings:'FILL' 1">security</span>
+        <span class="text-[10px] font-bold uppercase tracking-tight">Safety</span>
+      </a>
+      <a class="flex flex-col items-center gap-1 text-slate-400" href="#">
+        <span class="material-symbols-outlined">account_circle</span>
+        <span class="text-[10px] font-bold uppercase tracking-tight">Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- ── Live cooldown timer script ─────────────────────────────────────── -->
+  <script>
+    /**
+     * Drives the cooldown countdown in Card ②.
+     * In production, initialise remainingSeconds from:
+     *   Math.max(0, (progress.nextAllowedAttemptAt - Date.now()) / 1000)
+     */
+    const COOLDOWN_TOTAL = 300; // seconds — matches cooldown_seconds in quiz_spec.json
+    let remainingSeconds = 92;  // example: 1 min 32 sec left
+
+    const timerEl    = document.getElementById('cooldown-timer');
+    const ringCircle = document.querySelector('.cooldown-ring circle:last-child');
+    const CIRCUMFERENCE = 213.6; // 2π × 34
+
+    function updateCooldown() {
+      if (remainingSeconds <= 0) {
+        // Cooldown expired — UI should flip card to "Not Started" state
+        timerEl.textContent = '0:00';
+        clearInterval(interval);
+        // TODO: trigger card state refresh via your front-end framework
+        return;
+      }
+
+      const m = Math.floor(remainingSeconds / 60);
+      const s = remainingSeconds % 60;
+      timerEl.textContent = `${m}:${String(s).padStart(2, '0')}`;
+
+      // Update retry button label
+      const retryBtn = document.querySelector('button[disabled]');
+      if (retryBtn) retryBtn.textContent = `Retry in ${m}:${String(s).padStart(2, '0')}`;
+
+      // Animate ring: offset shrinks as time elapses
+      const elapsed = COOLDOWN_TOTAL - remainingSeconds;
+      const offset  = CIRCUMFERENCE * (1 - elapsed / COOLDOWN_TOTAL);
+      ringCircle.setAttribute('stroke-dashoffset', offset.toFixed(1));
+
+      remainingSeconds--;
+    }
+
+    updateCooldown();
+    const interval = setInterval(updateCooldown, 1000);
+  </script>
+
+  <!-- Map context marker (required) -->
+  <div data-location="Sydney, Australia" style="display:none"></div>
+</body>
+</html>

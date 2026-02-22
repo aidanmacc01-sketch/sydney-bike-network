@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+  <title>NSW Rules & Infrastructure — Micro2Move</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet"/>
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "primary":          "#0df259",  /* Micro2Move green */
+            "secondary":        "#7c3aed",  /* Micro2Move purple */
+            "background-light": "#f5f8f6",
+            "background-dark":  "#171121",
+          },
+          fontFamily: { "display": ["Space Grotesk", "sans-serif"] },
+          borderRadius: {
+            "DEFAULT": "0.25rem", "lg": "0.5rem",
+            "xl": "0.75rem",     "full": "9999px"
+          },
+        },
+      },
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Space Grotesk', sans-serif;
+      -webkit-tap-highlight-color: transparent;
+      min-height: max(884px, 100dvh);
+    }
+    .ios-blur { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+  </style>
+</head>
+
+<!--
+  ============================================================
+  DATA CONTRACT — quiz-detail.html
+  Populated from module id: "nsw_rules"  (quiz_spec.json)
+  ============================================================
+  title            : NSW Rules & Infrastructure
+  description      : Local NSW rules for where and how you can ride an e-bike legally.
+  questions        : 10
+  credits_on_pass  : 200   (first pass only — anti-farm guard in quiz_engine.ts)
+  required_score   : 1.0   (100% — every question must be correct)
+  cooldown_seconds : 300   (5 min cooldown applied on a failed attempt)
+  credit_to_AUD    : 0.10  (200 credits = $20.00)
+  ============================================================
+-->
+
+<body class="bg-background-light dark:bg-background-dark
+             text-slate-900 dark:text-slate-100 min-h-screen flex flex-col">
+
+  <!-- ── Top Nav ──────────────────────────────────────────────────────────── -->
+  <nav class="sticky top-0 z-50 flex items-center justify-between px-4 py-3
+              bg-background-light/80 dark:bg-background-dark/80 ios-blur">
+    <button class="flex items-center justify-center size-10 rounded-full
+                   bg-slate-200/50 dark:bg-slate-800/50
+                   text-slate-900 dark:text-slate-100">
+      <span class="material-symbols-outlined">arrow_back_ios_new</span>
+    </button>
+    <h2 class="text-base font-bold tracking-tight">NSW Rules &amp; Infrastructure</h2>
+    <div class="size-10"></div>
+  </nav>
+
+  <main class="flex-1 overflow-y-auto pb-36">
+
+    <!-- ── Hero banner ──────────────────────────────────────────────────── -->
+    <div class="px-4 py-6">
+      <div class="relative w-full aspect-[4/3] rounded-xl overflow-hidden
+                  shadow-lg border border-secondary/10">
+        <div class="absolute inset-0 bg-gradient-to-br from-secondary/20 to-secondary/5"></div>
+        <!-- Placeholder illustration — replace with real asset -->
+        <div class="w-full h-full flex flex-col items-center justify-center gap-3
+                    bg-secondary/5">
+          <span class="material-symbols-outlined text-secondary text-8xl opacity-30"
+                style="font-variation-settings:'FILL' 1">traffic</span>
+          <p class="text-xs text-secondary/50 font-medium tracking-widest uppercase">
+            Sydney CBD — shared road illustration
+          </p>
+        </div>
+        <!-- Official badge -->
+        <div class="absolute bottom-4 left-4 right-4">
+          <span class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full
+                       bg-white/90 dark:bg-slate-900/90 text-secondary
+                       text-xs font-bold uppercase tracking-wider shadow-sm">
+            <span class="material-symbols-outlined text-sm"
+                  style="font-variation-settings:'FILL' 1">verified</span>
+            NSW Road Rules compliant
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Title & quick stats ─────────────────────────────────────────── -->
+    <div class="px-6 text-center">
+      <h1 class="text-3xl font-bold leading-tight mb-2">NSW Rules &amp; Infrastructure</h1>
+      <p class="text-sm text-slate-500 dark:text-slate-400 mb-6 max-w-xs mx-auto">
+        Local NSW rules for where and how you can ride an e-bike, and how to use
+        bike infrastructure legally.
+      </p>
+
+      <div class="flex items-center justify-center gap-3">
+        <!-- Est. duration (10 q × ~30 s each) -->
+        <div class="flex flex-col items-center px-4 py-2
+                    bg-secondary/10 dark:bg-secondary/20
+                    rounded-lg border border-secondary/20 min-w-[90px]">
+          <span class="material-symbols-outlined text-secondary mb-1">timer</span>
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Duration</span>
+          <span class="text-lg font-bold">~5 min</span>
+        </div>
+        <!-- Question count -->
+        <div class="flex flex-col items-center px-4 py-2
+                    bg-secondary/10 dark:bg-secondary/20
+                    rounded-lg border border-secondary/20 min-w-[90px]">
+          <span class="material-symbols-outlined text-secondary mb-1">quiz</span>
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Questions</span>
+          <span class="text-lg font-bold">10</span>
+        </div>
+        <!-- Pass requirement -->
+        <div class="flex flex-col items-center px-4 py-2
+                    bg-secondary/10 dark:bg-secondary/20
+                    rounded-lg border border-secondary/20 min-w-[90px]">
+          <span class="material-symbols-outlined text-secondary mb-1">workspace_premium</span>
+          <span class="text-xs font-medium text-slate-500 dark:text-slate-400">Required</span>
+          <span class="text-lg font-bold">100%</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Reward / credit card ─────────────────────────────────────────── -->
+    <div class="px-4 mt-8">
+      <div class="bg-white dark:bg-slate-900 rounded-xl p-5 shadow-sm
+                  border border-slate-200 dark:border-slate-800 relative overflow-hidden">
+        <!-- Decorative icon -->
+        <div class="absolute top-0 right-0 p-2 pointer-events-none select-none">
+          <span class="material-symbols-outlined text-primary/15 text-7xl rotate-12"
+                style="font-variation-settings:'FILL' 1">redeem</span>
+        </div>
+
+        <div class="relative z-10">
+          <!-- Credit headline -->
+          <div class="flex items-center gap-2 mb-2">
+            <div class="size-8 rounded-full bg-primary flex items-center justify-center">
+              <span class="material-symbols-outlined text-slate-900 text-lg"
+                    style="font-variation-settings:'FILL' 1">star</span>
+            </div>
+            <!-- credits_on_pass = 200; 200 × 0.10 = $20.00 -->
+            <h3 class="text-lg font-bold">Earn 200 Credits <span class="text-slate-400 font-medium text-sm">= $20.00</span></h3>
+          </div>
+
+          <p class="text-slate-600 dark:text-slate-400 text-sm leading-relaxed mb-4 max-w-[85%]">
+            Master NSW road rules. You must score
+            <span class="text-secondary font-bold">100%</span> to unlock your
+            Micro2Move credits — every question must be correct.
+          </p>
+
+          <!-- Cooldown warning -->
+          <div class="flex items-start gap-2 py-2 px-3
+                      bg-orange-50 dark:bg-orange-950/30
+                      rounded-lg border border-orange-100 dark:border-orange-900/40 mb-3">
+            <span class="material-symbols-outlined text-orange-400 text-lg mt-0.5"
+                  style="font-variation-settings:'FILL' 1">timer</span>
+            <p class="text-xs font-medium text-orange-700 dark:text-orange-300">
+              A <strong>5-minute cooldown</strong> applies if you don't score 100%.
+              Credits are awarded on your <strong>first pass only</strong>.
+            </p>
+          </div>
+
+          <!-- AUD rate note -->
+          <div class="flex items-center gap-2 py-2 px-3
+                      bg-slate-50 dark:bg-slate-800
+                      rounded-lg border border-slate-100 dark:border-slate-700">
+            <span class="material-symbols-outlined text-primary text-lg"
+                  style="font-variation-settings:'FILL' 1">payments</span>
+            <p class="text-xs font-medium text-slate-500 dark:text-slate-400">
+              100 credits = <strong class="text-slate-700 dark:text-slate-200">$10.00</strong> off your next Micro2Move ride.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ── Quiz coverage (sourced from nsw_rules question topics) ─────── -->
+    <div class="px-6 mt-8">
+      <h4 class="text-xs font-bold uppercase tracking-widest
+                 text-slate-400 dark:text-slate-500 mb-4">
+        What this quiz covers
+      </h4>
+      <ul class="space-y-3">
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <p class="text-sm">Where adults can and <strong>cannot</strong> ride —
+            roads, shared paths, and the footpath ban</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <p class="text-sm">Legal e-bike definition — 250 W motor, 25 km/h
+            assist cut-off (PAPC), no registration needed</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <p class="text-sm">Helmet laws, traffic signals, and red light obligations</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <p class="text-sm">Riding two abreast, hand-held phone ban, and
+            giving way at bus stops</p>
+        </li>
+        <li class="flex items-start gap-3">
+          <span class="material-symbols-outlined text-primary mt-0.5"
+                style="font-variation-settings:'FILL' 1">check_circle</span>
+          <p class="text-sm">What to do when a bike lane is obstructed by a vehicle</p>
+        </li>
+      </ul>
+    </div>
+
+    <!-- ── Previous attempt block (shown if UserProgress exists) ─────── -->
+    <!--
+      Conditionally rendered by front-end when:
+        progress.lastAttemptAt !== null && !progress.passed
+      Data: progress.lastAttemptAt, score from last attempt
+    -->
+    <div class="px-4 mt-8">
+      <div class="bg-orange-50 dark:bg-orange-950/30 rounded-xl p-4
+                  border border-orange-200 dark:border-orange-900/50">
+        <div class="flex items-center gap-2 mb-1">
+          <span class="material-symbols-outlined text-orange-400"
+                style="font-variation-settings:'FILL' 1">history</span>
+          <h4 class="text-sm font-bold text-orange-700 dark:text-orange-300">
+            Previous attempt
+          </h4>
+        </div>
+        <p class="text-xs text-orange-600 dark:text-orange-400">
+          Score: <strong>8 / 10</strong> — not enough to pass.
+          Review the explanations below before retrying.
+        </p>
+        <!-- Expand feedback (optional) — links to quiz-result.html -->
+        <button class="mt-2 text-xs font-bold text-secondary underline">
+          View question-by-question feedback
+        </button>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ── Fixed CTA ────────────────────────────────────────────────────────── -->
+  <div class="fixed bottom-0 left-0 right-0 p-4
+              bg-background-light/80 dark:bg-background-dark/80 ios-blur
+              border-t border-slate-200 dark:border-slate-800">
+
+    <!--
+      CTA STATE A — Not started / eligible to attempt
+      Shown when: canStartModule(progress, module, now) === true
+    -->
+    <button id="btn-start"
+            class="w-full h-14 bg-primary hover:bg-primary/90
+                   text-slate-900 rounded-xl font-bold text-lg
+                   shadow-lg shadow-primary/20
+                   flex items-center justify-center gap-2
+                   transition-transform active:scale-[0.98]">
+      Start Quiz
+      <span class="material-symbols-outlined">play_arrow</span>
+    </button>
+
+    <!--
+      CTA STATE B — Cooldown active (failed attempt, timer not expired)
+      Shown when: canStartModule returns false
+      Uncomment and swap with State A when cooldown is active:
+
+    <button disabled
+            class="w-full h-14 bg-slate-200 dark:bg-slate-800
+                   text-slate-400 dark:text-slate-500 rounded-xl font-bold text-lg
+                   cursor-not-allowed
+                   flex items-center justify-center gap-2">
+      <span class="material-symbols-outlined">lock_clock</span>
+      Retry available in <span id="cta-timer">4:58</span>
+    </button>
+    -->
+
+    <p class="text-center text-[10px] text-slate-400 dark:text-slate-600
+              mt-3 uppercase tracking-tighter">
+      By starting you agree to the Micro2Move learning terms
+    </p>
+  </div>
+
+  <!-- Map context marker -->
+  <div data-location="Sydney, Australia" style="display:none"></div>
+</body>
+</html>

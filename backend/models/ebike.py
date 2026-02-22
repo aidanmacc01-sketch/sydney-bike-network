@@ -11,7 +11,7 @@ import uuid
 class EBikeStatus(Base):
     """E-bike status master table."""
     __tablename__ = "e_bike_status"
-    __table_args__ = {"schema": "micro2move"}
+
 
     e_bike_status_id = Column(SmallInteger, primary_key=True, autoincrement=True)
     e_bike_status_name = Column(Text, unique=True, nullable=False)
@@ -23,7 +23,7 @@ class EBikeStatus(Base):
 class EBikeCategory(Base):
     """E-bike category master table."""
     __tablename__ = "e_bike_category"
-    __table_args__ = {"schema": "micro2move"}
+
 
     e_bike_category_id = Column(SmallInteger, primary_key=True, autoincrement=True)
     e_bike_category_name = Column(Text, unique=True, nullable=False)
@@ -35,7 +35,7 @@ class EBikeCategory(Base):
 class FeatureCheck(Base):
     """Feature check master table."""
     __tablename__ = "feature_check"
-    __table_args__ = {"schema": "micro2move"}
+
 
     feature_check_id = Column(SmallInteger, primary_key=True, autoincrement=True)
     feature_check_name = Column(Text, unique=True, nullable=False)
@@ -48,17 +48,17 @@ class FeatureCheck(Base):
 class EBike(Base):
     """E-bike listing."""
     __tablename__ = "e_bike"
-    __table_args__ = {"schema": "micro2move"}
+
 
     e_bike_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
     e_bike_name = Column(String(120), nullable=False)
-    supplier_user_id = Column(String, ForeignKey("micro2move.supplier.supplier_user_id", ondelete="RESTRICT"), nullable=False)
+    supplier_user_id = Column(String, ForeignKey("supplier.supplier_user_id", ondelete="RESTRICT"), nullable=False)
     price_per_week = Column(Numeric(10, 2), nullable=False)
     available_from_date = Column(Date, nullable=False)
     available_to_date = Column(Date, nullable=True)
-    e_bike_category_id = Column(SmallInteger, ForeignKey("micro2move.e_bike_category.e_bike_category_id", ondelete="RESTRICT"), nullable=False)
-    pick_up_geo_location_id = Column(String, ForeignKey("micro2move.geo_location.geo_location_id", ondelete="SET NULL"), nullable=True)
-    e_bike_status_id = Column(SmallInteger, ForeignKey("micro2move.e_bike_status.e_bike_status_id", ondelete="RESTRICT"), nullable=False)
+    e_bike_category_id = Column(SmallInteger, ForeignKey("e_bike_category.e_bike_category_id", ondelete="RESTRICT"), nullable=False)
+    pick_up_geo_location_id = Column(String, ForeignKey("geo_location.geo_location_id", ondelete="SET NULL"), nullable=True)
+    e_bike_status_id = Column(SmallInteger, ForeignKey("e_bike_status.e_bike_status_id", ondelete="RESTRICT"), nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
     # Relationships
@@ -75,10 +75,10 @@ class EBike(Base):
 class EBikeFeatureCheck(Base):
     """E-bike feature check results."""
     __tablename__ = "e_bike_feature_check"
-    __table_args__ = {"schema": "micro2move"}
 
-    e_bike_id = Column(String, ForeignKey("micro2move.e_bike.e_bike_id", ondelete="CASCADE"), primary_key=True)
-    feature_check_id = Column(SmallInteger, ForeignKey("micro2move.feature_check.feature_check_id", ondelete="RESTRICT"), primary_key=True)
+
+    e_bike_id = Column(String, ForeignKey("e_bike.e_bike_id", ondelete="CASCADE"), primary_key=True)
+    feature_check_id = Column(SmallInteger, ForeignKey("feature_check.feature_check_id", ondelete="RESTRICT"), primary_key=True)
     checked_ok = Column(Boolean, default=False, nullable=False)
     checked_at = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)
 
@@ -90,11 +90,11 @@ class EBikeFeatureCheck(Base):
 class EBikeRating(Base):
     """E-bike rating by renter."""
     __tablename__ = "e_bike_rating"
-    __table_args__ = {"schema": "micro2move"}
+
 
     e_bike_rating_id = Column(String, primary_key=True, default=lambda: str(uuid.uuid4()))
-    renter_user_id = Column(String, ForeignKey("micro2move.users.user_id", ondelete="RESTRICT"), nullable=False)
-    e_bike_id = Column(String, ForeignKey("micro2move.e_bike.e_bike_id", ondelete="CASCADE"), nullable=False)
+    renter_user_id = Column(String, ForeignKey("users.user_id", ondelete="RESTRICT"), nullable=False)
+    e_bike_id = Column(String, ForeignKey("e_bike.e_bike_id", ondelete="CASCADE"), nullable=False)
     e_bike_rating = Column(SmallInteger, nullable=False)  # 1-5
     comment = Column(Text, nullable=True)
     rating_date_time = Column(DateTime(timezone=True), server_default=func.now(), nullable=False)

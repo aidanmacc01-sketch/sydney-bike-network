@@ -1,0 +1,395 @@
+{
+  "modules": [
+    {
+      "id": "safety_basics",
+      "title": "Safety Basics",
+      "description": "Core riding skills for safe, predictable e-bike use in urban environments.",
+      "required_score": 1.0,
+      "credits_on_pass": 150,
+      "cooldown_seconds": 300,
+      "questions": [
+        {
+          "id": "sb_q1",
+          "question": "You are riding in a bike lane next to parked cars on a busy Sydney street. A car door suddenly opens just ahead of you. What should you have been doing to minimise this risk?",
+          "options": [
+            "Riding as close to the parked cars as possible to leave more room for traffic",
+            "Riding at least 1 metre from parked car doors to stay out of the door zone",
+            "Sounding your bell continuously as you pass parked cars",
+            "Riding on the footpath to avoid the bike lane entirely"
+          ],
+          "correct_option_index": 1,
+          "explanation": "The 'door zone' extends roughly 1–1.5 m from a parked car. Staying outside it gives you reaction time if a door opens unexpectedly. This is sometimes called riding the 'secondary position' in bike lanes next to parking."
+        },
+        {
+          "id": "sb_q2",
+          "question": "You are riding through a narrow section of road with no bike lane and cars behind you. Where should you position yourself in the lane?",
+          "options": [
+            "As close to the left kerb as possible so cars can squeeze past",
+            "In the centre of the lane (primary position) so drivers cannot safely overtake in the same lane",
+            "On the footpath temporarily until the road widens",
+            "Weave between the parked cars and moving traffic"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Taking the primary lane position signals clearly to drivers that the lane is too narrow to share side-by-side. It prevents dangerous close-passes and keeps you visible. Move left again once a safe passing opportunity exists."
+        },
+        {
+          "id": "sb_q3",
+          "question": "You are approaching a right turn on your e-bike on a Sydney road. When and how should you signal?",
+          "options": [
+            "Signal only after you have started turning so drivers know you have committed",
+            "Extend your right arm well in advance, check over your shoulder, then move when safe",
+            "E-bikes do not need to signal because they are not motor vehicles",
+            "Flash your phone torch to the right instead of using arm signals"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Early, clear arm signals give drivers and other road users time to react. Shoulder-checking confirms the gap is safe before you move. NSW Road Rules require cyclists to signal turns; e-bikes are no exception."
+        },
+        {
+          "id": "sb_q4",
+          "question": "It has been raining heavily in Sydney. How should this change your e-bike riding?",
+          "options": [
+            "Ride at the same speed — e-bike tyres are waterproof",
+            "Increase your following distance and begin braking earlier, as wet roads significantly extend stopping distances",
+            "Use the motor assist more heavily to reduce wheel-spin on the pedals",
+            "Ride closer to the centre lane line to avoid kerb puddles"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Wet roads can triple stopping distances. Brake early and gently — especially over painted lines, steel grates, and tram tracks which become extremely slippery when wet. Speed adjustments are legally required when conditions are poor."
+        },
+        {
+          "id": "sb_q5",
+          "question": "You are riding on a shared path in Centennial Park and are approaching pedestrians from behind. What is the correct thing to do?",
+          "options": [
+            "Ring your bell or call out 'passing left' well in advance, then pass slowly with plenty of clearance",
+            "Speed up and pass them as quickly as possible to minimise the time spent beside them",
+            "Stay directly behind them and wait until they naturally move aside",
+            "Hop onto the grass verge to go around without warning them"
+          ],
+          "correct_option_index": 0,
+          "explanation": "Pedestrians have priority on shared paths. Warning them early with your bell or voice prevents sudden fright and gives them time to step aside safely. Pass slowly with at least 1 m clearance where space allows."
+        },
+        {
+          "id": "sb_q6",
+          "question": "Under NSW law, when riding at night or in reduced visibility, which combination of lights and reflectors must your e-bike have?",
+          "options": [
+            "A white or yellow front light, a red rear light, and a red rear reflector",
+            "Any colour LED light at the front and rear — colour does not matter",
+            "A rear reflector only; a front light is optional if you ride slowly",
+            "Lights are only required on roads — shared paths are exempt"
+          ],
+          "correct_option_index": 0,
+          "explanation": "NSW Road Rules require a white or yellow front light, a red rear light, and a red rear reflector at night or in reduced visibility. This applies on all paths and roads. Without them you are invisible to drivers and other path users — and liable for a fine."
+        },
+        {
+          "id": "sb_q7",
+          "question": "Which approach most improves your visibility to drivers, especially at dawn and dusk?",
+          "options": [
+            "Wearing a dark jacket to blend with traffic and avoid attention",
+            "Wearing high-visibility or bright clothing combined with reflective strips, plus front and rear lights",
+            "Fitting a single flashing light to your helmet only",
+            "Riding faster so drivers notice you sooner"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Bright colours help during daylight; reflective strips and lights are critical at low-light times when headlights are not yet on. Layering visibility aids — clothing, lights, and reflectors — gives every road user the best chance of seeing you in time."
+        },
+        {
+          "id": "sb_q8",
+          "question": "What is a safe and considerate speed when riding your e-bike on a busy shared path with many pedestrians present?",
+          "options": [
+            "Up to 25 km/h — the e-bike's maximum motor-assist speed",
+            "Near walking pace (around 10 km/h or less) so you can stop safely for any sudden movements",
+            "20 km/h, matching the nearby road's speed sign",
+            "As fast as you like, provided you have a working bell fitted"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Even when no speed limit is posted on a path, you must ride at a speed that allows you to stop or avoid a hazard at any moment. On a busy shared path, pedestrians can step sideways without warning — near-walking pace protects them and you."
+        },
+        {
+          "id": "sb_q9",
+          "question": "You want to overtake a slower cyclist on a shared path. What is the safest approach?",
+          "options": [
+            "Pass on either side as quickly as possible without warning to avoid delaying them",
+            "Ring your bell as a warning, check for oncoming path users, then pass on the right with at least 1 m clearance",
+            "Tailgate closely until they move aside or speed up",
+            "Jump onto the footpath beside the shared path to pass"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Always warn the rider ahead before overtaking. Passing on the right is conventional and expected on shared paths. Check for oncoming users before moving out — they need space too. Maintain clearance throughout the pass."
+        },
+        {
+          "id": "sb_q10",
+          "question": "You are riding your e-bike in wet conditions and approach a section of road covered in fallen autumn leaves. What should you do?",
+          "options": [
+            "Accelerate through quickly to reduce the time your tyres are on the slippery surface",
+            "Brake hard immediately before the leaves to scrub speed",
+            "Slow down well before the leaves, avoid sharp braking or steering on them, and pass through gently",
+            "Swerve onto the footpath to avoid the leaves altogether"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Wet leaves are as slippery as ice. The safest approach is to reduce speed before you reach them, then roll through with minimal steering input and gentle braking. Sudden inputs on a low-grip surface cause skids and falls."
+        }
+      ]
+    },
+    {
+      "id": "nsw_rules",
+      "title": "NSW Rules & Infrastructure",
+      "description": "Local NSW rules for where and how you can ride an e-bike, and how to use bike infrastructure legally.",
+      "required_score": 1.0,
+      "credits_on_pass": 200,
+      "cooldown_seconds": 300,
+      "questions": [
+        {
+          "id": "nsw_q1",
+          "question": "As an adult e-bike rider in NSW, which of the following locations is NOT legally permitted for riding?",
+          "options": [
+            "A marked bicycle lane on a road",
+            "A shared path with pedestrians",
+            "A footpath where no sign permits cycling",
+            "A road with a 60 km/h speed limit"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Adults in NSW may not ride on footpaths unless a sign specifically permits cycling there, or they are accompanying a child under 12. Footpaths are for pedestrians. Use roads, bike lanes, and shared paths instead."
+        },
+        {
+          "id": "nsw_q2",
+          "question": "Under NSW law, which description correctly identifies a power-assisted pedal cycle (PAPC) that can be ridden without registration or a licence?",
+          "options": [
+            "Any electric bike with a motor up to 500 W",
+            "A pedalec with a motor up to 250 W that assists only while pedalling, with assist cutting off at 25 km/h",
+            "An electric scooter with a seat and pedals fitted",
+            "A throttle-only e-bike with a top speed of 30 km/h"
+          ],
+          "correct_option_index": 1,
+          "explanation": "A legal PAPC in NSW has a motor no greater than 250 W and provides assistance only while the rider is pedalling, cutting off at 25 km/h. These bikes are classified as bicycles — no registration, licence, or CTP insurance is required, but all bicycle road rules and the helmet law apply."
+        },
+        {
+          "id": "nsw_q3",
+          "question": "Which statement about helmets for e-bike riders in NSW is correct?",
+          "options": [
+            "Only riders under 18 are legally required to wear a helmet",
+            "Helmets are strongly recommended but not legally required for adult riders",
+            "All riders must wear an approved bicycle helmet at all times while riding",
+            "Helmets are only required on roads — shared paths and bike tracks are exempt"
+          ],
+          "correct_option_index": 2,
+          "explanation": "NSW law requires every bicycle and e-bike rider — regardless of age — to wear an approved helmet at all times while riding. This applies on roads, shared paths, and bike tracks. Riding without one can result in an on-the-spot fine."
+        },
+        {
+          "id": "nsw_q4",
+          "question": "You are an adult commuting on your e-bike and the road feels dangerous. Can you ride on the adjacent footpath?",
+          "options": [
+            "Yes — e-bikes are allowed on footpaths because their speed is low",
+            "Yes, as long as you give way to pedestrians and ride slowly",
+            "No — adults may not ride on footpaths in NSW unless a sign specifically permits it",
+            "Yes, but only when travelling under 10 km/h"
+          ],
+          "correct_option_index": 2,
+          "explanation": "It is illegal for adults to ride on footpaths in NSW unless a sign permits cycling there, or they are supervising a child under 12 on a bike. If a road feels unsafe, plan an alternate route using shared paths or quieter streets rather than the footpath."
+        },
+        {
+          "id": "nsw_q5",
+          "question": "How many cyclists may legally ride side by side on a NSW road?",
+          "options": [
+            "Only one at a time — riding two abreast is never legal",
+            "Up to two, side by side, provided they are no more than 1.5 m apart",
+            "As many as will fit across the lane",
+            "Two abreast is only permitted in marked bike lanes, never on the road"
+          ],
+          "correct_option_index": 1,
+          "explanation": "NSW Road Rules permit up to two cyclists to ride side by side (two abreast), as long as they remain within 1.5 m of each other. A third rider side by side is not permitted. When two abreast, you must still allow overtaking vehicles a safe passing gap."
+        },
+        {
+          "id": "nsw_q6",
+          "question": "Can you use a hand-held mobile phone while riding your e-bike in NSW?",
+          "options": [
+            "Yes, as long as you are travelling under 25 km/h",
+            "Yes — e-bikes are not subject to phone laws because they are not motor vehicles",
+            "No — using a hand-held phone while riding is illegal and carries a fine",
+            "Yes, but only to check navigation — not for calls or messages"
+          ],
+          "correct_option_index": 2,
+          "explanation": "NSW Road Rules prohibit cyclists from using hand-held mobile phones while riding, and this applies equally to e-bike riders. An infringement notice and fine apply. Use a securely mounted phone holder if you need navigation assistance."
+        },
+        {
+          "id": "nsw_q7",
+          "question": "You are cycling past a bus that has stopped to pick up passengers. Pedestrians are crossing the road to board. What must you do?",
+          "options": [
+            "Proceed normally — pedestrians must give way to cyclists on the road",
+            "Give way to any pedestrians crossing the road to or from the stopped bus",
+            "Stop and wait for the bus to depart before continuing",
+            "Ring your bell and proceed at full speed so pedestrians know to wait"
+          ],
+          "correct_option_index": 1,
+          "explanation": "NSW Road Rules require cyclists — like drivers — to give way to pedestrians crossing the road to or from a stopped bus. Passengers may step out suddenly. Always be prepared to stop when approaching a bus at a stop."
+        },
+        {
+          "id": "nsw_q8",
+          "question": "A delivery van is illegally blocking the bike lane ahead of you. What are you legally permitted to do?",
+          "options": [
+            "Leave the bike lane and merge into the adjacent car lane to safely pass the obstruction",
+            "Ride on the footpath to go around the obstruction",
+            "Stop and wait behind the van until it moves",
+            "Ride between the van and the kerb in the remaining gap"
+          ],
+          "correct_option_index": 0,
+          "explanation": "If a bike lane is obstructed, you may temporarily leave it and travel in the adjacent car lane to pass the obstruction, then return to the bike lane. Riding on the footpath remains illegal for adults. Signal and check for traffic before merging."
+        },
+        {
+          "id": "nsw_q9",
+          "question": "You approach a red traffic light on your e-bike on a NSW road. What must you do?",
+          "options": [
+            "You may proceed slowly if no vehicles are coming from cross traffic",
+            "You may cross while pedestrians are walking — you share their crossing right",
+            "Stop and wait for a green signal, the same as any road vehicle",
+            "Dismount, walk across as a pedestrian, then remount"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Cyclists and e-bike riders in NSW must obey all traffic signals including red lights. Running a red light is illegal and carries a fine. You may use a pedestrian crossing to cross while on foot, but not while mounted unless signals permit cyclists."
+        },
+        {
+          "id": "nsw_q10",
+          "question": "Does a compliant 250 W pedalec e-bike require registration in NSW?",
+          "options": [
+            "Yes — all motorised vehicles must be registered",
+            "Yes — registration is required once you ride on any public road",
+            "No — a compliant PAPC (250 W motor, 25 km/h assist cut-off) is classified as a bicycle and needs no registration",
+            "Only if the e-bike has a retail value above $2,000"
+          ],
+          "correct_option_index": 2,
+          "explanation": "A power-assisted pedal cycle that meets the 250 W and 25 km/h threshold is legally a bicycle in NSW. No registration, licence, or compulsory third-party insurance is required. However, all bicycle road rules, including the helmet law and traffic signals, still apply in full."
+        }
+      ]
+    },
+    {
+      "id": "ebike_tech_battery",
+      "title": "E-Bike Tech & Safe Ownership",
+      "description": "How e-bike systems and batteries work, plus safe charging and storage to reduce fire risk.",
+      "required_score": 1.0,
+      "credits_on_pass": 200,
+      "cooldown_seconds": 300,
+      "questions": [
+        {
+          "id": "etb_q1",
+          "question": "What most commonly triggers a thermal runaway (rapid, self-sustaining fire) in an e-bike lithium-ion battery?",
+          "options": [
+            "Riding the e-bike in hot summer weather above 30 °C",
+            "Physical damage to the battery pack, using an incompatible charger, or overcharging",
+            "Leaving the e-bike unplugged in a garden shed overnight",
+            "Regularly draining the battery to 0% before recharging"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Thermal runaway can be triggered by mechanical damage (from a drop or crash), an incompatible or faulty charger, overcharging, or a manufacturing defect. Once started, it produces intense heat and toxic gases very rapidly. Prevention focuses on protecting the pack from damage and using the correct charger."
+        },
+        {
+          "id": "etb_q2",
+          "question": "Which charger should you use with your e-bike battery?",
+          "options": [
+            "Any USB-C charger that physically fits the port",
+            "The fastest available third-party charger to reduce charge time",
+            "The charger supplied by the manufacturer, or a certified replacement with identical voltage and current specs",
+            "A car battery charger with a step-down voltage adapter"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Using the manufacturer's charger or a certified equivalent guarantees the correct voltage, current, and charge profile for your specific battery chemistry. An incompatible charger can overcharge or unevenly charge individual cells, dramatically increasing the risk of thermal runaway."
+        },
+        {
+          "id": "etb_q3",
+          "question": "Fire and Rescue NSW specifically advises against which very common charging habit?",
+          "options": [
+            "Charging the battery to 100% before a long ride",
+            "Leaving the e-bike battery charging unattended overnight while everyone in the home is asleep",
+            "Charging the battery immediately after returning from a long ride while it is still warm",
+            "Charging the battery indoors rather than in a garage"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Charging unattended overnight means a fire could start while everyone is asleep and unable to respond. Fire and Rescue NSW advise: charge when awake and present, unplug once fully charged, and never charge overnight or when leaving the premises."
+        },
+        {
+          "id": "etb_q4",
+          "question": "Where is the safest place to charge your e-bike battery?",
+          "options": [
+            "In a bedroom, close to the electrical outlet for convenience",
+            "In a well-ventilated area, away from flammable materials such as curtains and furniture",
+            "Inside a sealed storage box to contain any smoke or heat if something goes wrong",
+            "In the boot of your car after parking in the garage"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Lithium-ion fires release toxic gases and intense heat. A well-ventilated area limits fume build-up and reduces the available fuel for a fire to spread. Keep the battery away from soft furnishings, paper, and other combustibles during charging."
+        },
+        {
+          "id": "etb_q5",
+          "question": "Fire and Rescue NSW warns against charging e-bikes near building exits or hallways. Why?",
+          "options": [
+            "It can overload the circuit and cause a building-wide blackout",
+            "A battery fire near a door or hallway can block the only escape route for occupants",
+            "Draughts from doorways affect the charger's cooling and reduce battery lifespan",
+            "It reduces the Wi-Fi signal strength required by smart chargers"
+          ],
+          "correct_option_index": 1,
+          "explanation": "In a fire, escape routes are critical. A battery fire near a door or hallway can engulf the exit in seconds, trapping occupants. Always charge in a location that keeps all exits and hallways clear and accessible."
+        },
+        {
+          "id": "etb_q6",
+          "question": "You drop your e-bike and notice the battery casing has cracked. What is the correct action?",
+          "options": [
+            "Charge it carefully at a low power setting to test if it still functions",
+            "Wrap the crack with heavy-duty tape and continue using the bike",
+            "Stop using the battery immediately and contact your retailer or a qualified technician for safe assessment",
+            "Submerge the battery in a bucket of water to cool any internal chemical reaction"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Physical damage can puncture internal cells and cause short circuits, even if no sparks or heat are visible immediately. A cracked or damaged battery can go into thermal runaway at any time — including during charging. Never charge or use a visibly damaged battery. Have it professionally assessed or safely disposed of."
+        },
+        {
+          "id": "etb_q7",
+          "question": "You notice your e-bike battery casing looks swollen or puffed out compared to when it was new. What does this indicate?",
+          "options": [
+            "The battery is fully charged and the cells are at peak capacity",
+            "Gas is building up inside the cells — a warning sign of internal damage or failure",
+            "The casing has simply expanded slightly from ambient heat and this is normal",
+            "The battery needs to be cooled in a refrigerator before it is safe to use"
+          ],
+          "correct_option_index": 1,
+          "explanation": "Swelling (puffing) in a lithium-ion battery means gas is being produced by internal chemical breakdown. A swollen battery can rupture or ignite at any time. Stop using it immediately, do not attempt to puncture or compress it, and take it to an authorised e-waste facility for safe disposal."
+        },
+        {
+          "id": "etb_q8",
+          "question": "Your e-bike battery has reached the end of its useful life. How should you dispose of it?",
+          "options": [
+            "Place it in your household yellow-lid recycling bin",
+            "Put it in the general rubbish bin for kerbside collection",
+            "Take it to a battery recycling point or an accredited e-waste facility",
+            "Bury it in garden soil to neutralise the chemicals safely"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Lithium-ion batteries must never go in household rubbish or recycling bins. They can cause fires in garbage trucks and waste-sorting facilities. Most council transfer stations and many bike retailers accept e-waste batteries for safe recycling at no cost."
+        },
+        {
+          "id": "etb_q9",
+          "question": "Your e-bike and its battery were submerged in floodwater. What should you do before using the bike again?",
+          "options": [
+            "Let the battery air-dry in direct sunlight for 24 hours, then charge as normal",
+            "Plug it in immediately on a low-power setting to test if it survived",
+            "Do not charge or use the battery — treat it as potentially damaged and have it professionally inspected first",
+            "Open the battery casing yourself to let trapped water drain out"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Water ingress can corrode cell connections and create internal short circuits that are not immediately visible. A water-damaged battery may appear functional but fail dangerously hours or days later. Have it professionally assessed before use, and do not attempt to open the casing yourself."
+        },
+        {
+          "id": "etb_q10",
+          "question": "You will not be riding your e-bike for several weeks. What is the safest way to store the battery?",
+          "options": [
+            "Fully charged (100%) in a hot garden shed to keep it ready to ride",
+            "Completely drained (0%) in a domestic freezer to slow chemical degradation",
+            "At around 50–80% charge in a cool, dry, indoor location away from flammable materials",
+            "Left connected to the charger so it tops up automatically if it self-discharges"
+          ],
+          "correct_option_index": 2,
+          "explanation": "Lithium-ion batteries are safest and longest-lasting when stored partially charged (not full, not flat) at a moderate, stable temperature. Extreme heat accelerates degradation and increases fire risk. Never store connected to a charger. If storing in a shed or garage, consider removing the battery and keeping it indoors."
+        }
+      ]
+    }
+  ],
+  "credit_to_currency_rate": 0.1
+}
