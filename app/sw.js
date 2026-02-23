@@ -3,20 +3,24 @@
  * Enables offline support, caching, and PWA features
  */
 
-const CACHE_NAME = 'micro2move-v1';
-const STATIC_CACHE = 'micro2move-static-v1';
-const DYNAMIC_CACHE = 'micro2move-dynamic-v1';
+const CACHE_NAME = 'micro2move-v2';
+const STATIC_CACHE = 'micro2move-static-v2';
+const DYNAMIC_CACHE = 'micro2move-dynamic-v2';
 
 // Files to cache immediately on install
 const STATIC_ASSETS = [
-  '/',
-  '/index.html',
-  '/manifest.json',
-  '/js/config.js',
-  '/js/data-planned.js',
-  '/js/data-community.js',
-  '/js/data-education.js',
-  '/js/data-veloways.js',
+  '/sydney-bike-network/',
+  '/sydney-bike-network/index.html',
+  '/sydney-bike-network/manifest.json',
+  '/sydney-bike-network/css/styles.css',
+  '/sydney-bike-network/js/config.js',
+  '/sydney-bike-network/js/data-planned.js',
+  '/sydney-bike-network/js/data-community.js',
+  '/sydney-bike-network/js/data-education.js',
+  '/sydney-bike-network/js/data-veloways.js',
+  '/sydney-bike-network/assets/icons/apple-touch-icon.png',
+  '/sydney-bike-network/assets/icons/icon-192.png',
+  '/sydney-bike-network/assets/icons/icon-512.png',
   'https://cdn.tailwindcss.com?plugins=forms,typography',
   'https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap',
   'https://fonts.googleapis.com/icon?family=Material+Icons+Round'

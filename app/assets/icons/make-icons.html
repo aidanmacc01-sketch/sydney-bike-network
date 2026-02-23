@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <title>Micro2Move — Icon Generator</title>
+  <style>
+    body { font-family: sans-serif; background: #f0f0f0; display: flex; flex-direction: column;
+           align-items: center; padding: 40px; gap: 20px; }
+    canvas { border-radius: 22%; box-shadow: 0 8px 32px rgba(0,0,0,0.25); }
+    .downloads { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+    a.dl { background: #7C3AED; color: white; padding: 10px 20px; border-radius: 8px;
+           text-decoration: none; font-weight: bold; font-size: 13px; }
+    a.dl:hover { background: #6D28D9; }
+    p { color: #555; text-align: center; max-width: 500px; line-height: 1.5; }
+  </style>
+</head>
+<body>
+  <h2 style="color:#7C3AED">Micro2Move Icon Generator</h2>
+  <p>Click each button to download the icon at that size.
+     Save all files into <code>app/assets/icons/</code>.</p>
+
+  <canvas id="preview" width="512" height="512"></canvas>
+
+  <div class="downloads" id="downloads"></div>
+
+  <script>
+    function drawIcon(size) {
+      var c = document.createElement('canvas');
+      c.width = size; c.height = size;
+      var ctx = c.getContext('2d');
+      var r = size / 2;
+
+      // Background: purple rounded square
+      var bgR = size * 0.22;
+      ctx.beginPath();
+      ctx.moveTo(bgR, 0);
+      ctx.lineTo(size - bgR, 0);
+      ctx.quadraticCurveTo(size, 0, size, bgR);
+      ctx.lineTo(size, size - bgR);
+      ctx.quadraticCurveTo(size, size, size - bgR, size);
+      ctx.lineTo(bgR, size);
+      ctx.quadraticCurveTo(0, size, 0, size - bgR);
+      ctx.lineTo(0, bgR);
+      ctx.quadraticCurveTo(0, 0, bgR, 0);
+      ctx.closePath();
+      var grad = ctx.createLinearGradient(0, 0, size, size);
+      grad.addColorStop(0, '#9333EA');
+      grad.addColorStop(1, '#7C3AED');
+      ctx.fillStyle = grad;
+      ctx.fill();
+
+      // Scale drawing units relative to 512
+      var s = size / 512;
+      ctx.save();
+      ctx.scale(s, s);
+
+      // Bolt (lightning) — left side
+      ctx.fillStyle = 'rgba(255,255,255,0.30)';
+      ctx.beginPath();
+      ctx.moveTo(210, 110);
+      ctx.lineTo(165, 270);
+      ctx.lineTo(200, 270);
+      ctx.lineTo(155, 400);
+      ctx.lineTo(255, 230);
+      ctx.lineTo(215, 230);
+      ctx.lineTo(260, 110);
+      ctx.closePath();
+      ctx.fill();
+
+      // Bike wheels
+      ctx.strokeStyle = '#ffffff';
+      ctx.lineWidth = 28;
+      ctx.lineCap = 'round';
+
+      // Rear wheel
+      ctx.beginPath();
+      ctx.arc(175, 340, 80, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Front wheel
+      ctx.beginPath();
+      ctx.arc(337, 340, 80, 0, Math.PI * 2);
+      ctx.stroke();
+
+      // Frame
+      ctx.lineWidth = 26;
+      ctx.beginPath();
+      ctx.moveTo(175, 340);  // rear wheel centre
+      ctx.lineTo(256, 210);  // seat post top
+      ctx.lineTo(337, 340);  // front wheel centre
+      ctx.stroke();
+
+      // Top tube + head tube
+      ctx.beginPath();
+      ctx.moveTo(210, 210);
+      ctx.lineTo(320, 210);
+      ctx.lineTo(337, 260);
+      ctx.stroke();
+
+      // Handlebars
+      ctx.lineWidth = 22;
+      ctx.beginPath();
+      ctx.moveTo(306, 200);
+      ctx.lineTo(356, 200);
+      ctx.stroke();
+
+      // Seat
+      ctx.beginPath();
+      ctx.moveTo(230, 205);
+      ctx.lineTo(180, 205);
+      ctx.stroke();
+
+      // "m2m" wordmark
+      ctx.fillStyle = '#ffffff';
+      ctx.font = 'bold ' + 52 + 'px system-ui, sans-serif';
+      ctx.textAlign = 'center';
+      ctx.letterSpacing = '2px';
+      ctx.fillText('micro2move', 256, 460);
+
+      ctx.restore();
+      return c;
+    }
+
+    // Draw preview
+    var preview = document.getElementById('preview');
+    var pCtx = preview.getContext('2d');
+    var src = drawIcon(512);
+    pCtx.drawImage(src, 0, 0);
+
+    // Generate download buttons
+    var sizes = [
+      { size: 180, name: 'apple-touch-icon.png', label: '180×180 Apple Touch Icon' },
+      { size: 192, name: 'icon-192.png',          label: '192×192 Android / PWA' },
+      { size: 512, name: 'icon-512.png',           label: '512×512 PWA Large' },
+      { size: 128, name: 'icon-128.png',           label: '128×128' },
+      { size: 152, name: 'icon-152.png',           label: '152×152 iPad' },
+    ];
+
+    var container = document.getElementById('downloads');
+    sizes.forEach(function(spec) {
+      var canvas = drawIcon(spec.size);
+      var a = document.createElement('a');
+      a.href = canvas.toDataURL('image/png');
+      a.download = spec.name;
+      a.className = 'dl';
+      a.textContent = '↓ ' + spec.label;
+      container.appendChild(a);
+    });
+  </script>
+</body>
+</html>
