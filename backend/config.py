@@ -55,11 +55,20 @@ class Settings(BaseSettings):
     STRIPE_PRICE_MONTHLY: str = "price_monthly"
     STRIPE_PRICE_YEARLY: str = "price_yearly"
 
-    # CORS
+    # Supabase
+    SUPABASE_URL: str = "https://your-project.supabase.co"
+    SUPABASE_ANON_KEY: str = "your-anon-key"
+    SUPABASE_SERVICE_KEY: str = "your-service-role-key"
+    SUPABASE_JWT_SECRET: str = "your-supabase-jwt-secret"
+
+    # CORS — lock to production origins before going live
     CORS_ORIGINS: list = [
         "http://localhost:3000",
+        "http://localhost:8080",
         "http://localhost:8081",
-        "exp://localhost:8081",
+        "https://aidanmacc01-sketch.github.io",  # GitHub Pages (current)
+        "capacitor://localhost",                  # Capacitor iOS wrapper
+        "ionic://localhost",                      # Capacitor fallback
     ]
 
     class Config:
